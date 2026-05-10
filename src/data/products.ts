@@ -1,8 +1,10 @@
 /**
  * Bron's — full rental catalog (beach + carts).
  *
- * Pricing: simplified flat-rate per day for the staging demo. Real prices
- * land after Bron confirms his actual SKUs + rates in the walk-in.
+ * Cart prices match his published Wix-site rates (per the discovery doc).
+ * Beach prices are starter rates pending his sign-off. Tiered pricing
+ * (hourly · half-day · 5+-day discount) is a near-term upgrade — today's
+ * cards show single-day price only.
  *
  * Revenue split: 12% to HeyeLab platform (application_fee_amount), 88%
  * to Bron's Stripe Connect connected account. Activates when env var
@@ -99,7 +101,7 @@ export const PRODUCTS: Product[] = [
       "Cruise the island. Picks up at the shop or delivered to your rental.",
     longDescription:
       "4-seat golf cart for four. Street-legal in Port A, perfect for cruising the beach access roads, the harbor, the bars. Pick up at our shop on Avenue G or have it dropped at your rental house. Includes safety check and a full tank.",
-    dailyTotalCents: 15000, // $150/day
+    dailyTotalCents: 15600, // $156/day — matches bronsbeachcarts.com rate
   },
   {
     slug: "cart-6pass",
@@ -111,7 +113,7 @@ export const PRODUCTS: Product[] = [
       "Roomier — fits six comfortably. Same delivery and pickup options.",
     longDescription:
       "6-seat golf cart for the bigger group. Plenty of room for the cooler, the chairs, and the crew. Pick up at our shop or have it delivered. Most popular cart for week-long stays.",
-    dailyTotalCents: 18000, // $180/day
+    dailyTotalCents: 18200, // $182/day — matches bronsbeachcarts.com rate
   },
 ];
 

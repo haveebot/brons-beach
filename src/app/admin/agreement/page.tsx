@@ -8,11 +8,8 @@ export const dynamic = "force-dynamic";
  *
  * Form takes per-booking data; renders a printable agreement merging
  * Bron's verified liability framework (sourced verbatim from
- * bronsbeachcarts.com/policies-%26-regulations on 2026-05-09).
- *
- * Designed for live demo at the walk-in: fill the form → agreement
- * renders inline → Print/Save-as-PDF and you have a customer-ready
- * document in 30 seconds.
+ * bronsbeachcarts.com/policies-%26-regulations on 2026-05-09). Fill the
+ * form → agreement renders inline → Print/Save-as-PDF in 30 seconds.
  */
 export default function AgreementPage() {
   return (
