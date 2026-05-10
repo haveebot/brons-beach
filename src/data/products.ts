@@ -15,8 +15,14 @@ export interface Product {
   slug: string;
   category: ProductCategory;
   label: string;
-  /** Emoji shown in the product card visual placeholder until real photos drop in. */
+  /** Emoji fallback when imageUrl is unset. */
   emoji: string;
+  /**
+   * Public path under /public or absolute URL. When set, ProductCard renders
+   * this image; when unset, falls back to the emoji + gradient card. Beach
+   * products are emoji-only until Bron sends product photography.
+   */
+  imageUrl?: string;
   shortDescription: string;
   longDescription: string;
   /** Customer pays this per day. */
@@ -88,6 +94,7 @@ export const PRODUCTS: Product[] = [
     category: "cart",
     label: "4-Passenger Golf Cart",
     emoji: "🛺",
+    imageUrl: "/images/bron-design.png",
     shortDescription:
       "Cruise the island. Picks up at the shop or delivered to your rental.",
     longDescription:
@@ -99,6 +106,7 @@ export const PRODUCTS: Product[] = [
     category: "cart",
     label: "6-Passenger Golf Cart",
     emoji: "🚐",
+    imageUrl: "/images/bron-cart-beach.jpg",
     shortDescription:
       "Roomier — fits six comfortably. Same delivery and pickup options.",
     longDescription:
@@ -112,4 +120,73 @@ export const CART_PRODUCTS = PRODUCTS.filter((p) => p.category === "cart");
 
 export function getProduct(slug: string): Product | null {
   return PRODUCTS.find((p) => p.slug === slug) ?? null;
+}
+
+/**
+ * Cart item — one rental in a multi-product checkout. Each item has its own
+ * dates (so a customer can book a week-long cart + a single-day cabana in
+ * one transaction).
+ */
+export interface CartItem {
+  productSlug: string;
+  pickupDate: string; // YYYY-MM-DD
+  returnDate: string; // YYYY-MM-DD
+  numDays: number;
+}
+
+export interface PricedCartItem extends CartItem {
+  product: Product;
+  itemTotalCents: number;
+  itemPlatformFeeCents: number;
+  itemVendorCents: number;
+}
+
+/**
+ * Server-trusted pricing pass over a cart. Uses the catalog daily rate,
+ * NEVER trusts client-supplied amounts. Throws on unknown product / invalid
+ * days so the API route can surface a clean 400.
+ */
+export function priceCart(items: CartItem[]): {
+  priced: PricedCartItem[];
+  totalCents: number;
+  platformFeeCents: number;
+  vendorCents: number;
+} {
+  if (!Array.isArray(items) || items.length === 0) {
+    throw new Error("Cart is empty");
+  }
+  if (items.length > 10) {
+    throw new Error("Cart too large (max 10 items)");
+  }
+
+  const priced: PricedCartItem[] = items.map((item, idx) => {
+    const product = getProduct(item.productSlug);
+    if (!product) throw new Error(`Unknown product: ${item.productSlug}`);
+    const days = Number(item.numDays);
+    if (!Number.isFinite(days) || days < 1 || days > 30) {
+      throw new Error(`Item ${idx + 1}: invalid numDays`);
+    }
+    if (!item.pickupDate || !item.returnDate) {
+      throw new Error(`Item ${idx + 1}: missing dates`);
+    }
+    const itemTotalCents = product.dailyTotalCents * days;
+    const split = splitTotal(itemTotalCents);
+    return {
+      ...item,
+      numDays: days,
+      product,
+      itemTotalCents,
+      itemPlatformFeeCents: split.platformFeeCents,
+      itemVendorCents: split.vendorCents,
+    };
+  });
+
+  const totalCents = priced.reduce((sum, p) => sum + p.itemTotalCents, 0);
+  const platformFeeCents = priced.reduce(
+    (sum, p) => sum + p.itemPlatformFeeCents,
+    0,
+  );
+  const vendorCents = totalCents - platformFeeCents;
+
+  return { priced, totalCents, platformFeeCents, vendorCents };
 }

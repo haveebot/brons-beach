@@ -1,6 +1,12 @@
+import Image from "next/image";
 import Link from "next/link";
 import { BEACH_PRODUCTS, CART_PRODUCTS, type Product } from "@/data/products";
 import { VENUE_ARMS, HOURS, CONTACT } from "@/data/venue";
+import {
+  upcomingActs,
+  actDayLabel,
+  type LiveAct,
+} from "@/data/live-music";
 import BookingForm from "./BookingForm";
 
 export const dynamic = "force-dynamic";
@@ -16,23 +22,38 @@ export const dynamic = "force-dynamic";
 export default function HomePage() {
   return (
     <main>
-      {/* Hero band — full Bron's */}
-      <section className="relative bg-gradient-to-b from-[#3d6e8c] via-[#2a4a63] to-[#1a3a52] text-white">
-        <div className="max-w-5xl mx-auto px-6 py-12 sm:py-20 text-center">
-          <p className="text-xs uppercase tracking-[0.3em] text-[#f5b35a] font-bold mb-3">
+      {/* Hero — Bron's branded aerial photo IS the headline.
+          The image already has "BRON'S BEACH CARTS" text in the artwork, so
+          we don't repeat it as page text. Eyebrow above, CTAs in a dark band
+          below. h1 is screen-reader-only for accessibility/SEO. */}
+      <section className="bg-[#1a3a52] text-white">
+        <h1 className="sr-only">
+          Bron&apos;s — Beach rentals, golf carts, outdoor bar in Port Aransas
+        </h1>
+        <div className="max-w-5xl mx-auto px-6 pt-8 pb-2 text-center">
+          <p className="text-xs uppercase tracking-[0.3em] text-[#f5b35a] font-bold">
             Port Aransas, TX · 314 E Avenue G
           </p>
-          <h1 className="font-display text-4xl sm:text-6xl font-bold tracking-tight mb-4">
-            Bron&apos;s
-          </h1>
-          <p className="text-base sm:text-xl text-white/90 max-w-2xl mx-auto leading-relaxed mb-2">
+        </div>
+        <div className="relative aspect-[16/9] sm:aspect-[21/9] max-h-[60vh] w-full">
+          <Image
+            src="/images/bron-halo.jpg"
+            alt="Bron's Beach Carts — aerial view of the boardwalk to the beach in Port Aransas"
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover"
+          />
+        </div>
+        <div className="max-w-5xl mx-auto px-6 py-8 sm:py-10 text-center">
+          <p className="text-base sm:text-xl text-white max-w-2xl mx-auto leading-relaxed mb-2 font-semibold">
             Beach rentals · Golf carts · Outdoor bar · Kitchen · Shaved ice
           </p>
-          <p className="text-sm sm:text-base text-white/70 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-sm sm:text-base text-white/80 max-w-2xl mx-auto leading-relaxed mb-6">
             Five spots, one yard. Everything you need on the island, all in
-            one place — set up where you want it, served the way you want it.
+            one place.
           </p>
-          <div className="mt-8 flex items-center justify-center gap-3 flex-wrap">
+          <div className="flex items-center justify-center gap-3 flex-wrap">
             <Link
               href="#beach"
               className="px-6 py-3 rounded-full bg-[#e8654a] text-white font-bold text-sm uppercase tracking-widest hover:bg-[#d2553c] transition-colors"
@@ -135,6 +156,8 @@ export default function HomePage() {
             beer, hot food, frozen drinks, live music most nights.
           </p>
         </div>
+
+        <LiveMusicPanel />
 
         <div className="space-y-6">
           {VENUE_ARMS.map((arm) => (
@@ -240,7 +263,13 @@ export default function HomePage() {
       {/* Footer */}
       <footer className="bg-[#1a3a52] text-white">
         <div className="max-w-5xl mx-auto px-6 py-10 text-center">
-          <p className="font-display text-xl font-bold mb-2">Bron&apos;s</p>
+          <Image
+            src="/images/bron-logo.png"
+            alt="Bron's Beach Carts logo"
+            width={96}
+            height={96}
+            className="mx-auto mb-3"
+          />
           <p className="text-sm text-white/80 mb-1">{CONTACT.address}</p>
           <p className="text-xs text-white/60 mb-3">
             {HOURS.weekdays} · {HOURS.weekends}
@@ -260,6 +289,62 @@ export default function HomePage() {
   );
 }
 
+function LiveMusicPanel() {
+  const acts = upcomingActs().slice(0, 4);
+  const tonightLabel = "Tonight";
+
+  return (
+    <div className="mb-8 rounded-2xl bg-gradient-to-br from-[#1a3a52] via-[#2a4a63] to-[#3d6e8c] text-white p-6 sm:p-7 shadow-md">
+      <div className="flex items-baseline justify-between gap-4 mb-4">
+        <p className="text-[10px] sm:text-xs uppercase tracking-[0.3em] text-[#f5b35a] font-bold">
+          🎶 Live music · Bron&apos;s Backyard
+        </p>
+        <p className="text-[10px] uppercase tracking-widest text-white/50">
+          most weekends
+        </p>
+      </div>
+      {acts.length === 0 ? (
+        <p className="text-sm sm:text-base text-white/85 leading-relaxed">
+          Watch this space for tonight&apos;s lineup. Live music plays most
+          weekends — pull up a chair and stay a while.
+        </p>
+      ) : (
+        <ul className="space-y-2.5">
+          {acts.map((a: LiveAct, i) => {
+            const dayLabel = actDayLabel(a.date);
+            const isFirst = i === 0;
+            return (
+              <li
+                key={`${a.date}-${a.time}-${a.artist}`}
+                className="flex items-baseline gap-3 flex-wrap"
+              >
+                <span
+                  className={`text-[10px] uppercase tracking-widest font-bold ${
+                    dayLabel === tonightLabel ? "text-[#f5b35a]" : "text-white/60"
+                  } w-20 shrink-0`}
+                >
+                  {dayLabel}
+                </span>
+                <span className="text-white/70 text-sm w-16 shrink-0">
+                  {a.time}
+                </span>
+                <span
+                  className={`font-display ${isFirst ? "text-lg sm:text-xl" : "text-base"} font-bold text-white`}
+                >
+                  {a.artist}
+                </span>
+                {a.stage && a.stage !== "Bron's Backyard" && (
+                  <span className="text-xs text-white/50">{a.stage}</span>
+                )}
+              </li>
+            );
+          })}
+        </ul>
+      )}
+    </div>
+  );
+}
+
 function ProductCard({
   product: p,
   bookHref,
@@ -269,8 +354,20 @@ function ProductCard({
 }) {
   return (
     <article className="bg-white rounded-2xl border border-[#1a3a52]/10 p-6 shadow-sm hover:shadow-md transition-shadow flex flex-col">
-      <div className="aspect-[16/9] rounded-lg bg-gradient-to-br from-[#f5b35a]/25 via-[#f5b35a]/10 to-[#3d6e8c]/15 border border-[#f5b35a]/30 flex items-center justify-center mb-4">
-        <span className="text-7xl drop-shadow-sm">{p.emoji}</span>
+      <div className="aspect-[16/9] rounded-lg overflow-hidden mb-4 relative bg-gradient-to-br from-[#f5b35a]/25 via-[#f5b35a]/10 to-[#3d6e8c]/15 border border-[#f5b35a]/30">
+        {p.imageUrl ? (
+          <Image
+            src={p.imageUrl}
+            alt={p.label}
+            fill
+            sizes="(min-width: 640px) 50vw, 100vw"
+            className="object-cover"
+          />
+        ) : (
+          <div className="absolute inset-0 flex items-center justify-center">
+            <span className="text-7xl drop-shadow-sm">{p.emoji}</span>
+          </div>
+        )}
       </div>
       <h3 className="font-display text-xl font-bold mb-2">{p.label}</h3>
       <p className="text-sm text-[#1a3a52]/80 leading-relaxed mb-4 flex-1">

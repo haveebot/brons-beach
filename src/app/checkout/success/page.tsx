@@ -1,14 +1,26 @@
 import Link from "next/link";
+import SuccessEmailTrigger from "./SuccessClient";
 
 export const dynamic = "force-dynamic";
 
 /**
  * Bron's Beach Rentals — checkout success page.
  * Customer lands here after completing Stripe checkout.
+ *
+ * SuccessEmailTrigger fires the confirmation email server-side via API;
+ * the trigger is mounted client-side so it runs on render, fire-and-forget.
  */
-export default function SuccessPage() {
+export default async function SuccessPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ session_id?: string }>;
+}) {
+  const params = await searchParams;
+  const sessionId = params.session_id || "";
+
   return (
     <main className="max-w-2xl mx-auto px-6 py-20 text-center">
+      {sessionId && <SuccessEmailTrigger sessionId={sessionId} />}
       <div className="text-6xl mb-6">🏖</div>
       <h1 className="font-display text-3xl sm:text-4xl font-bold mb-4">
         You&apos;re set up.

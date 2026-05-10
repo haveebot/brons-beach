@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
-import { getProduct, splitTotal } from "@/data/products";
+import { priceCart, type CartItem } from "@/data/products";
 
 // No apiVersion pinned — Stripe SDK uses the account's default API
 // version. Pinning a string literal can break across SDK upgrades.
@@ -18,17 +18,16 @@ const getStripe = () => {
 };
 
 /**
- * Bron's Beach Rentals checkout — staging build.
+ * Bron's Beach Rentals checkout — multi-product cart.
  *
- * The 12% HeyeLab platform fee is computed server-side from the trusted
- * catalog. In production (post-Bron-Connect-onboarding), this becomes a
- * Stripe Connect Direct Charge with `application_fee_amount` and
- * `payment_intent_data.transfer_data.destination = <Bron's connected
- * account ID>` so the 88% lands in his account daily, automatically.
+ * Each cart item is a separate rental with its own dates. Server prices
+ * every item from the trusted catalog, builds a Stripe line_item per item,
+ * and sums the 12% platform fee for a single application_fee_amount on
+ * the Connect Direct Charge (when STRIPE_BRONS_CONNECTED_ACCT_ID is set).
  *
- * For staging (no connected account, no HeyeLab Stripe yet), the split
- * is recorded in metadata only — the actual transfer becomes real when
- * STRIPE_BRONS_CONNECTED_ACCT_ID is set on production.
+ * Backwards-compatible: legacy single-product POSTs ({product, pickupDate,
+ * returnDate, numDays}) get translated into a one-item cart so old clients
+ * keep working during deploy windows.
  */
 
 const APP_URL =
@@ -37,31 +36,26 @@ const APP_URL =
 const BRONS_CONNECTED_ACCT_ID =
   process.env.STRIPE_BRONS_CONNECTED_ACCT_ID || "";
 
-export async function POST(req: NextRequest) {
-  const body = await req.json();
-  const {
-    name,
-    phone,
-    email,
-    product,
-    pickupDate,
-    returnDate,
-    accessPoint,
-    numDays,
-  } = body;
+interface RequestBody {
+  name: string;
+  phone: string;
+  email: string;
+  accessPoint: string;
+  cart?: CartItem[];
+  // Legacy single-product fields:
+  product?: string;
+  pickupDate?: string;
+  returnDate?: string;
+  numDays?: number;
+}
 
-  if (
-    !name ||
-    !phone ||
-    !email ||
-    !product ||
-    !pickupDate ||
-    !returnDate ||
-    !accessPoint ||
-    !numDays
-  ) {
+export async function POST(req: NextRequest) {
+  const body = (await req.json()) as RequestBody;
+  const { name, phone, email, accessPoint } = body;
+
+  if (!name || !phone || !email || !accessPoint) {
     return NextResponse.json(
-      { error: "Missing required fields" },
+      { error: "Missing required customer fields" },
       { status: 400 },
     );
   }
@@ -76,51 +70,77 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const catalog = getProduct(product);
-  if (!catalog) {
-    return NextResponse.json({ error: "Unknown product" }, { status: 400 });
+  // Build the cart — accept either {cart:[...]} or legacy single-product body
+  let cart: CartItem[];
+  if (Array.isArray(body.cart) && body.cart.length > 0) {
+    cart = body.cart;
+  } else if (body.product && body.pickupDate && body.returnDate) {
+    cart = [
+      {
+        productSlug: body.product,
+        pickupDate: body.pickupDate,
+        returnDate: body.returnDate,
+        numDays: Number(body.numDays || 1),
+      },
+    ];
+  } else {
+    return NextResponse.json({ error: "Cart is empty" }, { status: 400 });
   }
 
-  const days = Number(numDays);
-  if (!Number.isFinite(days) || days < 1 || days > 30) {
-    return NextResponse.json({ error: "Invalid numDays" }, { status: 400 });
+  let priced;
+  try {
+    priced = priceCart(cart);
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : String(err);
+    return NextResponse.json({ error: msg }, { status: 400 });
   }
 
-  // SERVER-COMPUTED amounts. Never trust client.
-  const totalCents = catalog.dailyTotalCents * days;
-  const { platformFeeCents, vendorCents } = splitTotal(totalCents);
+  const { priced: items, totalCents, platformFeeCents } = priced;
 
   try {
+    const lineItems: NonNullable<
+      Stripe.Checkout.SessionCreateParams["line_items"]
+    > = items.map((item) => ({
+      price_data: {
+        currency: "usd",
+        unit_amount: item.itemTotalCents,
+        product_data: {
+          name: `${item.product.label} — Bron's Beach Rentals`,
+          description: `${item.numDays} day${item.numDays !== 1 ? "s" : ""} · ${item.pickupDate}${item.pickupDate !== item.returnDate ? ` → ${item.returnDate}` : ""} · ${accessPoint}`,
+        },
+      },
+      quantity: 1,
+    }));
+
+    // Cart JSON in metadata so we can rehydrate items on the success page
+    // and in the confirmation email. Trim to fit Stripe's 500-char per-key
+    // metadata limit — store as a single compact JSON string.
+    const cartJson = JSON.stringify(
+      items.map((it) => ({
+        slug: it.productSlug,
+        label: it.product.label,
+        pickupDate: it.pickupDate,
+        returnDate: it.returnDate,
+        numDays: it.numDays,
+        totalCents: it.itemTotalCents,
+      })),
+    );
+
     const sessionConfig: Stripe.Checkout.SessionCreateParams = {
       payment_method_types: ["card"],
       mode: "payment",
       customer_email: email,
-      line_items: [
-        {
-          price_data: {
-            currency: "usd",
-            unit_amount: totalCents,
-            product_data: {
-              name: `${catalog.label} — Bron's Beach Rentals`,
-              description: `${days} day${days !== 1 ? "s" : ""} · ${pickupDate} → ${returnDate} · ${accessPoint} · Free cancellation up to 24 hours before start`,
-            },
-          },
-          quantity: 1,
-        },
-      ],
+      line_items: lineItems,
       metadata: {
         type: "brons-beach-rental",
         name,
         phone,
         email,
-        product,
-        pickupDate,
-        returnDate,
         accessPoint,
-        numDays: String(days),
+        cart_json: cartJson.slice(0, 500),
+        item_count: String(items.length),
         total_cents: String(totalCents),
         platform_fee_cents: String(platformFeeCents),
-        vendor_cents: String(vendorCents),
         platform_fee_pct: "12",
       },
       success_url: `${APP_URL}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
@@ -128,9 +148,8 @@ export async function POST(req: NextRequest) {
     };
 
     if (BRONS_CONNECTED_ACCT_ID) {
-      // Stripe Connect Direct Charge mode — application_fee_amount is
-      // HeyeLab's 12% cut; the rest auto-transfers to Bron's connected
-      // account. Activates when the env var is set on production.
+      // Single Direct Charge for the whole cart — Stripe routes
+      // (totalCents - application_fee_amount) to Bron's connected account.
       sessionConfig.payment_intent_data = {
         application_fee_amount: platformFeeCents,
         transfer_data: {

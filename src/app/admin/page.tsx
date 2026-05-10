@@ -239,21 +239,27 @@ export default function AdminDashboardPage() {
         </section>
 
         {/* Quick actions */}
-        <section className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+        <section className="grid grid-cols-2 sm:grid-cols-4 gap-3">
           <Link
             href="/admin/agreement"
             className="bg-[#e8654a] text-white rounded-xl p-4 font-bold text-sm uppercase tracking-widest hover:bg-[#d2553c] text-center"
           >
-            New rental agreement
+            New agreement
+          </Link>
+          <Link
+            href="/admin/why"
+            className="bg-[#1a3a52] text-white rounded-xl p-4 font-bold text-sm uppercase tracking-widest hover:bg-[#2a4a63] text-center"
+          >
+            vs your stack
           </Link>
           <Link
             href="/"
             className="bg-white border border-[#1a3a52]/15 rounded-xl p-4 font-bold text-sm hover:border-[#1a3a52]/40 text-[#1a3a52] text-center"
           >
-            View customer site →
+            Customer site →
           </Link>
           <span className="bg-white border border-[#1a3a52]/15 rounded-xl p-4 font-bold text-sm text-[#1a3a52]/60 text-center cursor-not-allowed">
-            Live data sync (post-deal)
+            Live sync (post-deal)
           </span>
         </section>
       </div>
