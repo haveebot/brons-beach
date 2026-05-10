@@ -95,11 +95,12 @@ export default function HeroLive() {
           <Sparkle color="#2EC4B6" />
         </div>
 
-        {/* Tagline — a real magazine cover line */}
+        {/* Tagline — captures the real operating model: beach delivery
+            + yard hangouts. Yard gets the brand-color emphasis. */}
         <p className="mt-5 sm:mt-6 font-display italic text-xl sm:text-3xl text-bron-navy/85 max-w-2xl mx-auto leading-snug">
-          Five spots, one yard,{" "}
+          Set you up at the beach.{" "}
           <span className="text-bron-pink not-italic font-bold">
-            no part of the trip you have to leave for.
+            See you back at the yard.
           </span>
         </p>
 
