@@ -16,13 +16,15 @@ export default function HeroMarquee({ items }: { items: string[] }) {
       {/* Scalloped canopy edge — venue tent curve at the top of the marquee */}
       <Scallop />
       <div className="bg-bron-deep text-bron-cream border-b-4 border-bron-coral overflow-hidden relative">
-        {/* String of "lights" along the top edge — vintage venue signage */}
-        <Lights />
+        {/* String lights — top + bottom edges, big bulbs, multi-color */}
+        <Lights position="top" />
 
-        <div className="marquee-track py-3.5 sm:py-4">
+        <div className="marquee-track py-5 sm:py-6">
           <MarqueeRow items={items} />
           <MarqueeRow items={items} aria-hidden />
         </div>
+
+        <Lights position="bottom" />
       </div>
     </div>
   );
@@ -61,7 +63,7 @@ function MarqueeRow({
           key={i}
           className="flex items-center gap-x-10 sm:gap-x-14 shrink-0"
         >
-          <span className="font-[family-name:var(--font-marquee)] text-sm sm:text-base uppercase tracking-[0.18em] whitespace-nowrap">
+          <span className="font-[family-name:var(--font-marquee)] text-base sm:text-lg uppercase tracking-[0.16em] whitespace-nowrap">
             {it}
           </span>
           <Pip />
@@ -74,31 +76,48 @@ function MarqueeRow({
 /** Decorative diamond/star separator between marquee items. */
 function Pip() {
   return (
-    <span aria-hidden className="text-bron-yellow text-lg leading-none select-none">
+    <span
+      aria-hidden
+      className="text-bron-yellow text-xl leading-none select-none"
+    >
       ✦
     </span>
   );
 }
 
-/** Row of small "bulbs" along the top edge of the marquee. */
-function Lights() {
+/** Row of bulbs along the top OR bottom edge of the marquee — vintage
+ *  venue signage. Bigger + more saturated than the previous version,
+ *  each bulb gets a soft glow ring via box-shadow. */
+function Lights({ position }: { position: "top" | "bottom" }) {
+  const colors = [
+    "bg-bron-yellow",
+    "bg-bron-coral",
+    "bg-bron-pink",
+    "bg-bron-teal",
+  ];
+  const glows = [
+    "0 0 8px rgba(246,192,38,0.7)",
+    "0 0 8px rgba(232,101,74,0.7)",
+    "0 0 8px rgba(255,77,139,0.7)",
+    "0 0 8px rgba(46,196,182,0.7)",
+  ];
   return (
     <div
       aria-hidden
-      className="absolute inset-x-0 top-1 flex justify-between px-2"
+      className={`absolute inset-x-0 flex justify-between px-3 z-10 ${
+        position === "top" ? "top-1.5" : "bottom-1.5"
+      }`}
     >
-      {Array.from({ length: 40 }).map((_, i) => (
-        <span
-          key={i}
-          className={`block w-1 h-1 rounded-full ${
-            i % 3 === 0
-              ? "bg-bron-yellow"
-              : i % 3 === 1
-                ? "bg-bron-coral"
-                : "bg-bron-pink"
-          }`}
-        />
-      ))}
+      {Array.from({ length: 64 }).map((_, i) => {
+        const idx = i % colors.length;
+        return (
+          <span
+            key={i}
+            className={`block w-1.5 h-1.5 rounded-full ${colors[idx]}`}
+            style={{ boxShadow: glows[idx] }}
+          />
+        );
+      })}
     </div>
   );
 }

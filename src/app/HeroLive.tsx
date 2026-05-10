@@ -36,8 +36,9 @@ export default function HeroLive() {
     status.label,
     `Sunset at ${formatPortATime(sun.sunset)}`,
     "Beach setups delivered to your sand",
-    "Carts ready when you are",
-    "Cold beer · hot food · walk-up shaved ice",
+    "Carts gassed + ready when you are",
+    "Frozen margaritas to-go from the walk-up window",
+    "Cold beer · burgers off the flat top",
     "Private events booking now",
   ];
 
@@ -52,6 +53,7 @@ export default function HeroLive() {
   });
 
   return (
+    <>
     <section className="relative bg-bron-cream text-bron-navy overflow-hidden isolate">
       {/* Paper grain — subtle texture overlay across the whole hero */}
       <div
@@ -59,12 +61,20 @@ export default function HeroLive() {
         className="absolute inset-0 paper-noise opacity-50 pointer-events-none mix-blend-multiply"
       />
 
+      {/* Rising sun — half-disc at the bottom edge of the hero, rays
+          fanning upward and outward through the composition. */}
+      <RisingSun />
+
+      {/* Palm silhouettes peeking in from the bottom corners — Key West
+          tropical framing. Hidden on small screens where they'd crowd. */}
+      <PalmFrame />
+
       {/* Top corner stamp — current local Port A time */}
       <div className="absolute top-20 right-5 sm:top-24 sm:right-8 z-20 text-[10px] uppercase tracking-[0.25em] font-bold text-bron-navy/75 bg-bron-cream/85 backdrop-blur-sm rounded-full px-3 py-1.5 border border-bron-navy/15">
         {stamp} · Port A
       </div>
 
-      <div className="relative z-10 max-w-6xl mx-auto px-6 pt-24 sm:pt-32 pb-20 sm:pb-28 text-center">
+      <div className="relative z-10 max-w-6xl mx-auto px-6 pt-24 sm:pt-32 pb-32 sm:pb-40 text-center">
         {/* Eyebrow with alternating tropical bullet dots */}
         <p className="flex items-center justify-center gap-3 text-[10px] sm:text-xs uppercase tracking-[0.4em] text-bron-coral font-bold mb-6 sm:mb-8">
           <Bullet color="bg-bron-teal" />
@@ -74,17 +84,14 @@ export default function HeroLive() {
           <Bullet color="bg-bron-teal" />
         </p>
 
-        {/* Sunburst + mark composition. Sunburst sits behind the type
-            in the same flow so they scale together. */}
-        <div className="relative inline-block mx-auto">
-          <Sunburst />
-          <h1
-            className="relative font-[family-name:var(--font-mark)] leading-none text-bron-navy text-[clamp(4.5rem,16vw,13rem)] tracking-tight mark-breath"
-            style={{ wordSpacing: "-0.05em" }}
-          >
-            Bron&apos;s
-          </h1>
-        </div>
+        {/* The mark — sun rays radiate behind it from the rising sun
+            below, no halo behind the type itself */}
+        <h1
+          className="relative font-[family-name:var(--font-mark)] leading-none text-bron-navy text-[clamp(4.5rem,16vw,13rem)] tracking-tight mark-breath"
+          style={{ wordSpacing: "-0.05em" }}
+        >
+          Bron&apos;s
+        </h1>
 
         {/* Tropical decorative row — visible-palette pop between mark and tagline */}
         <div className="mt-12 sm:mt-16 flex items-center justify-center gap-3 text-base sm:text-lg">
@@ -121,12 +128,12 @@ export default function HeroLive() {
         </div>
       </div>
 
-      {/* Live marquee letterboard — anchored to the bottom of the hero.
-          The marquee renders its own scalloped canopy at its top edge. */}
-      <div className="relative z-10">
-        <HeroMarquee items={marqueeItems} />
-      </div>
     </section>
+
+    {/* Live marquee letterboard — outside the hero section so the
+        rising sun can occupy the hero's bottom edge cleanly. */}
+    <HeroMarquee items={marqueeItems} />
+    </>
   );
 }
 
@@ -154,21 +161,23 @@ function Sparkle({ color }: { color: string }) {
   );
 }
 
-/** Slow-spinning sunburst behind the mark. Sized as a halo around the
- *  type — bounded clamp so it doesn't swallow the tagline or CTAs.
+/** Rising-sun backdrop — half-disc anchored at the bottom edge of the
+ *  hero, rays fanning up and outward through the composition. The disc
+ *  sits at the horizon (the seam between hero and marquee); rays fan
+ *  upward into the visible area like a sunset.
  *  Wrapper handles centering, inner SVG handles rotation. */
-function Sunburst() {
-  const rays = Array.from({ length: 24 });
+function RisingSun() {
+  const rays = Array.from({ length: 28 });
   return (
     <div
       aria-hidden
-      className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10 pointer-events-none w-[clamp(260px,38vw,480px)] aspect-square opacity-90"
+      className="absolute left-1/2 bottom-0 -translate-x-1/2 translate-y-1/2 -z-10 pointer-events-none w-[clamp(700px,130vw,1500px)] aspect-square opacity-95"
     >
       <svg viewBox="-200 -200 400 400" className="w-full h-full sunburst-spin">
         {rays.map((_, i) => {
           const isLong = i % 2 === 0;
-          const length = isLong ? 198 : 150;
-          const width = isLong ? 11 : 6;
+          const length = isLong ? 198 : 152;
+          const width = isLong ? 9 : 5;
           const fill = isLong ? "#FF8B4D" : "#FF4D8B";
           return (
             <rect
@@ -176,21 +185,66 @@ function Sunburst() {
               x={-width / 2}
               y={-length}
               width={width}
-              height={length - 92}
+              height={length - 88}
               rx={width / 2}
               fill={fill}
-              opacity={isLong ? 0.85 : 0.7}
-              transform={`rotate(${i * 15})`}
+              opacity={isLong ? 0.9 : 0.75}
+              transform={`rotate(${(i * 360) / rays.length})`}
             />
           );
         })}
         {/* Concentric sun disc — yellow / coral / pink / yellow center */}
-        <circle r="96" fill="#F6C026" />
-        <circle r="78" fill="#FF8B4D" />
-        <circle r="58" fill="#FF4D8B" />
-        <circle r="36" fill="#F6C026" />
+        <circle r="92" fill="#F6C026" />
+        <circle r="74" fill="#FF8B4D" />
+        <circle r="56" fill="#FF4D8B" />
+        <circle r="34" fill="#F6C026" />
       </svg>
     </div>
+  );
+}
+
+/** Stylized palm silhouettes peeking in from the bottom corners. Pure
+ *  SVG, deep navy, hidden on small screens. Adds tropical Key West
+ *  framing without competing with the typography. */
+function PalmFrame() {
+  return (
+    <>
+      <div className="hidden md:block absolute left-0 bottom-0 w-32 lg:w-44 z-0 pointer-events-none origin-bottom-left">
+        <Palm flip={false} />
+      </div>
+      <div className="hidden md:block absolute right-0 bottom-0 w-32 lg:w-44 z-0 pointer-events-none origin-bottom-right">
+        <Palm flip={true} />
+      </div>
+    </>
+  );
+}
+
+function Palm({ flip }: { flip: boolean }) {
+  return (
+    <svg
+      viewBox="0 0 120 200"
+      className="w-full h-auto"
+      style={{ transform: flip ? "scaleX(-1)" : undefined }}
+      fill="#0d1f2c"
+    >
+      {/* Trunk — gentle lean */}
+      <path
+        d="M52 200 C 50 160, 45 110, 38 70 C 33 40, 30 20, 28 5 L 36 5 C 38 22, 42 42, 48 70 C 56 110, 60 160, 60 200 Z"
+        opacity="0.92"
+      />
+      {/* Fronds — six radiating leaves */}
+      <g transform="translate(32 5)">
+        <path d="M0 0 C -22 -8, -36 0, -44 14 C -28 6, -10 4, 4 4 Z" />
+        <path d="M0 0 C -24 -22, -22 -38, -16 -52 C -14 -34, -8 -16, 4 -2 Z" />
+        <path d="M0 0 C -6 -28, 4 -44, 16 -54 C 12 -34, 8 -16, 6 -2 Z" />
+        <path d="M0 0 C 18 -22, 32 -22, 46 -14 C 30 -8, 16 -2, 6 2 Z" />
+        <path d="M0 0 C 24 -4, 42 4, 50 14 C 32 8, 14 6, 4 4 Z" />
+        <path d="M0 0 C 14 16, 8 26, -2 32 C 0 18, 2 8, 0 0 Z" />
+      </g>
+      {/* Tiny coconut cluster */}
+      <circle cx="32" cy="6" r="3" opacity="0.75" />
+      <circle cx="36" cy="8" r="2.5" opacity="0.75" />
+    </svg>
   );
 }
 

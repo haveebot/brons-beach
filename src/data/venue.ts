@@ -49,14 +49,14 @@ export const VENUE_ARMS: VenueArm[] = [
     slug: "shaved-ice",
     emoji: "🍧",
     label: "Bron's Shaved Ice & To-Go Bar",
-    tagline: "Tropical cocktails · frozen daiquiris · shaved ice",
+    tagline: "Frozen margaritas · daiquiris · shaved ice — walk-up, to-go",
     description:
-      "Walk-up shaved ice and frozen daiquiris to-go. Take it to the beach, take it back to the rental, or take it ten feet to the patio. No wait, no fuss.",
+      "Walk-up window for frozen margaritas, daiquiris, tropical cocktails, and shaved ice — built for the beach, the cart, the rental, or ten feet to the patio. No table, no wait.",
     highlights: [
+      "Frozen margaritas to-go",
+      "Daiquiris + tropical cocktails",
       "Shaved ice — every flavor",
-      "Frozen daiquiris to-go",
-      "Tropical cocktails",
-      "Quick walk-up service",
+      "Walk-up window, no wait",
     ],
   },
 ];
