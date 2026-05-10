@@ -83,7 +83,12 @@ export default function BookingForm() {
       const data = await res.json();
       if (!res.ok) {
         setStatus("error");
-        setErrorMsg(data.error ?? "Something went wrong");
+        // Show both the generic error AND the detail (Stripe error message)
+        // so debugging doesn't require diving into Vercel logs
+        const msg = data.detail
+          ? `${data.error ?? "Error"}: ${data.detail}`
+          : (data.error ?? "Something went wrong");
+        setErrorMsg(msg);
         return;
       }
       window.location.href = data.url;
