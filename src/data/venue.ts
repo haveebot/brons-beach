@@ -66,6 +66,24 @@ export const HOURS = {
   weekends: "Fri–Sat · 10am–midnight",
 };
 
+/**
+ * Structured open hours by day-of-week (0=Sun, 1=Mon, ..., 6=Sat).
+ * Pair = [openHour, closeHour] in 24h local time. closeHour=24 means
+ * midnight; >24 means past-midnight closing (e.g. 25 = 1am next day).
+ *
+ * Drives the live "Open until X" / "Closed — opens X" status tile and
+ * any future hours-aware logic.
+ */
+export const HOURS_BY_DAY: Record<number, [number, number]> = {
+  0: [10, 23], // Sun  10am – 11pm
+  1: [10, 23], // Mon
+  2: [10, 23], // Tue
+  3: [10, 23], // Wed
+  4: [10, 23], // Thu
+  5: [10, 24], // Fri  10am – midnight
+  6: [10, 24], // Sat  10am – midnight
+};
+
 export const CONTACT = {
   phone: "(361) 290-7143",
   phoneTel: "+13612907143",

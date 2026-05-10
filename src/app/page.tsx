@@ -7,7 +7,7 @@ import {
   type LiveAct,
 } from "@/data/live-music";
 import BookingForm from "./BookingForm";
-import HeroCarousel from "./HeroCarousel";
+import HeroLive from "./HeroLive";
 import SiteNav from "./SiteNav";
 import MobileCtaBar from "./MobileCtaBar";
 
@@ -18,58 +18,7 @@ export default function HomePage() {
     <>
       <SiteNav />
       <main className="pb-20 md:pb-0">
-        {/* Hero — Bron's branded aerial photo IS the headline.
-            The image already has "BRON'S BEACH CARTS" text in the artwork, so
-            we don't repeat it as page text. h1 is screen-reader-only. */}
-        <section className="bg-bron-navy text-white">
-          <h1 className="sr-only">
-            Bron&apos;s — Beach rentals, golf carts, outdoor bar in Port Aransas
-          </h1>
-          <div className="max-w-5xl mx-auto px-6 pt-20 pb-2 text-center">
-            <p className="text-xs uppercase tracking-[0.3em] text-bron-gold font-bold">
-              Port Aransas, TX · 314 E Avenue G
-            </p>
-          </div>
-          <div className="relative aspect-[16/9] sm:aspect-[21/9] max-h-[60vh] w-full overflow-hidden">
-            <HeroCarousel />
-            <a
-              href="#beach"
-              aria-label="Scroll to rentals"
-              className="hidden sm:flex hero-bob absolute bottom-5 left-1/2 -translate-x-1/2 w-9 h-9 items-center justify-center rounded-full border-2 border-white/70 text-white text-base hover:border-bron-gold hover:text-bron-gold transition-colors"
-            >
-              ↓
-            </a>
-          </div>
-          <div className="max-w-5xl mx-auto px-6 py-8 sm:py-10 text-center">
-            <p className="text-base sm:text-xl text-white max-w-2xl mx-auto leading-relaxed mb-2 font-semibold">
-              Beach rentals · Golf carts · Outdoor bar · Kitchen · Shaved ice
-            </p>
-            <p className="text-sm sm:text-base text-white/80 max-w-2xl mx-auto leading-relaxed mb-6">
-              Five spots, one yard. Everything you need on the island, all in
-              one place.
-            </p>
-            <div className="flex items-center justify-center gap-3 flex-wrap">
-              <a
-                href="#beach"
-                className="px-6 py-3 rounded-full bg-bron-coral text-white font-bold text-sm uppercase tracking-widest hover:bg-bron-coral-dark transition-colors"
-              >
-                🏖 Beach setups
-              </a>
-              <a
-                href="#carts"
-                className="px-6 py-3 rounded-full bg-bron-coral text-white font-bold text-sm uppercase tracking-widest hover:bg-bron-coral-dark transition-colors"
-              >
-                🛺 Golf carts
-              </a>
-              <a
-                href="#yard"
-                className="px-6 py-3 rounded-full border-2 border-white/40 text-white font-bold text-sm uppercase tracking-widest hover:bg-white/10 transition-colors"
-              >
-                🍻 Visit the yard
-              </a>
-            </div>
-          </div>
-        </section>
+        <HeroLive />
 
         {/* Beach Rentals */}
         <section
