@@ -1,19 +1,19 @@
 /**
- * Bron's Beach Rentals — product catalog.
+ * Bron's — full rental catalog (beach + carts).
  *
  * Pricing: simplified flat-rate per day for the staging demo. Real prices
- * land after Bron confirms his actual SKUs + rates.
+ * land after Bron confirms his actual SKUs + rates in the walk-in.
  *
  * Revenue split: 12% to HeyeLab platform (application_fee_amount), 88%
- * to Bron's Stripe Connect connected account. In production this happens
- * automatically via Stripe Connect Direct Charges with the platform fee
- * auto-deposited daily. For staging (no connected account yet), the split
- * is recorded in metadata; actual transfer activates when env var
- * STRIPE_BRONS_CONNECTED_ACCT_ID is set.
+ * to Bron's Stripe Connect connected account. Activates when env var
+ * STRIPE_BRONS_CONNECTED_ACCT_ID is set on production.
  */
+
+export type ProductCategory = "beach" | "cart";
 
 export interface Product {
   slug: string;
+  category: ProductCategory;
   label: string;
   shortDescription: string;
   longDescription: string;
@@ -21,10 +21,9 @@ export interface Product {
   dailyTotalCents: number;
 }
 
-/** HeyeLab platform fee on every Bron's transaction. Internal only. */
+/** HeyeLab platform fee on every transaction. Internal only — never shown. */
 export const PLATFORM_FEE_PCT = 12;
 
-/** Compute platform fee + vendor portion from total. Server-side only. */
 export function splitTotal(totalCents: number): {
   platformFeeCents: number;
   vendorCents: number;
@@ -37,8 +36,10 @@ export function splitTotal(totalCents: number): {
 }
 
 export const PRODUCTS: Product[] = [
+  // -------- Beach --------
   {
     slug: "chair-umbrella",
+    category: "beach",
     label: "Chair & Umbrella",
     shortDescription:
       "Two beach chairs and a 6-foot umbrella, set up where you'd like on the beach.",
@@ -48,6 +49,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     slug: "cabana",
+    category: "beach",
     label: "Family Cabana",
     shortDescription:
       "16×16 shade cloth cabana with chairs and a cooler. The big setup.",
@@ -56,22 +58,49 @@ export const PRODUCTS: Product[] = [
     dailyTotalCents: 17500,
   },
   {
-    slug: "cooler-only",
-    label: "Cooler with Ice",
-    shortDescription: "Large cooler, fully iced, dropped at your spot.",
-    longDescription:
-      "75-quart cooler with a full bag of ice, delivered to your beach access point or vacation rental. Add to any setup or rent on its own.",
-    dailyTotalCents: 2500,
-  },
-  {
     slug: "beach-tent",
+    category: "beach",
     label: "Beach Shade Tent",
     shortDescription: "Pop-up shade tent, sand anchors, and crew setup.",
     longDescription:
       "8×8 pop-up beach shade tent with all four sand anchors and crew setup at your spot. Smaller footprint than the cabana — perfect for a couple or small family.",
     dailyTotalCents: 6500,
   },
+  {
+    slug: "cooler-only",
+    category: "beach",
+    label: "Cooler with Ice",
+    shortDescription: "Large cooler, fully iced, dropped at your spot.",
+    longDescription:
+      "75-quart cooler with a full bag of ice, delivered to your beach access point or vacation rental. Add to any setup or rent on its own.",
+    dailyTotalCents: 2500,
+  },
+
+  // -------- Carts --------
+  {
+    slug: "cart-4pass",
+    category: "cart",
+    label: "4-Passenger Golf Cart",
+    shortDescription:
+      "Cruise the island. Picks up at the shop or delivered to your rental.",
+    longDescription:
+      "4-seat golf cart for four. Street-legal in Port A, perfect for cruising the beach access roads, the harbor, the bars. Pick up at our shop on Avenue G or have it dropped at your rental house. Includes safety check and a full tank.",
+    dailyTotalCents: 15000, // $150/day
+  },
+  {
+    slug: "cart-6pass",
+    category: "cart",
+    label: "6-Passenger Golf Cart",
+    shortDescription:
+      "Roomier — fits six comfortably. Same delivery and pickup options.",
+    longDescription:
+      "6-seat golf cart for the bigger group. Plenty of room for the cooler, the chairs, and the crew. Pick up at our shop or have it delivered. Most popular cart for week-long stays.",
+    dailyTotalCents: 18000, // $180/day
+  },
 ];
+
+export const BEACH_PRODUCTS = PRODUCTS.filter((p) => p.category === "beach");
+export const CART_PRODUCTS = PRODUCTS.filter((p) => p.category === "cart");
 
 export function getProduct(slug: string): Product | null {
   return PRODUCTS.find((p) => p.slug === slug) ?? null;

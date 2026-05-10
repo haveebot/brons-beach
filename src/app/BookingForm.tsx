@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { PRODUCTS } from "@/data/products";
+import { BEACH_PRODUCTS, CART_PRODUCTS, PRODUCTS } from "@/data/products";
 
 function todayStr() {
   return new Date().toISOString().split("T")[0];
@@ -64,6 +64,14 @@ export default function BookingForm() {
     }
   };
 
+  // Category-aware placeholder for the "where" field
+  const accessPointPlaceholder =
+    selected.category === "cart"
+      ? "Pickup at shop, OR delivery address (e.g. 123 Cinnamon Shore Ln)"
+      : "e.g. Access Road 1A · Beach Marker 6 · in front of Cinnamon Shore";
+  const accessPointLabel =
+    selected.category === "cart" ? "Pickup or delivery" : "Beach access point";
+
   return (
     <form
       onSubmit={onSubmit}
@@ -71,7 +79,7 @@ export default function BookingForm() {
     >
       <div>
         <label className="block text-xs uppercase tracking-widest font-bold mb-1.5">
-          Setup
+          What you&apos;re renting
         </label>
         <select
           name="product"
@@ -79,11 +87,20 @@ export default function BookingForm() {
           onChange={onChange}
           className="w-full px-4 py-3 rounded-lg border border-[#1a3a52]/20 bg-[#f5efe2] focus:outline-none focus:ring-2 focus:ring-[#e8654a]"
         >
-          {PRODUCTS.map((p) => (
-            <option key={p.slug} value={p.slug}>
-              {p.label} — ${(p.dailyTotalCents / 100).toFixed(0)}/day
-            </option>
-          ))}
+          <optgroup label="🏖 Beach Setups">
+            {BEACH_PRODUCTS.map((p) => (
+              <option key={p.slug} value={p.slug}>
+                {p.label} — ${(p.dailyTotalCents / 100).toFixed(0)}/day
+              </option>
+            ))}
+          </optgroup>
+          <optgroup label="🛺 Golf Carts">
+            {CART_PRODUCTS.map((p) => (
+              <option key={p.slug} value={p.slug}>
+                {p.label} — ${(p.dailyTotalCents / 100).toFixed(0)}/day
+              </option>
+            ))}
+          </optgroup>
         </select>
         <p className="text-xs text-[#1a3a52]/70 mt-1.5">
           {selected.shortDescription}
@@ -123,14 +140,14 @@ export default function BookingForm() {
 
       <div>
         <label className="block text-xs uppercase tracking-widest font-bold mb-1.5">
-          Beach access point
+          {accessPointLabel}
         </label>
         <input
           type="text"
           name="accessPoint"
           value={form.accessPoint}
           onChange={onChange}
-          placeholder="e.g. Access Road 1A · Beach Marker 6 · in front of Cinnamon Shore"
+          placeholder={accessPointPlaceholder}
           required
           className="w-full px-4 py-3 rounded-lg border border-[#1a3a52]/20 focus:outline-none focus:ring-2 focus:ring-[#e8654a]"
         />

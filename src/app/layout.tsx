@@ -4,18 +4,22 @@ import "./globals.css";
 export const metadata: Metadata = {
   metadataBase: new URL("https://bronsbeach.com"),
   title: {
-    default: "Bron's Beach Rentals — Port Aransas, TX",
-    template: "%s · Bron's Beach Rentals",
+    default:
+      "Bron's — Beach Rentals · Golf Carts · Outdoor Bar in Port Aransas, TX",
+    template: "%s · Bron's",
   },
   description:
-    "Beach rentals in Port Aransas — chairs, umbrellas, cabanas, coolers. Setup and pickup handled. Reserve in 30 seconds.",
-  applicationName: "Bron's Beach Rentals",
+    "Beach setups, golf carts, outdoor bar, kitchen, and shaved ice — all in one yard at 314 E Avenue G in Port Aransas. Reserve rentals online; come find the rest.",
+  applicationName: "Bron's",
   keywords: [
     "Port Aransas beach rentals",
+    "Port Aransas golf cart rental",
     "beach chair umbrella rental",
     "cabana rental Port A",
+    "Bron's Backyard",
+    "Port Aransas outdoor bar",
+    "Port Aransas live music",
     "Port Aransas Texas",
-    "Bron's Beach Carts",
   ],
   formatDetection: {
     email: false,
@@ -23,7 +27,7 @@ export const metadata: Metadata = {
     telephone: false,
   },
   openGraph: {
-    siteName: "Bron's Beach Rentals",
+    siteName: "Bron's",
     locale: "en_US",
     type: "website",
   },
