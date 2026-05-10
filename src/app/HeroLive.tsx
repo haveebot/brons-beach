@@ -64,12 +64,14 @@ export default function HeroLive() {
         {stamp} · Port A
       </div>
 
-      <div className="relative z-10 max-w-6xl mx-auto px-6 pt-24 sm:pt-32 pb-40 sm:pb-48 text-center">
-        {/* Eyebrow with decorative dots */}
+      <div className="relative z-10 max-w-6xl mx-auto px-6 pt-24 sm:pt-32 pb-20 sm:pb-28 text-center">
+        {/* Eyebrow with alternating tropical bullet dots */}
         <p className="flex items-center justify-center gap-3 text-[10px] sm:text-xs uppercase tracking-[0.4em] text-bron-coral font-bold mb-6 sm:mb-8">
-          <Bullet />
+          <Bullet color="bg-bron-teal" />
+          <Bullet color="bg-bron-coral" />
           <span>The yard on Avenue G</span>
-          <Bullet />
+          <Bullet color="bg-bron-coral" />
+          <Bullet color="bg-bron-teal" />
         </p>
 
         {/* Sunburst + mark composition. Sunburst sits behind the type
@@ -84,8 +86,17 @@ export default function HeroLive() {
           </h1>
         </div>
 
-        {/* Tagline — a real magazine cover line, not a corporate subhead */}
-        <p className="mt-6 sm:mt-8 font-display italic text-xl sm:text-3xl text-bron-navy/85 max-w-2xl mx-auto leading-snug">
+        {/* Tropical decorative row — visible-palette pop between mark and tagline */}
+        <div className="mt-5 sm:mt-6 flex items-center justify-center gap-3 text-base sm:text-lg">
+          <Sparkle color="#F6C026" />
+          <Sparkle color="#2EC4B6" />
+          <Sparkle color="#FF4D8B" />
+          <Sparkle color="#F6C026" />
+          <Sparkle color="#2EC4B6" />
+        </div>
+
+        {/* Tagline — a real magazine cover line */}
+        <p className="mt-5 sm:mt-6 font-display italic text-xl sm:text-3xl text-bron-navy/85 max-w-2xl mx-auto leading-snug">
           Five spots, one yard,{" "}
           <span className="text-bron-pink not-italic font-bold">
             no part of the trip you have to leave for.
@@ -109,10 +120,8 @@ export default function HeroLive() {
         </div>
       </div>
 
-      {/* Scalloped canopy edge above the marquee letterboard */}
-      <Scallop />
-
-      {/* Live marquee letterboard — anchored to the bottom of the hero */}
+      {/* Live marquee letterboard — anchored to the bottom of the hero.
+          The marquee renders its own scalloped canopy at its top edge. */}
       <div className="relative z-10">
         <HeroMarquee items={marqueeItems} />
       </div>
@@ -121,72 +130,69 @@ export default function HeroLive() {
 }
 
 /** Decorative bullet dot for the eyebrow */
-function Bullet() {
+function Bullet({ color = "bg-bron-coral" }: { color?: string }) {
   return (
-    <span className="inline-block w-1.5 h-1.5 rounded-full bg-bron-coral" />
+    <span className={`inline-block w-1.5 h-1.5 rounded-full ${color}`} />
   );
 }
 
-/** Slow-spinning sunburst behind the mark. Pure SVG, scales with viewport. */
-function Sunburst() {
-  // 18 alternating-length rays for visual rhythm
-  const rays = Array.from({ length: 18 });
+/** Tiny 4-point sparkle — tropical pop accent, used in the decorative row */
+function Sparkle({ color }: { color: string }) {
   return (
     <svg
       aria-hidden
-      viewBox="-200 -200 400 400"
-      className="absolute inset-0 m-auto w-[180%] h-[180%] -z-10 pointer-events-none sunburst-spin"
-      style={{ left: "50%", top: "50%", transform: "translate(-50%, -50%)" }}
+      viewBox="0 0 16 16"
+      className="w-3 h-3 sm:w-4 sm:h-4"
+      style={{ color }}
     >
-      {rays.map((_, i) => {
-        const isLong = i % 2 === 0;
-        const length = isLong ? 175 : 130;
-        const width = isLong ? 8 : 5;
-        return (
-          <rect
-            key={i}
-            x={-width / 2}
-            y={-length}
-            width={width}
-            height={length - 80}
-            rx={width / 2}
-            fill="#F6C026"
-            transform={`rotate(${i * 20})`}
-          />
-        );
-      })}
-      {/* Inner sun disc — coral over yellow, matches the brand pop */}
-      <circle r="78" fill="#F6C026" />
-      <circle r="64" fill="#FF8B4D" />
-      <circle r="48" fill="#FF4D8B" opacity="0.85" />
+      <path
+        d="M8 0 L9.5 6.5 L16 8 L9.5 9.5 L8 16 L6.5 9.5 L0 8 L6.5 6.5 Z"
+        fill="currentColor"
+      />
     </svg>
   );
 }
 
-/** Scalloped canopy — half-circles in a row, evokes a venue marquee tent. */
-function Scallop() {
-  const count = 22;
+/** Slow-spinning sunburst behind the mark. Wrapper handles centering
+ *  (CSS translate) so the rotation animation on the inner SVG doesn't
+ *  fight it. Coral + pink rays read against the cream background. */
+function Sunburst() {
+  const rays = Array.from({ length: 24 });
   return (
     <div
       aria-hidden
-      className="absolute inset-x-0 z-10 flex justify-around"
-      style={{ bottom: "calc(var(--marquee-h, 60px) + 0px)" }}
+      className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[155%] aspect-square -z-10 pointer-events-none"
     >
       <svg
-        viewBox={`0 0 ${count * 30} 24`}
-        preserveAspectRatio="none"
-        className="w-full h-6"
+        viewBox="-200 -200 400 400"
+        className="w-full h-full sunburst-spin"
       >
-        {Array.from({ length: count }).map((_, i) => (
-          <circle
-            key={i}
-            cx={15 + i * 30}
-            cy={20}
-            r={14}
-            fill="#1a3a52"
-          />
-        ))}
+        {rays.map((_, i) => {
+          const isLong = i % 2 === 0;
+          const length = isLong ? 198 : 150;
+          const width = isLong ? 11 : 6;
+          const fill = isLong ? "#FF8B4D" : "#FF4D8B"; // coral + hot pink
+          return (
+            <rect
+              key={i}
+              x={-width / 2}
+              y={-length}
+              width={width}
+              height={length - 92}
+              rx={width / 2}
+              fill={fill}
+              opacity={isLong ? 0.85 : 0.7}
+              transform={`rotate(${i * 15})`}
+            />
+          );
+        })}
+        {/* Concentric sun disc — yellow / coral / pink / yellow center */}
+        <circle r="96" fill="#F6C026" />
+        <circle r="78" fill="#FF8B4D" />
+        <circle r="58" fill="#FF4D8B" />
+        <circle r="36" fill="#F6C026" />
       </svg>
     </div>
   );
 }
+

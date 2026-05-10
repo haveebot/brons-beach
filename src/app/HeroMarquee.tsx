@@ -12,15 +12,38 @@
 
 export default function HeroMarquee({ items }: { items: string[] }) {
   return (
-    <div className="bg-bron-deep text-bron-cream border-y-4 border-bron-coral overflow-hidden relative">
-      {/* String of "lights" above the marquee — vintage venue signage */}
-      <Lights />
+    <div className="relative">
+      {/* Scalloped canopy edge — venue tent curve at the top of the marquee */}
+      <Scallop />
+      <div className="bg-bron-deep text-bron-cream border-b-4 border-bron-coral overflow-hidden relative">
+        {/* String of "lights" along the top edge — vintage venue signage */}
+        <Lights />
 
-      <div className="marquee-track py-3.5 sm:py-4">
-        <MarqueeRow items={items} />
-        <MarqueeRow items={items} aria-hidden />
+        <div className="marquee-track py-3.5 sm:py-4">
+          <MarqueeRow items={items} />
+          <MarqueeRow items={items} aria-hidden />
+        </div>
       </div>
     </div>
+  );
+}
+
+/** Scalloped canopy — circles peek down from above the marquee like the
+ *  edge of a venue tent. Negative top margin so they overlap the cream
+ *  hero above by exactly half their radius. */
+function Scallop() {
+  const count = 24;
+  return (
+    <svg
+      aria-hidden
+      viewBox={`0 0 ${count * 30} 28`}
+      preserveAspectRatio="none"
+      className="absolute inset-x-0 -top-4 w-full h-7 z-10"
+    >
+      {Array.from({ length: count }).map((_, i) => (
+        <circle key={i} cx={15 + i * 30} cy={28} r={16} fill="#0d1f2c" />
+      ))}
+    </svg>
   );
 }
 
