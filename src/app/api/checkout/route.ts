@@ -2,9 +2,9 @@ import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 import { getProduct, splitTotal } from "@/data/products";
 
-const getStripe = () => new Stripe(process.env.STRIPE_SECRET_KEY || "", {
-  apiVersion: "2026-04-22.dahlia",
-});
+// No apiVersion pinned — Stripe SDK uses the account's default API
+// version. Pinning a string literal can break across SDK upgrades.
+const getStripe = () => new Stripe(process.env.STRIPE_SECRET_KEY || "");
 
 /**
  * Bron's Beach Rentals checkout — staging build.
@@ -52,6 +52,16 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(
       { error: "Missing required fields" },
       { status: 400 },
+    );
+  }
+
+  // Defense: if STRIPE_SECRET_KEY isn't set on the deploy, surface that
+  // explicitly instead of letting Stripe SDK throw a vague error
+  if (!process.env.STRIPE_SECRET_KEY) {
+    console.error("[Checkout] STRIPE_SECRET_KEY not set in environment");
+    return NextResponse.json(
+      { error: "Stripe not configured (env var missing)" },
+      { status: 500 },
     );
   }
 
@@ -121,9 +131,22 @@ export async function POST(req: NextRequest) {
     const session = await getStripe().checkout.sessions.create(sessionConfig);
     return NextResponse.json({ url: session.url });
   } catch (err) {
-    console.error("[Checkout] Stripe error:", err);
+    // Surface as much as possible to both server logs AND the client
+    // response so we can diagnose without diving into Vercel logs every time
+    const stripeErr = err as { message?: string; code?: string; type?: string };
+    const detail = stripeErr.message || String(err);
+    console.error("[Checkout] Stripe error:", {
+      message: detail,
+      code: stripeErr.code,
+      type: stripeErr.type,
+    });
     return NextResponse.json(
-      { error: "Failed to create checkout session" },
+      {
+        error: "Failed to create checkout session",
+        detail,
+        code: stripeErr.code,
+        type: stripeErr.type,
+      },
       { status: 500 },
     );
   }
