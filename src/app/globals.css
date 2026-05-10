@@ -37,6 +37,42 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Hero Ken Burns — slow zoom variants. 18s loop = 3 slides × 6s each.
+   Different motion paths give the carousel rhythm without uniformity. */
+@keyframes ken-burns-center {
+  0%, 100% { transform: scale(1.0); transform-origin: center; }
+  50% { transform: scale(1.08); transform-origin: center; }
+}
+@keyframes ken-burns-up {
+  0% { transform: scale(1.02) translateY(1%); }
+  100% { transform: scale(1.10) translateY(-1.5%); }
+}
+@keyframes ken-burns-down {
+  0% { transform: scale(1.10) translateY(-1.5%); }
+  100% { transform: scale(1.02) translateY(1%); }
+}
+.ken-burns-center {
+  animation: ken-burns-center 18s ease-in-out infinite;
+  will-change: transform;
+}
+.ken-burns-up {
+  animation: ken-burns-up 18s ease-in-out infinite alternate;
+  will-change: transform;
+}
+.ken-burns-down {
+  animation: ken-burns-down 18s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+/* Subtle scroll-down nudge for the hero */
+@keyframes hero-bob {
+  0%, 100% { transform: translateY(0); opacity: 0.65; }
+  50% { transform: translateY(6px); opacity: 1; }
+}
+.hero-bob {
+  animation: hero-bob 2.4s ease-in-out infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

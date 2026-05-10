@@ -7,6 +7,7 @@ import {
   type LiveAct,
 } from "@/data/live-music";
 import BookingForm from "./BookingForm";
+import HeroCarousel from "./HeroCarousel";
 import SiteNav from "./SiteNav";
 import MobileCtaBar from "./MobileCtaBar";
 
@@ -29,15 +30,15 @@ export default function HomePage() {
               Port Aransas, TX · 314 E Avenue G
             </p>
           </div>
-          <div className="relative aspect-[16/9] sm:aspect-[21/9] max-h-[60vh] w-full">
-            <Image
-              src="/images/bron-halo.jpg"
-              alt="Bron's Beach Carts — aerial view of the boardwalk to the beach in Port Aransas"
-              fill
-              priority
-              sizes="100vw"
-              className="object-cover"
-            />
+          <div className="relative aspect-[16/9] sm:aspect-[21/9] max-h-[60vh] w-full overflow-hidden">
+            <HeroCarousel />
+            <a
+              href="#beach"
+              aria-label="Scroll to rentals"
+              className="hidden sm:flex hero-bob absolute bottom-5 left-1/2 -translate-x-1/2 w-9 h-9 items-center justify-center rounded-full border-2 border-white/70 text-white text-base hover:border-bron-gold hover:text-bron-gold transition-colors"
+            >
+              ↓
+            </a>
           </div>
           <div className="max-w-5xl mx-auto px-6 py-8 sm:py-10 text-center">
             <p className="text-base sm:text-xl text-white max-w-2xl mx-auto leading-relaxed mb-2 font-semibold">
