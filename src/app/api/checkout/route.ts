@@ -4,7 +4,18 @@ import { getProduct, splitTotal } from "@/data/products";
 
 // No apiVersion pinned — Stripe SDK uses the account's default API
 // version. Pinning a string literal can break across SDK upgrades.
-const getStripe = () => new Stripe(process.env.STRIPE_SECRET_KEY || "");
+//
+// .trim() defends against a known Vercel env-var paste hazard: copy-
+// pasting a key from clipboard sometimes carries a trailing newline
+// or whitespace, which breaks Stripe auth without a clear error
+// message (Stripe SDK reports it as a connection error, not auth).
+// See workspace memory: feedback_vercel_env_pull_escaped_newlines.md
+const getStripe = () => {
+  const key = (process.env.STRIPE_SECRET_KEY || "")
+    .trim()
+    .replace(/\\n$/, "");
+  return new Stripe(key);
+};
 
 /**
  * Bron's Beach Rentals checkout — staging build.
