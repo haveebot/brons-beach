@@ -60,7 +60,7 @@ export default function HeroLive() {
       />
 
       {/* Top corner stamp — current local Port A time */}
-      <div className="absolute top-20 right-5 sm:top-24 sm:right-8 z-20 text-[10px] uppercase tracking-[0.25em] font-bold text-bron-navy/55">
+      <div className="absolute top-20 right-5 sm:top-24 sm:right-8 z-20 text-[10px] uppercase tracking-[0.25em] font-bold text-bron-navy/75 bg-bron-cream/85 backdrop-blur-sm rounded-full px-3 py-1.5 border border-bron-navy/15">
         {stamp} · Port A
       </div>
 
@@ -87,7 +87,7 @@ export default function HeroLive() {
         </div>
 
         {/* Tropical decorative row — visible-palette pop between mark and tagline */}
-        <div className="mt-5 sm:mt-6 flex items-center justify-center gap-3 text-base sm:text-lg">
+        <div className="mt-12 sm:mt-16 flex items-center justify-center gap-3 text-base sm:text-lg">
           <Sparkle color="#F6C026" />
           <Sparkle color="#2EC4B6" />
           <Sparkle color="#FF4D8B" />
@@ -153,25 +153,22 @@ function Sparkle({ color }: { color: string }) {
   );
 }
 
-/** Slow-spinning sunburst behind the mark. Wrapper handles centering
- *  (CSS translate) so the rotation animation on the inner SVG doesn't
- *  fight it. Coral + pink rays read against the cream background. */
+/** Slow-spinning sunburst behind the mark. Sized as a halo around the
+ *  type — bounded clamp so it doesn't swallow the tagline or CTAs.
+ *  Wrapper handles centering, inner SVG handles rotation. */
 function Sunburst() {
   const rays = Array.from({ length: 24 });
   return (
     <div
       aria-hidden
-      className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[155%] aspect-square -z-10 pointer-events-none"
+      className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10 pointer-events-none w-[clamp(260px,38vw,480px)] aspect-square opacity-90"
     >
-      <svg
-        viewBox="-200 -200 400 400"
-        className="w-full h-full sunburst-spin"
-      >
+      <svg viewBox="-200 -200 400 400" className="w-full h-full sunburst-spin">
         {rays.map((_, i) => {
           const isLong = i % 2 === 0;
           const length = isLong ? 198 : 150;
           const width = isLong ? 11 : 6;
-          const fill = isLong ? "#FF8B4D" : "#FF4D8B"; // coral + hot pink
+          const fill = isLong ? "#FF8B4D" : "#FF4D8B";
           return (
             <rect
               key={i}

@@ -27,7 +27,7 @@ export default function SiteNav() {
       className={`fixed top-0 inset-x-0 z-40 transition-colors duration-200 ${
         scrolled
           ? "bg-bron-navy/95 backdrop-blur-md border-b border-white/10"
-          : "bg-transparent"
+          : "bg-bron-navy/70 backdrop-blur-md"
       }`}
     >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-3">
