@@ -8,6 +8,7 @@ import {
 } from "@/data/live-music";
 import BookingForm from "./BookingForm";
 import HeroLive from "./HeroLive";
+import HeroStatusStrip from "./HeroStatusStrip";
 import SiteNav from "./SiteNav";
 import MobileCtaBar from "./MobileCtaBar";
 
@@ -19,6 +20,7 @@ export default function HomePage() {
       <SiteNav />
       <main className="pb-20 md:pb-0">
         <HeroLive />
+        <HeroStatusStrip />
 
         {/* Beach Rentals */}
         <section

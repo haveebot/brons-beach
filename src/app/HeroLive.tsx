@@ -1,112 +1,78 @@
-import HeroLiveTile from "./HeroLiveTile";
-import HeroWeatherTile from "./HeroWeatherTile";
-import { upcomingActs, todayInPortA } from "@/data/live-music";
-import { sunTimesFor, formatPortATime } from "@/lib/sunCalc";
-import { openStatus } from "@/lib/openStatus";
-
 /**
- * Live Conditions Hero — the "wow" entry. Editorial type at the top,
- * a row of four live tiles right under it (sunset · music · weather ·
- * open-status), CTAs below. Background: time-of-day-adaptive animated
- * mesh of soft blurred color blobs drifting on a navy canvas. No photos.
+ * Magazine-cover hero. Massive Fraunces "Bron's" rendered huge over an
+ * ambient SVG sun rising at the bottom edge. No tiles in the hero — the
+ * live conditions become a thin status strip below (HeroStatusStrip).
  *
- * Server-rendered so sunset/music/open all populate on first paint;
- * weather is a small client island that hydrates after.
+ * Server-rendered. The strip handles its own data; this file is pure
+ * presentation.
  */
 export default function HeroLive() {
-  const now = new Date();
-  const status = openStatus(now);
-  const sun = sunTimesFor(now);
-
-  const today = todayInPortA();
-  const upcoming = upcomingActs();
-  const tonight = upcoming.find((a) => a.date === today);
-  const next = tonight ?? upcoming[0];
-
-  // Music tile content
-  let musicValue: string;
-  let musicSub: string;
-  if (tonight) {
-    musicValue = tonight.artist;
-    musicSub = `${tonight.time} · Bron's Backyard`;
-  } else if (next) {
-    const d = new Date(next.date + "T12:00:00");
-    const dayLabel = d.toLocaleDateString("en-US", { weekday: "short" });
-    musicValue = next.artist;
-    musicSub = `${dayLabel} · ${next.time}`;
-  } else {
-    musicValue = "Returns Friday";
-    musicSub = "Live music most weekends";
-  }
-
   return (
-    <section
-      className="relative bg-bron-navy text-white overflow-hidden"
-      data-time={status.partOfDay}
-    >
-      {/* Animated mesh-blob background — pure CSS, four blurred color
-          blobs drifting on the navy canvas. Time-of-day class on the
-          parent rotates the palette (dawn / day / dusk / night). */}
-      <div
-        aria-hidden
-        className={`absolute inset-0 overflow-hidden mesh-${status.partOfDay}`}
-      >
-        <span className="mesh-blob mesh-blob-a" />
-        <span className="mesh-blob mesh-blob-b" />
-        <span className="mesh-blob mesh-blob-c" />
-        <span className="mesh-blob mesh-blob-d" />
+    <section className="relative bg-bron-navy text-white overflow-hidden">
+      {/* Ambient sun — half-rises from the bottom edge, slow pulse.
+          Pure SVG so it scales perfectly at any size. */}
+      <div aria-hidden className="absolute inset-0 pointer-events-none">
+        <svg
+          viewBox="0 0 1200 800"
+          preserveAspectRatio="xMidYMax slice"
+          className="absolute inset-0 w-full h-full"
+        >
+          <defs>
+            <radialGradient id="sunGrad" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stopColor="#f5b35a" stopOpacity="0.95" />
+              <stop offset="40%" stopColor="#e8654a" stopOpacity="0.7" />
+              <stop offset="80%" stopColor="#1a3a52" stopOpacity="0" />
+              <stop offset="100%" stopColor="#1a3a52" stopOpacity="0" />
+            </radialGradient>
+            <linearGradient id="horizonGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stopColor="#1a3a52" stopOpacity="0" />
+              <stop offset="100%" stopColor="#0d1f2c" stopOpacity="1" />
+            </linearGradient>
+          </defs>
+          {/* Horizon dunes — soft silhouette band at the bottom */}
+          <rect
+            x="0"
+            y="600"
+            width="1200"
+            height="200"
+            fill="url(#horizonGrad)"
+          />
+          {/* Sun — centered, large, rising from below the fold */}
+          <g className="hero-sun">
+            <circle cx="600" cy="780" r="520" fill="url(#sunGrad)" />
+          </g>
+        </svg>
       </div>
 
-      <div className="relative max-w-5xl mx-auto px-6 pt-24 pb-14 sm:pt-32 sm:pb-20 text-center">
-        <p className="text-[11px] uppercase tracking-[0.35em] text-bron-gold font-bold mb-4">
-          Port Aransas, TX · 314 E Avenue G
+      <div className="relative max-w-6xl mx-auto px-6 pt-24 sm:pt-32 pb-20 sm:pb-32 text-center">
+        <p className="text-[11px] sm:text-xs uppercase tracking-[0.4em] text-bron-gold font-bold mb-8 sm:mb-10">
+          <span className="opacity-90">Port Aransas, TX</span>
+          <span className="mx-3 opacity-50">·</span>
+          <span className="opacity-90">314 E Avenue G</span>
         </p>
 
-        <h1 className="font-display text-[clamp(2.6rem,8vw,5.5rem)] font-bold tracking-tight leading-[0.95] mb-3">
-          Today at Bron&apos;s.
+        {/* The mark — proper-case Fraunces, optical-sized, set huge.
+            clamp() makes it fluidly responsive: 5rem on phone up to ~16rem
+            on widescreen. Letter-spacing tightened (handled in globals.css
+            on .font-display). */}
+        <h1 className="font-display font-bold leading-[0.9] mb-6 sm:mb-8 text-[clamp(5rem,18vw,16rem)]">
+          Bron&apos;s
         </h1>
 
-        <p className="text-base sm:text-lg text-white/85 max-w-xl mx-auto leading-relaxed mb-9">
-          Beach rentals, golf carts, outdoor bar, kitchen, shaved ice.
-          Five spots, one yard, one place to land all day.
+        <p className="font-display text-xl sm:text-3xl text-white/90 max-w-2xl mx-auto leading-snug mb-10 sm:mb-12 italic">
+          The whole island stop, in one yard.
         </p>
 
-        {/* Live tiles row */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-3 max-w-3xl mx-auto mb-10 text-left">
-          <HeroLiveTile
-            icon="🌅"
-            label="Sunset"
-            value={formatPortATime(sun.sunset)}
-            sub="Beach time"
-          />
-          <HeroLiveTile
-            icon="🎶"
-            label={tonight ? "Tonight" : "Next up"}
-            value={musicValue}
-            sub={musicSub}
-            highlight={!!tonight}
-          />
-          <HeroWeatherTile />
-          <HeroLiveTile
-            icon={status.isOpen ? "🍻" : "🌙"}
-            label={status.isOpen ? "The yard" : "The yard"}
-            value={status.isOpen ? "Open" : "Closed"}
-            sub={status.label.replace(/^Open until |^Closed — /, "")}
-            highlight={status.isOpen}
-          />
-        </div>
-
-        {/* CTAs */}
         <div className="flex items-center justify-center gap-3 flex-wrap">
           <a
             href="#book"
-            className="px-7 py-3.5 rounded-full bg-bron-coral text-white font-bold text-sm uppercase tracking-widest hover:bg-bron-coral-dark transition-colors shadow-xl shadow-bron-coral/20"
+            className="px-8 py-4 rounded-full bg-bron-coral text-white font-bold text-sm uppercase tracking-widest hover:bg-bron-coral-dark transition-colors shadow-xl shadow-bron-coral/25"
           >
             Reserve a rental
           </a>
           <a
             href="#yard"
-            className="px-7 py-3.5 rounded-full border-2 border-white/40 text-white font-bold text-sm uppercase tracking-widest hover:bg-white/10 transition-colors"
+            className="px-8 py-4 rounded-full border-2 border-white/40 text-white font-bold text-sm uppercase tracking-widest hover:bg-white/10 transition-colors"
           >
             Visit the yard
           </a>

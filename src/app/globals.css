@@ -37,92 +37,22 @@ html {
   scroll-behavior: smooth;
 }
 
-/* ────────── Live-conditions hero · animated mesh background ──────────
-   Four soft-blurred color blobs that drift slowly on the navy canvas.
-   Each blob picks up its hue from a per-time-of-day palette set by the
-   wrapping `mesh-${partOfDay}` class. */
-
-.mesh-blob {
-  position: absolute;
-  display: block;
-  border-radius: 9999px;
-  filter: blur(70px);
-  opacity: 0.55;
-  pointer-events: none;
-  will-change: transform;
+/* ────────── Hero · ambient sun pulse ──────────
+   Subtle scale + opacity breath on the half-rising sun behind the type.
+   Slow enough to feel atmospheric, not distracting. */
+@keyframes hero-sun {
+  0%, 100% { transform: scale(1); opacity: 0.95; }
+  50% { transform: scale(1.04); opacity: 1; }
 }
-
-.mesh-blob-a {
-  top: -20%; left: -10%;
-  width: 60vmax; height: 60vmax;
-  background: var(--mesh-a, #f5b35a);
-  animation: mesh-drift-a 22s ease-in-out infinite;
-}
-.mesh-blob-b {
-  top: -10%; right: -15%;
-  width: 55vmax; height: 55vmax;
-  background: var(--mesh-b, #e8654a);
-  animation: mesh-drift-b 28s ease-in-out infinite;
-}
-.mesh-blob-c {
-  bottom: -25%; left: 10%;
-  width: 70vmax; height: 70vmax;
-  background: var(--mesh-c, #3d6e8c);
-  animation: mesh-drift-c 32s ease-in-out infinite;
-}
-.mesh-blob-d {
-  bottom: -15%; right: 5%;
-  width: 50vmax; height: 50vmax;
-  background: var(--mesh-d, #1a3a52);
-  animation: mesh-drift-d 26s ease-in-out infinite;
-}
-
-@keyframes mesh-drift-a {
-  0%, 100% { transform: translate(0%, 0%) scale(1); }
-  50% { transform: translate(8%, 12%) scale(1.08); }
-}
-@keyframes mesh-drift-b {
-  0%, 100% { transform: translate(0%, 0%) scale(1); }
-  50% { transform: translate(-10%, 8%) scale(1.05); }
-}
-@keyframes mesh-drift-c {
-  0%, 100% { transform: translate(0%, 0%) scale(1); }
-  50% { transform: translate(12%, -10%) scale(1.10); }
-}
-@keyframes mesh-drift-d {
-  0%, 100% { transform: translate(0%, 0%) scale(1); }
-  50% { transform: translate(-8%, -12%) scale(1.06); }
-}
-
-/* Time-of-day palettes — different blob colors at dawn / day / dusk /
-   night so the hero quietly shifts mood across the day. */
-.mesh-dawn {
-  --mesh-a: #f5b35a;  /* gold */
-  --mesh-b: #e8654a;  /* coral */
-  --mesh-c: #3d6e8c;  /* sky */
-  --mesh-d: #f5efe2;  /* sand */
-}
-.mesh-day {
-  --mesh-a: #3d6e8c;  /* sky */
-  --mesh-b: #f5b35a;  /* gold */
-  --mesh-c: #f5efe2;  /* sand */
-  --mesh-d: #1a3a52;  /* navy */
-}
-.mesh-dusk {
-  --mesh-a: #e8654a;  /* coral */
-  --mesh-b: #f5b35a;  /* gold */
-  --mesh-c: #1a3a52;  /* navy */
-  --mesh-d: #3d6e8c;  /* sky */
-}
-.mesh-night {
-  --mesh-a: #1a3a52;  /* navy */
-  --mesh-b: #3d6e8c;  /* sky */
-  --mesh-c: #e8654a;  /* coral */
-  --mesh-d: #f5b35a;  /* gold */
+.hero-sun {
+  animation: hero-sun 7s ease-in-out infinite;
+  transform-origin: 50% 100%;
+  transform-box: fill-box;
+  will-change: transform, opacity;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .mesh-blob { animation: none !important; }
+  .hero-sun { animation: none !important; }
 }
 
 @media (prefers-reduced-motion: reduce) {
