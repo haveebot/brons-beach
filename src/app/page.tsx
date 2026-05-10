@@ -269,10 +269,8 @@ function ProductCard({
 }) {
   return (
     <article className="bg-white rounded-2xl border border-[#1a3a52]/10 p-6 shadow-sm hover:shadow-md transition-shadow flex flex-col">
-      <div className="aspect-[16/9] rounded-lg bg-gradient-to-br from-[#f5b35a]/20 to-[#e8654a]/10 border border-[#f5b35a]/30 flex items-center justify-center mb-4">
-        <span className="text-xs uppercase tracking-widest text-[#1a3a52]/40">
-          {p.label} photo
-        </span>
+      <div className="aspect-[16/9] rounded-lg bg-gradient-to-br from-[#f5b35a]/25 via-[#f5b35a]/10 to-[#3d6e8c]/15 border border-[#f5b35a]/30 flex items-center justify-center mb-4">
+        <span className="text-7xl drop-shadow-sm">{p.emoji}</span>
       </div>
       <h3 className="font-display text-xl font-bold mb-2">{p.label}</h3>
       <p className="text-sm text-[#1a3a52]/80 leading-relaxed mb-4 flex-1">

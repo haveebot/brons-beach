@@ -1,7 +1,12 @@
 "use client";
 
-import { useState } from "react";
-import { BEACH_PRODUCTS, CART_PRODUCTS, PRODUCTS } from "@/data/products";
+import { useState, useEffect } from "react";
+import {
+  BEACH_PRODUCTS,
+  CART_PRODUCTS,
+  PRODUCTS,
+  type Product,
+} from "@/data/products";
 
 function todayStr() {
   return new Date().toISOString().split("T")[0];
@@ -18,22 +23,42 @@ export default function BookingForm() {
     returnDate: "",
     accessPoint: "",
   });
+  const [multiDay, setMultiDay] = useState(false);
   const [status, setStatus] = useState<"idle" | "loading" | "error">("idle");
   const [errorMsg, setErrorMsg] = useState("");
 
-  const selected = PRODUCTS.find((p) => p.slug === form.product)!;
+  const selected: Product = PRODUCTS.find((p) => p.slug === form.product)!;
+  const isBeach = selected.category === "beach";
+  const isCart = selected.category === "cart";
+
+  // For beach single-day: returnDate = pickupDate (one day)
+  // For beach multi-day: returnDate = end of stretch
+  // For cart: range required (always multi-day-ish)
+  const effectiveReturnDate =
+    isBeach && !multiDay ? form.pickupDate : form.returnDate;
+
   const numDays =
-    form.pickupDate && form.returnDate
+    form.pickupDate && effectiveReturnDate
       ? Math.max(
           1,
           Math.ceil(
-            (new Date(form.returnDate).getTime() -
+            (new Date(effectiveReturnDate).getTime() -
               new Date(form.pickupDate).getTime()) /
               (1000 * 60 * 60 * 24),
           ) + 1,
         )
       : 1;
   const totalDollars = ((selected.dailyTotalCents * numDays) / 100).toFixed(2);
+
+  // When category switches between beach/cart, reset the multi-day toggle
+  // so the date UX matches the new category's default
+  useEffect(() => {
+    if (isCart) {
+      setMultiDay(true); // cart always uses range
+    } else {
+      setMultiDay(false); // beach defaults to single-day
+    }
+  }, [isCart]);
 
   const onChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
@@ -49,7 +74,11 @@ export default function BookingForm() {
       const res = await fetch("/api/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...form, numDays }),
+        body: JSON.stringify({
+          ...form,
+          returnDate: effectiveReturnDate,
+          numDays,
+        }),
       });
       const data = await res.json();
       if (!res.ok) {
@@ -64,13 +93,10 @@ export default function BookingForm() {
     }
   };
 
-  // Category-aware placeholder for the "where" field
-  const accessPointPlaceholder =
-    selected.category === "cart"
-      ? "Pickup at shop, OR delivery address (e.g. 123 Cinnamon Shore Ln)"
-      : "e.g. Access Road 1A · Beach Marker 6 · in front of Cinnamon Shore";
-  const accessPointLabel =
-    selected.category === "cart" ? "Pickup or delivery" : "Beach access point";
+  const accessPointPlaceholder = isCart
+    ? "Pickup at shop, OR delivery address (e.g. 123 Cinnamon Shore Ln)"
+    : "e.g. Access Road 1A · Beach Marker 6 · in front of Cinnamon Shore";
+  const accessPointLabel = isCart ? "Pickup or delivery" : "Beach access point";
 
   return (
     <form
@@ -107,10 +133,11 @@ export default function BookingForm() {
         </p>
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
+      {/* Date fields — adapt to category */}
+      {isBeach && !multiDay ? (
         <div>
           <label className="block text-xs uppercase tracking-widest font-bold mb-1.5">
-            Start
+            Setup date
           </label>
           <input
             type="date"
@@ -121,22 +148,58 @@ export default function BookingForm() {
             required
             className="w-full px-4 py-3 rounded-lg border border-[#1a3a52]/20 focus:outline-none focus:ring-2 focus:ring-[#e8654a]"
           />
+          <button
+            type="button"
+            onClick={() => setMultiDay(true)}
+            className="text-xs text-[#e8654a] underline-offset-4 hover:underline mt-2"
+          >
+            + Need a setup for multiple days?
+          </button>
         </div>
-        <div>
-          <label className="block text-xs uppercase tracking-widest font-bold mb-1.5">
-            End
-          </label>
-          <input
-            type="date"
-            name="returnDate"
-            min={form.pickupDate || today}
-            value={form.returnDate}
-            onChange={onChange}
-            required
-            className="w-full px-4 py-3 rounded-lg border border-[#1a3a52]/20 focus:outline-none focus:ring-2 focus:ring-[#e8654a]"
-          />
+      ) : (
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <label className="block text-xs uppercase tracking-widest font-bold mb-1.5">
+              {isCart ? "Pickup" : "Start"}
+            </label>
+            <input
+              type="date"
+              name="pickupDate"
+              min={today}
+              value={form.pickupDate}
+              onChange={onChange}
+              required
+              className="w-full px-4 py-3 rounded-lg border border-[#1a3a52]/20 focus:outline-none focus:ring-2 focus:ring-[#e8654a]"
+            />
+          </div>
+          <div>
+            <label className="block text-xs uppercase tracking-widest font-bold mb-1.5">
+              {isCart ? "Return" : "End"}
+            </label>
+            <input
+              type="date"
+              name="returnDate"
+              min={form.pickupDate || today}
+              value={form.returnDate}
+              onChange={onChange}
+              required
+              className="w-full px-4 py-3 rounded-lg border border-[#1a3a52]/20 focus:outline-none focus:ring-2 focus:ring-[#e8654a]"
+            />
+          </div>
+          {isBeach && (
+            <button
+              type="button"
+              onClick={() => {
+                setMultiDay(false);
+                setForm({ ...form, returnDate: "" });
+              }}
+              className="col-span-2 text-xs text-[#1a3a52]/60 underline-offset-4 hover:underline justify-self-start"
+            >
+              ← Single day instead
+            </button>
+          )}
         </div>
-      </div>
+      )}
 
       <div>
         <label className="block text-xs uppercase tracking-widest font-bold mb-1.5">

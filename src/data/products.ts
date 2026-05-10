@@ -15,6 +15,8 @@ export interface Product {
   slug: string;
   category: ProductCategory;
   label: string;
+  /** Emoji shown in the product card visual placeholder until real photos drop in. */
+  emoji: string;
   shortDescription: string;
   longDescription: string;
   /** Customer pays this per day. */
@@ -41,6 +43,7 @@ export const PRODUCTS: Product[] = [
     slug: "chair-umbrella",
     category: "beach",
     label: "Chair & Umbrella",
+    emoji: "⛱️",
     shortDescription:
       "Two beach chairs and a 6-foot umbrella, set up where you'd like on the beach.",
     longDescription:
@@ -51,6 +54,7 @@ export const PRODUCTS: Product[] = [
     slug: "cabana",
     category: "beach",
     label: "Family Cabana",
+    emoji: "🏖",
     shortDescription:
       "16×16 shade cloth cabana with chairs and a cooler. The big setup.",
     longDescription:
@@ -61,6 +65,7 @@ export const PRODUCTS: Product[] = [
     slug: "beach-tent",
     category: "beach",
     label: "Beach Shade Tent",
+    emoji: "⛺",
     shortDescription: "Pop-up shade tent, sand anchors, and crew setup.",
     longDescription:
       "8×8 pop-up beach shade tent with all four sand anchors and crew setup at your spot. Smaller footprint than the cabana — perfect for a couple or small family.",
@@ -70,6 +75,7 @@ export const PRODUCTS: Product[] = [
     slug: "cooler-only",
     category: "beach",
     label: "Cooler with Ice",
+    emoji: "🧊",
     shortDescription: "Large cooler, fully iced, dropped at your spot.",
     longDescription:
       "75-quart cooler with a full bag of ice, delivered to your beach access point or vacation rental. Add to any setup or rent on its own.",
@@ -81,6 +87,7 @@ export const PRODUCTS: Product[] = [
     slug: "cart-4pass",
     category: "cart",
     label: "4-Passenger Golf Cart",
+    emoji: "🛺",
     shortDescription:
       "Cruise the island. Picks up at the shop or delivered to your rental.",
     longDescription:
@@ -91,6 +98,7 @@ export const PRODUCTS: Product[] = [
     slug: "cart-6pass",
     category: "cart",
     label: "6-Passenger Golf Cart",
+    emoji: "🚐",
     shortDescription:
       "Roomier — fits six comfortably. Same delivery and pickup options.",
     longDescription:
