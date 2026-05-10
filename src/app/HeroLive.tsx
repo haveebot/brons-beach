@@ -76,11 +76,11 @@ export default function HeroLive() {
 
       <div className="relative z-10 max-w-6xl mx-auto px-6 pt-24 sm:pt-32 pb-32 sm:pb-40 text-center">
         {/* Eyebrow with alternating tropical bullet dots */}
-        <p className="flex items-center justify-center gap-3 text-[10px] sm:text-xs uppercase tracking-[0.4em] text-bron-coral font-bold mb-6 sm:mb-8">
+        <p className="flex items-center justify-center gap-2 sm:gap-3 text-[10px] sm:text-xs uppercase tracking-[0.25em] sm:tracking-[0.4em] text-bron-coral font-bold mb-6 sm:mb-8 whitespace-nowrap">
           <Bullet color="bg-bron-teal" />
-          <Bullet color="bg-bron-coral" />
+          <Bullet color="bg-bron-coral hidden sm:inline-block" />
           <span>The yard on Avenue G</span>
-          <Bullet color="bg-bron-coral" />
+          <Bullet color="bg-bron-coral hidden sm:inline-block" />
           <Bullet color="bg-bron-teal" />
         </p>
 
@@ -95,7 +95,7 @@ export default function HeroLive() {
 
         {/* Tagline — captures the real operating model: beach delivery
             + yard hangouts. Yard gets the brand-color emphasis. */}
-        <p className="mt-12 sm:mt-16 font-display italic text-xl sm:text-3xl text-bron-navy/85 max-w-2xl mx-auto leading-snug">
+        <p className="mt-6 sm:mt-8 font-display italic text-xl sm:text-3xl text-bron-navy/85 max-w-2xl mx-auto leading-snug">
           Set you up at the beach.{" "}
           <span className="text-bron-pink not-italic font-bold">
             See you back at the yard.
@@ -177,47 +177,68 @@ function RisingSun() {
   );
 }
 
-/** Stylized palm silhouettes peeking in from the bottom corners. Pure
- *  SVG, deep navy, hidden on small screens. Adds tropical Key West
- *  framing without competing with the typography. */
+/** Frond-bouquet decorations peeking in from the bottom corners. No
+ *  trunk — just a fan of stylized palm fronds radiating up and inward,
+ *  so there's nothing to "cut off" against the marquee seam. */
 function PalmFrame() {
   return (
     <>
-      <div className="hidden md:block absolute left-0 bottom-0 w-44 lg:w-60 z-0 pointer-events-none origin-bottom-left">
-        <Palm flip={false} />
+      <div className="hidden md:block absolute left-[-1rem] bottom-2 w-48 lg:w-64 z-0 pointer-events-none">
+        <PalmFronds flip={false} />
       </div>
-      <div className="hidden md:block absolute right-0 bottom-0 w-44 lg:w-60 z-0 pointer-events-none origin-bottom-right">
-        <Palm flip={true} />
+      <div className="hidden md:block absolute right-[-1rem] bottom-2 w-48 lg:w-64 z-0 pointer-events-none">
+        <PalmFronds flip={true} />
       </div>
     </>
   );
 }
 
-function Palm({ flip }: { flip: boolean }) {
+/** Six-frond bouquet, fronds radiating up + outward from a single base
+ *  point, no trunk. Drawn in a square viewBox so width:auto sizes
+ *  proportionally without cropping. */
+function PalmFronds({ flip }: { flip: boolean }) {
+  // Each frond: angle from vertical (negative = lean left, positive = right)
+  // and length scalar. Bouquet fans across ~180° centered on straight-up.
+  const fronds: { angle: number; length: number }[] = [
+    { angle: -78, length: 0.9 },
+    { angle: -50, length: 1.0 },
+    { angle: -22, length: 1.05 },
+    { angle: 10, length: 1.0 },
+    { angle: 38, length: 0.95 },
+    { angle: 68, length: 0.85 },
+  ];
   return (
     <svg
-      viewBox="0 0 120 200"
+      viewBox="0 0 200 200"
       className="w-full h-auto"
       style={{ transform: flip ? "scaleX(-1)" : undefined }}
-      fill="#0d1f2c"
     >
-      {/* Trunk — gentle lean */}
-      <path
-        d="M52 200 C 50 160, 45 110, 38 70 C 33 40, 30 20, 28 5 L 36 5 C 38 22, 42 42, 48 70 C 56 110, 60 160, 60 200 Z"
-        opacity="0.92"
-      />
-      {/* Fronds — six radiating leaves */}
-      <g transform="translate(32 5)">
-        <path d="M0 0 C -22 -8, -36 0, -44 14 C -28 6, -10 4, 4 4 Z" />
-        <path d="M0 0 C -24 -22, -22 -38, -16 -52 C -14 -34, -8 -16, 4 -2 Z" />
-        <path d="M0 0 C -6 -28, 4 -44, 16 -54 C 12 -34, 8 -16, 6 -2 Z" />
-        <path d="M0 0 C 18 -22, 32 -22, 46 -14 C 30 -8, 16 -2, 6 2 Z" />
-        <path d="M0 0 C 24 -4, 42 4, 50 14 C 32 8, 14 6, 4 4 Z" />
-        <path d="M0 0 C 14 16, 8 26, -2 32 C 0 18, 2 8, 0 0 Z" />
+      <g transform="translate(100 200)">
+        {fronds.map((f, i) => (
+          <g key={i} transform={`rotate(${f.angle})`}>
+            {/* Leaf — thin pointed ellipse rising from origin */}
+            <path
+              d={`M 0 0 Q -${10 * f.length} -${75 * f.length}, 0 -${150 * f.length} Q ${10 * f.length} -${75 * f.length}, 0 0 Z`}
+              fill="#0d1f2c"
+              opacity={0.88}
+            />
+            {/* Center vein — thin lighter line */}
+            <line
+              x1="0"
+              y1="0"
+              x2="0"
+              y2={-150 * f.length}
+              stroke="#1a3a52"
+              strokeWidth="1.5"
+              opacity="0.45"
+            />
+          </g>
+        ))}
+        {/* Tiny coconut cluster at the base */}
+        <circle cx="-3" cy="-4" r="4" fill="#0d1f2c" opacity="0.85" />
+        <circle cx="4" cy="-3" r="3.5" fill="#0d1f2c" opacity="0.85" />
+        <circle cx="0" cy="-9" r="3" fill="#0d1f2c" opacity="0.85" />
       </g>
-      {/* Tiny coconut cluster */}
-      <circle cx="32" cy="6" r="3" opacity="0.75" />
-      <circle cx="36" cy="8" r="2.5" opacity="0.75" />
     </svg>
   );
 }
