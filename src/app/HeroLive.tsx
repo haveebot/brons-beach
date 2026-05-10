@@ -93,18 +93,9 @@ export default function HeroLive() {
           Bron&apos;s
         </h1>
 
-        {/* Tropical decorative row — visible-palette pop between mark and tagline */}
-        <div className="mt-12 sm:mt-16 flex items-center justify-center gap-3 text-base sm:text-lg">
-          <Sparkle color="#F6C026" />
-          <Sparkle color="#2EC4B6" />
-          <Sparkle color="#FF4D8B" />
-          <Sparkle color="#F6C026" />
-          <Sparkle color="#2EC4B6" />
-        </div>
-
         {/* Tagline — captures the real operating model: beach delivery
             + yard hangouts. Yard gets the brand-color emphasis. */}
-        <p className="mt-5 sm:mt-6 font-display italic text-xl sm:text-3xl text-bron-navy/85 max-w-2xl mx-auto leading-snug">
+        <p className="mt-12 sm:mt-16 font-display italic text-xl sm:text-3xl text-bron-navy/85 max-w-2xl mx-auto leading-snug">
           Set you up at the beach.{" "}
           <span className="text-bron-pink not-italic font-bold">
             See you back at the yard.
@@ -144,23 +135,6 @@ function Bullet({ color = "bg-bron-coral" }: { color?: string }) {
   );
 }
 
-/** Tiny 4-point sparkle — tropical pop accent, used in the decorative row */
-function Sparkle({ color }: { color: string }) {
-  return (
-    <svg
-      aria-hidden
-      viewBox="0 0 16 16"
-      className="w-3 h-3 sm:w-4 sm:h-4"
-      style={{ color }}
-    >
-      <path
-        d="M8 0 L9.5 6.5 L16 8 L9.5 9.5 L8 16 L6.5 9.5 L0 8 L6.5 6.5 Z"
-        fill="currentColor"
-      />
-    </svg>
-  );
-}
-
 /** Rising-sun backdrop — half-disc anchored at the bottom edge of the
  *  hero, rays fanning up and outward through the composition. The disc
  *  sits at the horizon (the seam between hero and marquee); rays fan
@@ -171,7 +145,7 @@ function RisingSun() {
   return (
     <div
       aria-hidden
-      className="absolute left-1/2 bottom-0 -translate-x-1/2 translate-y-1/2 -z-10 pointer-events-none w-[clamp(700px,130vw,1500px)] aspect-square opacity-95"
+      className="absolute left-1/2 bottom-0 -translate-x-1/2 translate-y-1/2 -z-10 pointer-events-none w-[clamp(700px,130vw,1500px)] aspect-square opacity-80"
     >
       <svg viewBox="-200 -200 400 400" className="w-full h-full sunburst-spin">
         {rays.map((_, i) => {
@@ -209,10 +183,10 @@ function RisingSun() {
 function PalmFrame() {
   return (
     <>
-      <div className="hidden md:block absolute left-0 bottom-0 w-32 lg:w-44 z-0 pointer-events-none origin-bottom-left">
+      <div className="hidden md:block absolute left-0 bottom-0 w-44 lg:w-60 z-0 pointer-events-none origin-bottom-left">
         <Palm flip={false} />
       </div>
-      <div className="hidden md:block absolute right-0 bottom-0 w-32 lg:w-44 z-0 pointer-events-none origin-bottom-right">
+      <div className="hidden md:block absolute right-0 bottom-0 w-44 lg:w-60 z-0 pointer-events-none origin-bottom-right">
         <Palm flip={true} />
       </div>
     </>
