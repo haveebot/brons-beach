@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Fraunces, Inter } from "next/font/google";
+import { Bungee, Bungee_Shade, Fraunces, Inter } from "next/font/google";
 import "./globals.css";
 
 const fraunces = Fraunces({
@@ -7,6 +7,22 @@ const fraunces = Fraunces({
   variable: "--font-display",
   display: "swap",
   axes: ["opsz", "SOFT"],
+});
+
+// Vintage signage display — built-in 3D shadow, perfect for marquee mark
+const bungeeShade = Bungee_Shade({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-mark",
+  display: "swap",
+});
+
+// Marquee letterboard — bold blocky condensed
+const bungee = Bungee({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-marquee",
+  display: "swap",
 });
 
 const inter = Inter({
@@ -66,7 +82,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${fraunces.variable} ${inter.variable}`}>
+    <html
+      lang="en"
+      className={`${fraunces.variable} ${bungeeShade.variable} ${bungee.variable} ${inter.variable}`}
+    >
       <body className="antialiased font-sans">{children}</body>
     </html>
   );

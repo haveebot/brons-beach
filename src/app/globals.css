@@ -5,13 +5,23 @@
     BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --font-display: var(--font-display), "Iowan Old Style", "Hoefler Text",
     Georgia, serif;
+  --font-mark: var(--font-mark), Impact, "Arial Black", sans-serif;
+  --font-marquee: var(--font-marquee), Impact, "Arial Black", sans-serif;
 
+  /* Bron's brand anchors */
   --color-bron-sand: #f5efe2;
+  --color-bron-cream: #faf3e3;
   --color-bron-navy: #1a3a52;
   --color-bron-coral: #e8654a;
   --color-bron-coral-dark: #d2553c;
   --color-bron-gold: #f5b35a;
   --color-bron-sky: #3d6e8c;
+
+  /* Tropical extension — wider palette for the vintage marquee hero */
+  --color-bron-pink: #ff4d8b;
+  --color-bron-teal: #2ec4b6;
+  --color-bron-yellow: #f6c026;
+  --color-bron-deep: #0d1f2c;
 }
 
 :root {
@@ -37,22 +47,51 @@ html {
   scroll-behavior: smooth;
 }
 
-/* ────────── Hero · ambient sun pulse ──────────
-   Subtle scale + opacity breath on the half-rising sun behind the type.
-   Slow enough to feel atmospheric, not distracting. */
-@keyframes hero-sun {
-  0%, 100% { transform: scale(1); opacity: 0.95; }
-  50% { transform: scale(1.04); opacity: 1; }
+/* ────────── Vintage tropical marquee hero ──────────
+   Sunburst rotates slowly behind the mark; marquee text scrolls across
+   the letterboard band; mark depth-shadow gently breathes. */
+
+@keyframes sunburst-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
-.hero-sun {
-  animation: hero-sun 7s ease-in-out infinite;
-  transform-origin: 50% 100%;
-  transform-box: fill-box;
-  will-change: transform, opacity;
+.sunburst-spin {
+  animation: sunburst-spin 90s linear infinite;
+  transform-origin: center;
+  will-change: transform;
+}
+
+@keyframes marquee-scroll {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll 40s linear infinite;
+  will-change: transform;
+}
+.marquee-track:hover { animation-play-state: paused; }
+
+@keyframes mark-breath {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(-2px, -2px); }
+}
+.mark-breath {
+  animation: mark-breath 6s ease-in-out infinite;
+  will-change: transform;
+}
+
+/* Subtle paper-grain noise texture using inline SVG. */
+.paper-noise {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='5'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.13 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  background-size: 240px 240px;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero-sun { animation: none !important; }
+  .sunburst-spin,
+  .marquee-track,
+  .mark-breath { animation: none !important; }
 }
 
 @media (prefers-reduced-motion: reduce) {
