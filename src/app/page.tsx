@@ -21,23 +21,27 @@ export default function HomePage() {
       <main className="pb-20 md:pb-0">
         <HeroLive />
 
-        {/* Pick your rental — two commanding tiles with Bron as mascot */}
+        {/* Pick your rental — bold solid tiles, custom icons, no photos */}
         <section id="rentals" className="bg-bron-sand scroll-mt-16">
           <div className="max-w-5xl mx-auto px-6 py-14 sm:py-20">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
               <RentalCommandTile
                 href="#book"
-                eyebrow="🏖 Beach Rentals"
+                eyebrow="Beach Rentals"
                 title="Rent the Beach"
                 sub="Cabanas, umbrellas, chairs, coolers — delivered to your sand, broken down at end of day."
-                gradient="bg-gradient-to-br from-bron-sky via-bron-gold/70 to-bron-coral"
+                bg="bg-bron-pink"
+                pillTextClass="text-bron-pink"
+                icon={<BeachIcon />}
               />
               <RentalCommandTile
                 href="#book"
-                eyebrow="🛺 Golf Carts"
+                eyebrow="Golf Carts"
                 title="Rent Carts"
                 sub="4 or 6 passenger, street-legal, full tank — pick up on Avenue G or we drop at your rental."
-                gradient="bg-gradient-to-br from-bron-coral via-bron-pink to-bron-navy"
+                bg="bg-bron-teal"
+                pillTextClass="text-bron-teal"
+                icon={<CartIcon />}
               />
             </div>
           </div>
@@ -363,53 +367,106 @@ function RentalCommandTile({
   eyebrow,
   title,
   sub,
-  gradient,
+  bg,
+  pillTextClass,
+  icon,
 }: {
   href: string;
   eyebrow: string;
   title: string;
   sub: string;
-  gradient: string;
+  bg: string;
+  pillTextClass: string;
+  icon: React.ReactNode;
 }) {
   return (
     <Link
       href={href}
-      className={`group relative aspect-[6/5] rounded-3xl overflow-hidden block shadow-xl shadow-bron-navy/15 ring-1 ring-bron-navy/10 hover:shadow-2xl hover:shadow-bron-navy/25 transition-shadow ${gradient}`}
+      className={`group relative aspect-[5/4] sm:aspect-[6/5] rounded-3xl overflow-hidden block shadow-xl shadow-bron-navy/15 ring-1 ring-bron-navy/10 hover:shadow-2xl hover:shadow-bron-navy/30 transition-shadow ${bg}`}
     >
-      {/* Subtle paper-grain noise across the gradient for warmth */}
+      {/* Subtle paper-grain noise for warmth */}
       <div
         aria-hidden
-        className="absolute inset-0 paper-noise opacity-30 mix-blend-overlay pointer-events-none"
+        className="absolute inset-0 paper-noise opacity-25 mix-blend-overlay pointer-events-none"
       />
 
-      {/* Bron mascot — anchored to bottom-right, hand gesturing toward
-          the headline on the left. Group-hover scales him slightly to
-          add liveliness on hover. */}
-      <Image
-        src="/images/bron-mascot.png"
-        alt=""
-        width={460}
-        height={572}
-        priority={false}
-        className="absolute -right-4 -bottom-3 sm:-right-2 sm:-bottom-2 w-[58%] sm:w-[55%] h-auto pointer-events-none drop-shadow-[0_8px_24px_rgba(13,31,44,0.25)] group-hover:scale-105 transition-transform duration-500 origin-bottom-right"
-      />
+      {/* Big icon — anchored top-right, slightly off-frame for poster
+          composition energy. White at low opacity acts as a watermark. */}
+      <div
+        aria-hidden
+        className="absolute -right-6 -top-2 w-[58%] sm:w-[52%] aspect-square text-white/90 pointer-events-none group-hover:scale-105 transition-transform duration-500 origin-top-right"
+      >
+        {icon}
+      </div>
 
-      {/* Text content — top-left anchored, leaves room for Bron on right */}
-      <div className="relative z-10 p-6 sm:p-8 max-w-[55%] text-white">
-        <p className="text-[11px] sm:text-xs uppercase tracking-[0.3em] text-bron-cream font-bold mb-2 drop-shadow-md">
+      {/* Text content — bottom-left anchored */}
+      <div className="relative z-10 p-6 sm:p-8 h-full flex flex-col justify-end max-w-[60%] text-white">
+        <p className="text-[10px] sm:text-xs uppercase tracking-[0.3em] font-bold mb-3 text-white/85">
           {eyebrow}
         </p>
-        <h3 className="font-display text-3xl sm:text-5xl font-bold mb-3 leading-none drop-shadow-md">
+        <h3 className="font-display text-4xl sm:text-6xl font-bold mb-3 leading-none">
           {title}
         </h3>
-        <p className="text-sm sm:text-base text-white/95 leading-snug mb-4 drop-shadow-md">
+        <p className="text-sm sm:text-base text-white/90 leading-snug mb-5">
           {sub}
         </p>
-        <span className="inline-flex items-center gap-2 text-xs uppercase tracking-widest font-bold text-bron-cream bg-bron-navy/30 backdrop-blur-sm rounded-full px-4 py-2 group-hover:gap-3 group-hover:bg-bron-navy/50 transition-all">
+        <span
+          className={`inline-flex items-center gap-2 self-start text-xs uppercase tracking-widest font-bold bg-white rounded-full px-5 py-2.5 group-hover:gap-3 transition-all shadow-md ${pillTextClass}`}
+        >
           Reserve <span aria-hidden>→</span>
         </span>
       </div>
     </Link>
+  );
+}
+
+/** Beach umbrella + chair silhouette — single-color filled icon. */
+function BeachIcon() {
+  return (
+    <svg viewBox="0 0 120 120" fill="currentColor" className="w-full h-full">
+      {/* Sand mound */}
+      <ellipse cx="60" cy="105" rx="48" ry="5" />
+      {/* Umbrella canopy — half circle */}
+      <path d="M 22 50 A 38 38 0 0 1 98 50 Z" />
+      {/* Umbrella ribs (subtle, same fill as canopy) */}
+      <path d="M 60 50 L 60 14" stroke="currentColor" strokeWidth="2" />
+      {/* Pole */}
+      <rect x="58" y="50" width="4" height="55" />
+      {/* Beach chair — to the right under umbrella */}
+      <g transform="translate(66 70)">
+        {/* angled back */}
+        <polygon points="32,0 8,-18 12,-18 36,0" />
+        {/* seat */}
+        <rect x="0" y="0" width="36" height="4" rx="1" />
+        {/* legs */}
+        <rect x="2" y="4" width="3" height="14" />
+        <rect x="31" y="4" width="3" height="14" />
+      </g>
+    </svg>
+  );
+}
+
+/** Golf cart side-view silhouette — single-color filled icon. */
+function CartIcon() {
+  return (
+    <svg viewBox="0 0 120 120" fill="currentColor" className="w-full h-full">
+      {/* Canopy bar */}
+      <rect x="10" y="34" width="100" height="6" rx="2" />
+      {/* Canopy posts */}
+      <rect x="14" y="40" width="3" height="32" />
+      <rect x="103" y="40" width="3" height="32" />
+      {/* Body chassis */}
+      <rect x="6" y="68" width="108" height="28" rx="5" />
+      {/* Seat backs */}
+      <rect x="22" y="46" width="32" height="22" rx="3" />
+      <rect x="66" y="46" width="32" height="22" rx="3" />
+      {/* Wheels */}
+      <circle cx="24" cy="100" r="9" />
+      <circle cx="96" cy="100" r="9" />
+      {/* Wheel hub circles (cut-out look via inner small circle) */}
+      <circle cx="24" cy="100" r="3.5" fill="none" stroke="currentColor" strokeWidth="1.5" opacity="0.5" />
+      <circle cx="96" cy="100" r="3.5" fill="none" stroke="currentColor" strokeWidth="1.5" opacity="0.5" />
+    </svg>
   );
 }
 
