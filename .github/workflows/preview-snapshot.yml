@@ -1,0 +1,104 @@
+name: Preview Snapshot (mobile + desktop)
+
+# Fires when Vercel marks a Preview deployment as successful.
+# Snapshots the preview URL at mobile + desktop viewports and posts
+# a comment on the associated PR with a link to the screenshots.
+#
+# Tenant-agnostic: lives in /scripts/preview-snapshot.js + this
+# workflow; promotes to HeyeDeploy framework pattern after the
+# 2nd tenant adopts it.
+
+on:
+  deployment_status:
+
+jobs:
+  snapshot:
+    if: >
+      github.event.deployment_status.state == 'success' &&
+      github.event.deployment.environment == 'Preview'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      pull-requests: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Playwright chromium
+        run: |
+          npm init -y >/dev/null
+          npm install playwright@1.49.0 --no-save
+          npx playwright install --with-deps chromium
+
+      - name: Snapshot preview URL
+        env:
+          PREVIEW_URL: ${{ github.event.deployment_status.target_url }}
+        run: node scripts/preview-snapshot.js
+
+      - name: Upload screenshots
+        id: artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: preview-snapshots
+          path: snapshots/
+          retention-days: 14
+
+      - name: Post comment on PR
+        uses: actions/github-script@v7
+        env:
+          PREVIEW_URL: ${{ github.event.deployment_status.target_url }}
+          ARTIFACT_URL: ${{ steps.artifact.outputs.artifact-url }}
+        with:
+          script: |
+            const sha = context.payload.deployment.sha;
+            const { data: prs } = await github.rest.repos.listPullRequestsAssociatedWithCommit({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              commit_sha: sha,
+            });
+            if (prs.length === 0) {
+              console.log(`No PR associated with commit ${sha}; skipping comment.`);
+              return;
+            }
+            const prNumber = prs[0].number;
+            const preview = process.env.PREVIEW_URL;
+            const artifact = process.env.ARTIFACT_URL || `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
+            const body = [
+              `### 📱 Preview snapshots`,
+              ``,
+              `Mobile + desktop screenshots of the Vercel preview deployment, captured the moment it went live.`,
+              ``,
+              `- **Preview URL:** ${preview}`,
+              `- **Screenshots (artifact):** ${artifact}`,
+              ``,
+              `<sub>Open the artifact link, download the zip, and you'll see <code>mobile-375x667.png</code> + <code>desktop-1440x900.png</code>.</sub>`,
+            ].join('\n');
+            // Replace prior snapshot comment on this PR if one exists, otherwise create
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: prNumber,
+              per_page: 100,
+            });
+            const existing = comments.find(c =>
+              c.user.login.endsWith('[bot]') && c.body.startsWith('### 📱 Preview snapshots')
+            );
+            if (existing) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: existing.id,
+                body,
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: prNumber,
+                body,
+              });
+            }
