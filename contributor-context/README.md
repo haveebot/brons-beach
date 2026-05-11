@@ -29,6 +29,7 @@ even though both operate in Port Aransas — see
 | [`brons-brand-system.md`](brons-brand-system.md) | Bron's color tokens, type system, voice samples, asset inventory |
 | [`brons-tier-1-scope.md`](brons-tier-1-scope.md) | What a Tier 1 contributor can / can't touch in brons-beach (free-merge vs CODEOWNERS-gated) |
 | [`brons-as-heyelab-tenant.md`](brons-as-heyelab-tenant.md) | The bridge doc — Bron's is HeyeLab principal, NOT a PAL listing; framework discipline still applies |
+| [`collie-pickup.md`](collie-pickup.md) | **Living doc.** The prioritized hit list of design dials queued for the contributor. Updated each session as new work emerges. |
 
 ### Cross-project rules (mirrored from workspace memory)
 
