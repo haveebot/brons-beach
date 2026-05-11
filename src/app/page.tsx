@@ -121,32 +121,34 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* About */}
+        {/* About — Bron's portrait + the yard story */}
         <section className="bg-bron-sand">
           <div className="max-w-4xl mx-auto px-6 py-14 sm:py-20 text-center">
             <Image
-              src="/images/bron-logo.png"
-              alt=""
-              width={84}
-              height={84}
-              className="mx-auto mb-6 rounded-full ring-2 ring-bron-navy/10"
+              src="/images/bron-caricature.jpg"
+              alt="Bron"
+              width={180}
+              height={228}
+              className="mx-auto mb-6"
+              priority={false}
             />
             <p className="text-xs uppercase tracking-[0.3em] text-bron-coral font-bold mb-2">
-              What we&apos;re about
+              Meet Bron
             </p>
             <h2 className="font-display text-3xl sm:text-5xl font-bold mb-5">
               The whole island stop, in one yard.
             </h2>
             <p className="text-base sm:text-lg text-bron-navy/85 leading-relaxed max-w-2xl mx-auto">
               Bron&apos;s started as a few golf carts on Avenue G and grew into
-              the full island stop you see today: beach rentals delivered to
+              the full island stop you see today: beach setups delivered to
               your sand, carts ready when you are, an outdoor bar with live
               music most weekends, a kitchen running the same hours as the bar,
-              and a walk-up shaved ice + frozen daiquiri to-go counter.
+              and a walk-up window for frozen margaritas, daiquiris, and
+              shaved ice.
             </p>
             <p className="text-base sm:text-lg text-bron-navy/85 leading-relaxed max-w-2xl mx-auto mt-4">
-              Same spot, same yard, no part of the trip you have to leave for.
-              Locally owned, family-run, friendly as a Texas afternoon.
+              Locally owned, family-run, friendly as a Texas afternoon. We set
+              you up at the beach and see you back at the yard.
             </p>
           </div>
         </section>
