@@ -81,11 +81,14 @@ export default function LiveConditionsBlock() {
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 max-w-4xl mx-auto">
+          {/* Tile colors per Collie's homepage revisions mockup:
+              sunset → deep-blue, weather → pink, music → orange, yard → teal. */}
           <LiveConditionsTile
             icon="🌅"
             label="Sunset"
             value={formatPortATime(sun.sunset)}
             sub="Beach time on the Gulf"
+            bgClass="bg-bron-deep-blue"
           />
           <LiveConditionsWeather />
           <LiveConditionsTile
@@ -93,14 +96,14 @@ export default function LiveConditionsBlock() {
             label={tonight ? "Tonight" : "Next up"}
             value={musicValue}
             sub={musicSub}
-            highlight={!!tonight}
+            bgClass="bg-bron-orange"
           />
           <LiveConditionsTile
             icon={status.isOpen ? "🍻" : "🌙"}
             label="The yard"
             value={status.isOpen ? "Open" : "Closed"}
             sub={status.label.replace(/^Open until |^Closed — /, "")}
-            highlight={status.isOpen}
+            bgClass="bg-bron-teal"
           />
         </div>
       </div>

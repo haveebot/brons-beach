@@ -47,6 +47,22 @@ export default function HomePage() {
           </div>
         </section>
 
+        {/* BRON'S BEACH CARTS circle mark — moved here from the top nav
+            per the homepage revisions. Sits between the rental tiles
+            (bron-sand) and the Right-now-on-the-island block (bron-blue),
+            straddling the boundary as a centered brand anchor. */}
+        <div className="relative h-0 z-10">
+          <div className="absolute left-1/2 -translate-x-1/2 -top-16 sm:-top-20">
+            <Image
+              src="/images/bron-logo.png"
+              alt="Bron's Beach Carts"
+              width={160}
+              height={160}
+              className="w-32 h-32 sm:w-40 sm:h-40 drop-shadow-lg"
+            />
+          </div>
+        </div>
+
         {/* Live Conditions — sunset, music, weather, open status */}
         <LiveConditionsBlock />
 
