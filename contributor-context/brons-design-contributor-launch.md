@@ -211,11 +211,12 @@ before moving to the next.
 
 Hit send. Claude on your Mac walks you through everything from there.
 
-When you're set up, the big first ask is: there are 3 Bron mascot
-illustrations queued in public/images/ (bron-mascot.png, bron-portrait.jpg,
-bron-at-beach.jpg) — your placement decision. Look at the site at
-https://www.bronsbeach.com and tell us where Bron belongs. Hero overlay?
-About section swap? Brand-new "Meet Bron" section? Your call.
+When you're set up, your Claude will auto-load `contributor-context/` —
+including `collie-pickup.md`, which is the prioritized queue of design
+dials waiting for you. Top of the pile is the Bron mascot placement
+decision (3 illustrations queued in `public/images/`, explicitly your
+call), but there's a full slate of brand / mobile / type / OG card work
+ready behind it. Hammer as many as you have time for.
 
 If anything stops you, screenshot it and reply to this thread.
 
