@@ -47,7 +47,7 @@ export default function LiveConditionsBlock() {
   });
 
   return (
-    <section className="relative bg-bron-navy text-white overflow-hidden isolate">
+    <section className="relative bg-bron-blue text-white overflow-hidden isolate">
       {/* Ambient sun glow off-center — atmospheric, not competing */}
       <div
         aria-hidden
@@ -68,7 +68,7 @@ export default function LiveConditionsBlock() {
 
       <div className="relative z-10 max-w-5xl mx-auto px-6 py-14 sm:py-20">
         <div className="text-center mb-8 sm:mb-10">
-          <p className="text-[11px] uppercase tracking-[0.35em] text-bron-gold font-bold mb-3">
+          <p className="text-[11px] uppercase tracking-[0.35em] text-bron-orange font-bold mb-3">
             Live from Avenue G · {stamp} Port A
           </p>
           <h2 className="font-display text-3xl sm:text-5xl font-bold tracking-tight leading-tight">

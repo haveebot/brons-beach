@@ -11,22 +11,22 @@
   /* Bron's brand anchors */
   --color-bron-sand: #f5efe2;
   --color-bron-cream: #faf3e3;
-  --color-bron-navy: #1a3a52;
+  --color-bron-blue: #5663ae;
+  --color-bron-deep-blue: #1f2844;
+  --color-bron-light-blue: #35a9e2;
   --color-bron-coral: #e8654a;
   --color-bron-coral-dark: #d2553c;
-  --color-bron-gold: #f5b35a;
-  --color-bron-sky: #3d6e8c;
+  --color-bron-orange: #f19301;
 
   /* Tropical extension — wider palette for the vintage marquee hero */
   --color-bron-pink: #ff4d8b;
-  --color-bron-teal: #2ec4b6;
-  --color-bron-yellow: #f6c026;
-  --color-bron-deep: #0d1f2c;
+  --color-bron-teal: #51c2c9;
+  --color-bron-yellow: #fcdd06;
 }
 
 :root {
   --background: #f5efe2;
-  --foreground: #1a3a52;
+  --foreground: #1f2844;
 }
 
 body {

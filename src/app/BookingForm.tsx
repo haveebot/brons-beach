@@ -174,7 +174,7 @@ export default function BookingForm() {
   return (
     <form
       onSubmit={onSubmit}
-      className="bg-white text-[#1a3a52] rounded-2xl p-6 sm:p-8 shadow-lg space-y-5"
+      className="bg-white text-bron-deep-blue rounded-2xl p-6 sm:p-8 shadow-lg space-y-5"
     >
       <div className="space-y-4">
         {priced.map((row, idx) => (
@@ -208,7 +208,7 @@ export default function BookingForm() {
           onChange={(e) => setAccessPoint(e.target.value)}
           placeholder={accessPointPlaceholder}
           required
-          className="w-full px-4 py-3 rounded-lg border border-[#1a3a52]/20 focus:outline-none focus:ring-2 focus:ring-[#e8654a]"
+          className="w-full px-4 py-3 rounded-lg border border-bron-blue/20 focus:outline-none focus:ring-2 focus:ring-[#e8654a]"
         />
       </div>
 
@@ -223,7 +223,7 @@ export default function BookingForm() {
             value={name}
             onChange={(e) => setName(e.target.value)}
             required
-            className="w-full px-4 py-3 rounded-lg border border-[#1a3a52]/20 focus:outline-none focus:ring-2 focus:ring-[#e8654a]"
+            className="w-full px-4 py-3 rounded-lg border border-bron-blue/20 focus:outline-none focus:ring-2 focus:ring-[#e8654a]"
           />
         </div>
         <div>
@@ -236,7 +236,7 @@ export default function BookingForm() {
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
             required
-            className="w-full px-4 py-3 rounded-lg border border-[#1a3a52]/20 focus:outline-none focus:ring-2 focus:ring-[#e8654a]"
+            className="w-full px-4 py-3 rounded-lg border border-bron-blue/20 focus:outline-none focus:ring-2 focus:ring-[#e8654a]"
           />
         </div>
       </div>
@@ -251,17 +251,17 @@ export default function BookingForm() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
-          className="w-full px-4 py-3 rounded-lg border border-[#1a3a52]/20 focus:outline-none focus:ring-2 focus:ring-[#e8654a]"
+          className="w-full px-4 py-3 rounded-lg border border-bron-blue/20 focus:outline-none focus:ring-2 focus:ring-[#e8654a]"
         />
       </div>
 
       <div className="bg-[#f5efe2] rounded-lg p-4">
         <div className="flex items-baseline justify-between">
           <div>
-            <p className="text-xs uppercase tracking-widest text-[#1a3a52]/60">
+            <p className="text-xs uppercase tracking-widest text-bron-deep-blue/60">
               Total
             </p>
-            <p className="text-[11px] text-[#1a3a52]/60">
+            <p className="text-[11px] text-bron-deep-blue/60">
               {priced.length} item{priced.length !== 1 ? "s" : ""}
             </p>
           </div>
@@ -283,7 +283,7 @@ export default function BookingForm() {
         <p className="text-sm text-[#e8654a] text-center">{errorMsg}</p>
       )}
 
-      <p className="text-[11px] text-[#1a3a52]/60 text-center">
+      <p className="text-[11px] text-bron-deep-blue/60 text-center">
         Secure payment via Stripe. Free cancellation up to 24 hours before
         rental start.
       </p>
@@ -312,16 +312,16 @@ function CartRow({
   const itemDollars = (row.itemTotalCents / 100).toFixed(0);
 
   return (
-    <div className="border border-[#1a3a52]/15 rounded-lg p-4 space-y-4 bg-[#f5efe2]/50">
+    <div className="border border-bron-blue/15 rounded-lg p-4 space-y-4 bg-[#f5efe2]/50">
       <div className="flex items-baseline justify-between gap-2">
-        <p className="text-[10px] uppercase tracking-widest text-[#1a3a52]/60 font-bold">
+        <p className="text-[10px] uppercase tracking-widest text-bron-deep-blue/60 font-bold">
           Item {index + 1}
         </p>
         {canRemove && (
           <button
             type="button"
             onClick={onRemove}
-            className="text-[10px] uppercase tracking-widest text-[#1a3a52]/60 hover:text-[#e8654a]"
+            className="text-[10px] uppercase tracking-widest text-bron-deep-blue/60 hover:text-[#e8654a]"
           >
             Remove
           </button>
@@ -335,7 +335,7 @@ function CartRow({
         <select
           value={row.productSlug}
           onChange={(e) => onChange({ productSlug: e.target.value })}
-          className="w-full px-4 py-3 rounded-lg border border-[#1a3a52]/20 bg-white focus:outline-none focus:ring-2 focus:ring-[#e8654a]"
+          className="w-full px-4 py-3 rounded-lg border border-bron-blue/20 bg-white focus:outline-none focus:ring-2 focus:ring-[#e8654a]"
         >
           <optgroup label="🏖 Beach Setups">
             {BEACH_PRODUCTS.map((p) => (
@@ -352,7 +352,7 @@ function CartRow({
             ))}
           </optgroup>
         </select>
-        <p className="text-xs text-[#1a3a52]/70 mt-1.5">
+        <p className="text-xs text-bron-deep-blue/70 mt-1.5">
           {product.shortDescription}
         </p>
       </div>
@@ -368,7 +368,7 @@ function CartRow({
             value={row.pickupDate}
             onChange={(e) => onChange({ pickupDate: e.target.value })}
             required
-            className="w-full px-4 py-3 rounded-lg border border-[#1a3a52]/20 bg-white focus:outline-none focus:ring-2 focus:ring-[#e8654a]"
+            className="w-full px-4 py-3 rounded-lg border border-bron-blue/20 bg-white focus:outline-none focus:ring-2 focus:ring-[#e8654a]"
           />
           <button
             type="button"
@@ -390,7 +390,7 @@ function CartRow({
               value={row.pickupDate}
               onChange={(e) => onChange({ pickupDate: e.target.value })}
               required
-              className="w-full px-4 py-3 rounded-lg border border-[#1a3a52]/20 bg-white focus:outline-none focus:ring-2 focus:ring-[#e8654a]"
+              className="w-full px-4 py-3 rounded-lg border border-bron-blue/20 bg-white focus:outline-none focus:ring-2 focus:ring-[#e8654a]"
             />
           </div>
           <div>
@@ -403,7 +403,7 @@ function CartRow({
               value={row.returnDate}
               onChange={(e) => onChange({ returnDate: e.target.value })}
               required
-              className="w-full px-4 py-3 rounded-lg border border-[#1a3a52]/20 bg-white focus:outline-none focus:ring-2 focus:ring-[#e8654a]"
+              className="w-full px-4 py-3 rounded-lg border border-bron-blue/20 bg-white focus:outline-none focus:ring-2 focus:ring-[#e8654a]"
             />
           </div>
           {isBeach && (
@@ -412,7 +412,7 @@ function CartRow({
               onClick={() =>
                 onChange({ multiDay: false, returnDate: "" })
               }
-              className="col-span-2 text-xs text-[#1a3a52]/60 underline-offset-4 hover:underline justify-self-start"
+              className="col-span-2 text-xs text-bron-deep-blue/60 underline-offset-4 hover:underline justify-self-start"
             >
               ← Single day instead
             </button>
@@ -420,12 +420,12 @@ function CartRow({
         </div>
       )}
 
-      <div className="flex items-baseline justify-between border-t border-[#1a3a52]/10 pt-3">
-        <p className="text-[11px] text-[#1a3a52]/60">
+      <div className="flex items-baseline justify-between border-t border-bron-blue/10 pt-3">
+        <p className="text-[11px] text-bron-deep-blue/60">
           {row.numDays} day{row.numDays !== 1 ? "s" : ""} · $
           {(product.dailyTotalCents / 100).toFixed(0)}/day
         </p>
-        <p className="font-display text-xl font-bold text-[#1a3a52]">
+        <p className="font-display text-xl font-bold text-bron-deep-blue">
           ${itemDollars}
         </p>
       </div>
