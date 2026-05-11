@@ -85,14 +85,17 @@ export default function HeroLive() {
           <Bullet color="bg-bron-teal" />
         </p>
 
-        {/* The mark — sun rays radiate behind it from the rising sun
-            below, no halo behind the type itself */}
-        <h1
-          className="relative font-[family-name:var(--font-mark)] leading-none text-bron-deep-blue text-[clamp(4.5rem,16vw,13rem)] tracking-tight mark-breath"
-          style={{ wordSpacing: "-0.05em" }}
-        >
-          Bron&apos;s
-        </h1>
+        {/* The mark — Bison-outlined "BRONS" SVG with the fedora as the
+            apostrophe. Sun rays radiate behind from the rising sun below;
+            no halo behind the type itself. */}
+        <h1 className="sr-only">Bron&apos;s</h1>
+        <img
+          src="/images/brons-hero-logo.svg"
+          alt=""
+          aria-hidden="true"
+          fetchPriority="high"
+          className="relative mx-auto block w-[clamp(280px,72vw,820px)] h-auto mark-breath"
+        />
 
         {/* Segments line — punchy declaration of what Bron's actually is */}
         <p className="mt-5 sm:mt-7 font-bold text-xs sm:text-base uppercase tracking-[0.2em] text-bron-deep-blue flex items-center justify-center gap-2 sm:gap-3 flex-wrap">
