@@ -1,0 +1,52 @@
+# CODEOWNERS for haveebot/brons-beach
+#
+# Mirrors PAL's agent-driven contributor autonomy pattern (locked 2026-05-04).
+# Branch protection requires status checks (Vercel build) but no general
+# approving review. Code owner review IS required on the paths below —
+# sensitive surfaces still get operator eyes; cosmetic / brand / copy /
+# component changes auto-merge once checks pass.
+#
+# Default (no codeowner): no review required — checks-only gate.
+
+# ──────────────────────────────────────────────────────────────────
+# Backend / API / data — operator review required
+# ──────────────────────────────────────────────────────────────────
+/src/app/api/                   @haveebot
+/src/middleware.ts              @haveebot
+/src/app/admin/                 @haveebot
+
+# Payment / messaging integrations
+/src/lib/sendConfirmationEmail.ts  @haveebot
+
+# ──────────────────────────────────────────────────────────────────
+# Build / deps / config — operator review required
+# ──────────────────────────────────────────────────────────────────
+/package.json                   @haveebot
+/package-lock.json              @haveebot
+/pnpm-lock.yaml                 @haveebot
+/next.config.*                  @haveebot
+/vercel.json                    @haveebot
+/tsconfig.json                  @haveebot
+/postcss.config.*               @haveebot
+
+# Env (should already be gitignored — defense-in-depth)
+/.env*                          @haveebot
+
+# CI / Actions
+/.github/workflows/             @haveebot
+/.github/CODEOWNERS             @haveebot
+
+# ──────────────────────────────────────────────────────────────────
+# Free-merge surfaces (no codeowner = auto-merges on checks pass):
+#   - src/app/*.tsx              Hero, LiveConditions, BookingForm, SiteNav, etc.
+#   - src/app/globals.css        Color tokens + animations
+#   - src/app/layout.tsx, page.tsx
+#   - src/data/**                Products, venue, live-music content
+#   - src/lib/openStatus.ts      Time/open-status util
+#   - src/lib/sunCalc.ts         NOAA sun calc util
+#   - public/**                  Static assets, photos, illustrations
+#   - README.md                  Docs
+#   - CONTRIBUTORS.md            Contributor list
+#   - contributor-context/**     Contributor orientation docs
+#   - Session Notes/**           Handoff briefs
+# ──────────────────────────────────────────────────────────────────
