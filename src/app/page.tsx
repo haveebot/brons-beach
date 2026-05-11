@@ -8,6 +8,7 @@ import {
 } from "@/data/live-music";
 import BookingForm from "./BookingForm";
 import HeroLive from "./HeroLive";
+import LiveConditionsBlock from "./LiveConditionsBlock";
 import SiteNav from "./SiteNav";
 import MobileCtaBar from "./MobileCtaBar";
 
@@ -55,6 +56,9 @@ export default function HomePage() {
             </div>
           </div>
         </section>
+
+        {/* Live Conditions — sunset, music, weather, open status */}
+        <LiveConditionsBlock />
 
         {/* Booking form */}
         <section
