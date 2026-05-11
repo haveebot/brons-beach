@@ -1,16 +1,15 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
 /**
- * Sticky top navigation. Transparent over the hero (the aerial photo
- * looks better unobstructed) and snaps to opaque navy on scroll past
- * the hero. Logo on left, section anchors center, Reserve CTA right.
- *
- * Mobile collapses to logo + Reserve CTA only — section anchors live
- * in the bottom sticky bar.
+ * Sticky top navigation. Solid bron-blue throughout (was lighter at top
+ * before scroll — Collie flagged in v3 review). Wordmark "BRON'S" in
+ * Bison Demibold (white) on the left, section anchors center, Reserve
+ * CTA right. The circle BRON'S BEACH CARTS logo lives lower on the page
+ * now (between rental tiles and Right-now-on-the-island) — a too-small
+ * 36px logo in the nav was undermining the brand identity.
  */
 export default function SiteNav() {
   const [scrolled, setScrolled] = useState(false);
@@ -34,18 +33,13 @@ export default function SiteNav() {
         <Link
           href="/"
           aria-label="Bron's home"
-          className="flex items-center gap-2 group"
+          className="flex items-center group"
         >
-          <Image
-            src="/images/bron-logo.png"
-            alt=""
-            width={36}
-            height={36}
-            className="rounded-full ring-2 ring-white/30 group-hover:ring-bron-orange transition"
-            priority
-          />
-          <span className="font-display text-white text-lg font-bold tracking-tight hidden sm:inline">
-            Bron&apos;s
+          <span
+            className="font-[family-name:var(--font-marquee)] text-white text-2xl sm:text-[26px] tracking-wide leading-none group-hover:text-bron-yellow transition-colors"
+            style={{ letterSpacing: "0.03em" }}
+          >
+            BRON&apos;S
           </span>
         </Link>
 

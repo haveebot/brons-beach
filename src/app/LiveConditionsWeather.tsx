@@ -39,6 +39,12 @@ export default function LiveConditionsWeather() {
       : "Reading the breeze…";
 
   return (
-    <LiveConditionsTile icon="🌡" label="At the beach" value={value} sub={sub} />
+    <LiveConditionsTile
+      icon="🌡"
+      label="At the beach"
+      value={value}
+      sub={sub}
+      bgClass="bg-bron-pink"
+    />
   );
 }
