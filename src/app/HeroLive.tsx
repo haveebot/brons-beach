@@ -202,6 +202,38 @@ function BronsTownscape() {
         {/* Ground baseline */}
         <rect x="0" y="218" width="1900" height="2" />
 
+        {/* Continuous festoon string lights — sweeps edge to edge,
+            attaching to rooftops + palm crowns + cabana, with bulbs
+            hanging at intervals */}
+        <path
+          d="M 0 110
+             Q 70 130 125 42
+             Q 215 90 305 55
+             Q 430 110 545 60
+             Q 700 105 850 55
+             Q 1060 110 1280 80
+             Q 1315 100 1350 105
+             Q 1380 110 1416 100
+             Q 1480 130 1540 132
+             Q 1605 138 1670 135
+             Q 1790 145 1900 148"
+          stroke="#0d1f2c"
+          strokeWidth="1.6"
+          fill="none"
+        />
+        {/* Bulbs hanging from the string at regular intervals */}
+        {[
+          [27, 116], [54, 112], [79, 99], [102, 77],
+          [161, 62], [197, 71], [232, 74], [269, 70],
+          [355, 77], [404, 86], [451, 87], [498, 80],
+          [606, 78], [667, 85], [729, 84], [790, 75],
+          [934, 78], [1020, 89], [1106, 94], [1192, 93],
+          [1315, 100], [1382, 110], [1453, 120],
+          [1492, 130], [1605, 140], [1739, 144], [1832, 149],
+        ].map(([x, y], i) => (
+          <circle key={`bulb-${i}`} cx={x} cy={y} r="2.2" />
+        ))}
+
         {/* — Picket fence start ————————————————————————————————— */}
         {[10, 17, 24, 31, 38, 45, 52].map((x) => (
           <rect key={`pf1-${x}`} x={x} y="192" width="3" height="28" />
@@ -240,17 +272,6 @@ function BronsTownscape() {
           <circle cx="34" cy="170" r="2" />
         </g>
 
-        {/* — String lights to next palm ————————————————————————————— */}
-        <path
-          d="M 285 100 Q 320 116 355 100"
-          stroke="#0d1f2c"
-          strokeWidth="1.5"
-          fill="none"
-        />
-        {[295, 308, 321, 334, 347].map((x, i) => (
-          <circle key={`sl1-${i}`} cx={x} cy={108 + (x === 321 ? 2 : 0)} r="2.2" />
-        ))}
-
         {/* 3 · Tall Palm Tree ————————————————————————————————————— */}
         <Palm x={295} scale={1.6} variant="tall" />
 
@@ -283,17 +304,6 @@ function BronsTownscape() {
         {/* — Tiki torch ——————————————————————————————————————————— */}
         <TikiTorch x={715} />
 
-        {/* — String lights to stage ————————————————————————————————— */}
-        <path
-          d="M 745 95 Q 790 112 835 95"
-          stroke="#0d1f2c"
-          strokeWidth="1.5"
-          fill="none"
-        />
-        {[755, 770, 785, 800, 815, 830].map((x) => (
-          <circle key={`sl2-${x}`} cx={x} cy={106} r="2.2" />
-        ))}
-
         {/* 5 · Stage / Band-shell ————————————————————————————————— */}
         <g transform="translate(750 0)">
           {/* stage platform */}
@@ -313,6 +323,18 @@ function BronsTownscape() {
           <circle cx="120" cy="172" r="6" />
           <rect x="125" y="160" width="2" height="12" />
           <ellipse cx="128" cy="158" rx="6" ry="1.5" />
+          {/* Bongo drums — Bron plays the bongo (stage left) */}
+          <g transform="translate(60 164)">
+            {/* macho — smaller drum on the left */}
+            <rect x="0" y="2" width="8" height="14" rx="1" />
+            {/* hembra — larger drum on the right */}
+            <rect x="9" y="0" width="10" height="16" rx="1" />
+            {/* connecting bridge between the two drums */}
+            <rect x="6" y="5" width="5" height="2" />
+            {/* small drum head highlights */}
+            <ellipse cx="4" cy="2" rx="4" ry="1" />
+            <ellipse cx="14" cy="0" rx="5" ry="1" />
+          </g>
         </g>
 
         {/* — Picket fence transition ——————————————————————————————— */}
