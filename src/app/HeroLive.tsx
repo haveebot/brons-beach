@@ -65,16 +65,17 @@ export default function HeroLive() {
           fanning upward and outward through the composition. */}
       <RisingSun />
 
-      {/* Palm silhouettes peeking in from the bottom corners — Key West
-          tropical framing. Hidden on small screens where they'd crowd. */}
-      <PalmFrame />
+      {/* Bron's townscape — Seaside-FL-style architectural silhouette
+          runner across the bottom of the hero: cart shack, bar pavilion,
+          stage, kitchen, sno-cone kiosk, palms, boardwalk + wave. */}
+      <BronsTownscape />
 
       {/* Top corner stamp — current local Port A time */}
       <div className="absolute top-20 right-5 sm:top-24 sm:right-8 z-20 text-[10px] uppercase tracking-[0.25em] font-bold text-bron-navy/75 bg-bron-cream/85 backdrop-blur-sm rounded-full px-3 py-1.5 border border-bron-navy/15">
         {stamp} · Port A
       </div>
 
-      <div className="relative z-10 max-w-6xl mx-auto px-6 pt-24 sm:pt-32 pb-32 sm:pb-40 text-center">
+      <div className="relative z-10 max-w-6xl mx-auto px-6 pt-24 sm:pt-32 pb-44 sm:pb-56 text-center">
         {/* Eyebrow with alternating tropical bullet dots */}
         <p className="flex items-center justify-center gap-2 sm:gap-3 text-[10px] sm:text-xs uppercase tracking-[0.25em] sm:tracking-[0.4em] text-bron-coral font-bold mb-6 sm:mb-8 whitespace-nowrap">
           <Bullet color="bg-bron-teal" />
@@ -177,93 +178,141 @@ function RisingSun() {
   );
 }
 
-/** Palm-frond crowns peeking in from the bottom corners. Banana-curved
- *  fronds with pinnate sub-leaflet detail — actually palm-shaped, not
- *  pot-leaf-shaped. Fronds spread including some that droop horizontally
- *  / down-outward (real palm crown behavior). */
-function PalmFrame() {
-  return (
-    <>
-      <div className="hidden md:block absolute left-[-2rem] bottom-1 w-56 lg:w-72 z-0 pointer-events-none">
-        <PalmFronds flip={false} />
-      </div>
-      <div className="hidden md:block absolute right-[-2rem] bottom-1 w-56 lg:w-72 z-0 pointer-events-none">
-        <PalmFronds flip={true} />
-      </div>
-    </>
-  );
-}
-
-function PalmFronds({ flip }: { flip: boolean }) {
-  // Crown peeking from the LEFT corner — fronds spread up + to the right
-  // (into the scene), with one drooping further right and one peeking
-  // back off-screen. flip=true mirrors via scaleX for the right corner.
-  const fronds: { angle: number; length: number }[] = [
-    { angle: -55, length: 0.85 }, // up-left, mostly off-screen
-    { angle: -20, length: 1.05 }, // mostly up, slight lean
-    { angle: 20, length: 1.1 },   // up-right, longest
-    { angle: 60, length: 1.0 },   // right
-    { angle: 100, length: 0.85 }, // drooping right (horizontal+)
-    { angle: 135, length: 0.7 },  // drooping further (sweeping down)
-  ];
+/** Seaside-FL-style townscape silhouette running across the bottom of
+ *  the hero. Each shape represents a facet of Bron's: cart rental shack,
+ *  open-air bar pavilion with peaked roof, stage band-shell, kitchen
+ *  with chimney, sno-cone walk-up kiosk, palms as accents, boardwalk
+ *  ramp leading to a wave that closes the runner. All baseline-aligned,
+ *  solid deep-navy silhouette — graphic and architectural, not clip-art.
+ *
+ *  preserveAspectRatio="xMidYEnd slice" anchors the bottom edge and
+ *  scales width-first so the runner always reaches edge-to-edge.
+ */
+function BronsTownscape() {
   return (
     <svg
-      viewBox="-160 -170 320 200"
-      className="w-full h-auto"
-      style={{ transform: flip ? "scaleX(-1)" : undefined }}
+      viewBox="0 0 1200 220"
+      preserveAspectRatio="xMidYEnd slice"
+      className="absolute inset-x-0 bottom-0 w-full h-[clamp(120px,17vw,220px)] z-0 pointer-events-none"
     >
-      {fronds.map((f, i) => (
-        <g key={i} transform={`rotate(${f.angle})`}>
-          {/* Banana-curved frond — wider in the middle, tapered tip,
-              arches outward then curls back. */}
-          <path
-            d={`
-              M 0 0
-              Q ${22 * f.length} ${-45 * f.length}, ${18 * f.length} ${-95 * f.length}
-              Q ${10 * f.length} ${-130 * f.length}, 0 ${-140 * f.length}
-              Q ${-10 * f.length} ${-130 * f.length}, ${-18 * f.length} ${-95 * f.length}
-              Q ${-22 * f.length} ${-45 * f.length}, 0 0
-              Z
-            `}
-            fill="#0d1f2c"
-            opacity={0.9}
-          />
-          {/* Pinnate sub-leaflet veins — short tick lines along the
-              central rachis, giving the feathered palm-frond texture. */}
-          {[0.25, 0.42, 0.58, 0.74, 0.86].map((p) => {
-            const y = -140 * f.length * p;
-            const x = 9 * f.length * (1 - p * 0.5);
-            return (
-              <g key={p}>
-                <line
-                  x1="0"
-                  y1={y}
-                  x2={x}
-                  y2={y - 6 * f.length}
-                  stroke="#1a3a52"
-                  strokeWidth="1.2"
-                  opacity="0.55"
-                  strokeLinecap="round"
-                />
-                <line
-                  x1="0"
-                  y1={y}
-                  x2={-x}
-                  y2={y - 6 * f.length}
-                  stroke="#1a3a52"
-                  strokeWidth="1.2"
-                  opacity="0.55"
-                  strokeLinecap="round"
-                />
-              </g>
-            );
-          })}
+      <g fill="#0d1f2c">
+        {/* Ground line — subtle baseline that ties everything together */}
+        <rect x="0" y="218" width="1200" height="2" />
+
+        {/* 1 · Cart Rental Shack ──────────────────────────────────────── */}
+        <g transform="translate(40 0)">
+          {/* body */}
+          <rect x="0" y="115" width="100" height="105" />
+          {/* peaked roof */}
+          <polygon points="-8,118 50,82 108,118" />
+          {/* signboard topper */}
+          <rect x="20" y="60" width="60" height="20" />
+          <rect x="48" y="80" width="4" height="35" />
         </g>
-      ))}
-      {/* Coconut cluster at the base */}
-      <circle cx="-4" cy="-4" r="5" fill="#0d1f2c" opacity="0.92" />
-      <circle cx="5" cy="-3" r="4" fill="#0d1f2c" opacity="0.92" />
-      <circle cx="0" cy="-12" r="3.5" fill="#0d1f2c" opacity="0.92" />
+
+        {/* picket fence */}
+        {[148, 154, 160, 166, 172, 178, 184, 190, 196, 202].map((x) => (
+          <rect key={x} x={x} y="190" width="3" height="30" />
+        ))}
+        <rect x="148" y="200" width="58" height="3" />
+
+        {/* 2 · Palm tree (curved trunk + crown) ─────────────────────── */}
+        <g transform="translate(230 0)">
+          <path d="M 0 220 Q -3 175 6 130 L 14 130 Q 7 175 10 220 Z" />
+          <g transform="translate(7 130)">
+            <path d="M 0 0 Q -28 -22 -50 -10 Q -32 -6 0 5 Z" />
+            <path d="M 0 0 Q -12 -32 -28 -50 Q -10 -22 6 0 Z" />
+            <path d="M 0 0 Q 12 -32 30 -50 Q 12 -22 -4 0 Z" />
+            <path d="M 0 0 Q 28 -22 50 -10 Q 32 -6 0 5 Z" />
+          </g>
+          {/* coconuts */}
+          <circle cx="4" cy="132" r="3" />
+          <circle cx="11" cy="135" r="2.5" />
+        </g>
+
+        {/* 3 · Bar Pavilion ───────────────────────────────────────── */}
+        <g transform="translate(310 0)">
+          {/* gable roof */}
+          <polygon points="-12,90 115,55 242,90" />
+          <rect x="-12" y="90" width="254" height="14" />
+          {/* columns */}
+          <rect x="0" y="104" width="11" height="116" />
+          <rect x="68" y="104" width="11" height="116" />
+          <rect x="151" y="104" width="11" height="116" />
+          <rect x="219" y="104" width="11" height="116" />
+          {/* counter band */}
+          <rect x="-5" y="172" width="240" height="48" />
+          {/* small pennant on roof peak */}
+          <rect x="113" y="38" width="3" height="22" />
+          <polygon points="116,40 132,46 116,52" />
+        </g>
+
+        {/* 4 · Stage / Band-shell ─────────────────────────────────── */}
+        <g transform="translate(580 0)">
+          {/* stage platform */}
+          <rect x="0" y="180" width="170" height="40" />
+          {/* arched roof shell */}
+          <path d="M -8 140 Q 85 56 178 140 L 178 152 L -8 152 Z" />
+          {/* support poles */}
+          <rect x="0" y="148" width="8" height="32" />
+          <rect x="162" y="148" width="8" height="32" />
+          {/* mic stand silhouette on stage */}
+          <rect x="82" y="160" width="3" height="22" />
+          <circle cx="83.5" cy="158" r="4" />
+        </g>
+
+        {/* 5 · Kitchen with chimney ───────────────────────────────── */}
+        <g transform="translate(770 0)">
+          {/* body */}
+          <rect x="0" y="135" width="80" height="85" />
+          {/* peaked roof */}
+          <polygon points="-6,138 40,108 86,138" />
+          {/* chimney */}
+          <rect x="55" y="80" width="14" height="40" />
+          {/* awning */}
+          <polygon points="-6,158 -26,168 -6,178" />
+          {/* small smoke puff */}
+          <circle cx="63" cy="68" r="4" opacity="0.55" />
+          <circle cx="58" cy="58" r="3" opacity="0.4" />
+        </g>
+
+        {/* 6 · Sno-cone / To-go bar walk-up kiosk ─────────────────── */}
+        <g transform="translate(880 0)">
+          {/* body */}
+          <rect x="0" y="160" width="58" height="60" />
+          {/* striped awning peak */}
+          <polygon points="-8,160 29,128 66,160" />
+          {/* shutter window */}
+          <polygon points="-8,176 -22,188 -8,200" />
+          {/* small flag */}
+          <rect x="27" y="108" width="3" height="22" />
+          <polygon points="30,110 42,116 30,122" />
+        </g>
+
+        {/* 7 · Palm tree (smaller) ────────────────────────────────── */}
+        <g transform="translate(970 0)">
+          <path d="M 0 220 Q 4 175 -3 135 L 4 135 Q 0 175 6 220 Z" />
+          <g transform="translate(2 135)">
+            <path d="M 0 0 Q -22 -16 -40 -8 Q -24 -4 0 4 Z" />
+            <path d="M 0 0 Q -8 -26 -20 -42 Q -6 -18 4 0 Z" />
+            <path d="M 0 0 Q 10 -26 24 -40 Q 8 -18 -4 0 Z" />
+            <path d="M 0 0 Q 22 -16 40 -8 Q 24 -4 0 4 Z" />
+          </g>
+        </g>
+
+        {/* 8 · Boardwalk ramp + wave to beach ────────────────────── */}
+        <g transform="translate(1030 0)">
+          {/* ramp */}
+          <polygon points="0,200 60,176 60,184 0,210" />
+          {/* posts */}
+          <rect x="14" y="186" width="3" height="22" />
+          <rect x="38" y="180" width="3" height="22" />
+          {/* wave silhouette closing to the right edge */}
+          <path d="M 60 184 Q 95 168 130 184 Q 165 200 200 184 L 200 220 L 60 220 Z" />
+          {/* second wave crest */}
+          <path d="M 130 184 Q 155 174 180 184 Q 195 192 200 188 L 200 220 L 130 220 Z" opacity="0.6" />
+        </g>
+      </g>
     </svg>
   );
 }
