@@ -54,7 +54,7 @@ export default function HeroLive() {
 
   return (
     <>
-    <section className="relative bg-bron-cream text-bron-navy overflow-hidden isolate">
+    <section className="relative bg-bron-cream text-bron-deep-blue overflow-hidden isolate">
       {/* Paper grain — subtle texture overlay across the whole hero */}
       <div
         aria-hidden
@@ -71,7 +71,7 @@ export default function HeroLive() {
       <BronsTownscape />
 
       {/* Top corner stamp — current local Port A time */}
-      <div className="absolute top-20 right-5 sm:top-24 sm:right-8 z-20 text-[10px] uppercase tracking-[0.25em] font-bold text-bron-navy/75 bg-bron-cream/85 backdrop-blur-sm rounded-full px-3 py-1.5 border border-bron-navy/15">
+      <div className="absolute top-20 right-5 sm:top-24 sm:right-8 z-20 text-[10px] uppercase tracking-[0.25em] font-bold text-bron-deep-blue/75 bg-bron-cream/85 backdrop-blur-sm rounded-full px-3 py-1.5 border border-bron-blue/15">
         {stamp} · Port A
       </div>
 
@@ -88,14 +88,14 @@ export default function HeroLive() {
         {/* The mark — sun rays radiate behind it from the rising sun
             below, no halo behind the type itself */}
         <h1
-          className="relative font-[family-name:var(--font-mark)] leading-none text-bron-navy text-[clamp(4.5rem,16vw,13rem)] tracking-tight mark-breath"
+          className="relative font-[family-name:var(--font-mark)] leading-none text-bron-deep-blue text-[clamp(4.5rem,16vw,13rem)] tracking-tight mark-breath"
           style={{ wordSpacing: "-0.05em" }}
         >
           Bron&apos;s
         </h1>
 
         {/* Segments line — punchy declaration of what Bron's actually is */}
-        <p className="mt-5 sm:mt-7 font-bold text-xs sm:text-base uppercase tracking-[0.2em] text-bron-navy flex items-center justify-center gap-2 sm:gap-3 flex-wrap">
+        <p className="mt-5 sm:mt-7 font-bold text-xs sm:text-base uppercase tracking-[0.2em] text-bron-deep-blue flex items-center justify-center gap-2 sm:gap-3 flex-wrap">
           <span>Beach</span>
           <span className="text-bron-coral">·</span>
           <span>Carts</span>
@@ -108,7 +108,7 @@ export default function HeroLive() {
         </p>
 
         {/* Brand-promise tagline — Bron's hospitality formula */}
-        <p className="mt-3 sm:mt-4 font-display italic text-xl sm:text-3xl text-bron-navy/85 max-w-2xl mx-auto leading-snug">
+        <p className="mt-3 sm:mt-4 font-display italic text-xl sm:text-3xl text-bron-deep-blue/85 max-w-2xl mx-auto leading-snug">
           Set you up at the beach.{" "}
           <span className="text-bron-pink not-italic font-bold">
             See you back at the yard.
@@ -125,7 +125,7 @@ export default function HeroLive() {
           </a>
           <a
             href="#yard"
-            className="px-8 py-4 rounded-full border-2 border-bron-navy text-bron-navy font-bold text-sm uppercase tracking-widest hover:bg-bron-navy hover:text-bron-cream transition-colors"
+            className="px-8 py-4 rounded-full border-2 border-bron-blue text-bron-deep-blue font-bold text-sm uppercase tracking-widest hover:bg-bron-blue hover:text-bron-cream transition-colors"
           >
             Visit the yard
           </a>
@@ -181,10 +181,10 @@ function RisingSun() {
           );
         })}
         {/* Concentric sun disc — yellow / coral / pink / yellow center */}
-        <circle r="92" fill="#F6C026" />
+        <circle r="92" fill="#fcdd06" />
         <circle r="74" fill="#FF8B4D" />
         <circle r="56" fill="#FF4D8B" />
-        <circle r="34" fill="#F6C026" />
+        <circle r="34" fill="#fcdd06" />
       </svg>
     </div>
   );
@@ -203,7 +203,7 @@ function BronsTownscape() {
       preserveAspectRatio="xMidYEnd slice"
       className="absolute inset-x-0 bottom-0 w-full h-[clamp(140px,18vw,240px)] z-0 pointer-events-none"
     >
-      <g fill="#0d1f2c">
+      <g fill="#1f2844">
         {/* Ground baseline */}
         <rect x="0" y="218" width="1600" height="2" />
 
@@ -221,7 +221,7 @@ function BronsTownscape() {
              Q 870 100 935 70
              Q 1010 110 1080 145
              Q 1280 165 1600 165"
-          stroke="#0d1f2c"
+          stroke="#1f2844"
           strokeWidth="1.6"
           fill="none"
         />

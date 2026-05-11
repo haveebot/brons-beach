@@ -15,7 +15,7 @@ export default function HeroMarquee({ items }: { items: string[] }) {
     <div className="relative">
       {/* Scalloped canopy edge — venue tent curve at the top of the marquee */}
       <Scallop />
-      <div className="bg-bron-deep text-bron-cream border-b-4 border-bron-coral overflow-hidden relative">
+      <div className="bg-bron-deep-blue text-bron-cream border-b-4 border-bron-coral overflow-hidden relative">
         {/* String lights — top + bottom edges, big bulbs, multi-color */}
         <Lights position="top" />
 
@@ -43,7 +43,7 @@ function Scallop() {
       className="absolute inset-x-0 -top-4 w-full h-7 z-10"
     >
       {Array.from({ length: count }).map((_, i) => (
-        <circle key={i} cx={15 + i * 30} cy={28} r={16} fill="#0d1f2c" />
+        <circle key={i} cx={15 + i * 30} cy={28} r={16} fill="#1f2844" />
       ))}
     </svg>
   );

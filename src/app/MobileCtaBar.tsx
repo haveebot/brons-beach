@@ -30,7 +30,7 @@ export default function MobileCtaBar() {
         hidden ? "translate-y-full" : "translate-y-0"
       }`}
     >
-      <div className="bg-bron-navy/95 backdrop-blur-md border-t border-white/10 px-3 py-3 grid grid-cols-2 gap-2">
+      <div className="bg-bron-blue/95 backdrop-blur-md border-t border-white/10 px-3 py-3 grid grid-cols-2 gap-2">
         <a
           href="#book"
           className="text-center py-3 rounded-lg bg-bron-coral text-white font-bold text-sm uppercase tracking-widest active:bg-bron-coral-dark"

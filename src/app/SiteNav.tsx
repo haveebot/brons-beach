@@ -26,8 +26,8 @@ export default function SiteNav() {
     <nav
       className={`fixed top-0 inset-x-0 z-40 transition-colors duration-200 ${
         scrolled
-          ? "bg-bron-navy/95 backdrop-blur-md border-b border-white/10"
-          : "bg-bron-navy/70 backdrop-blur-md"
+          ? "bg-bron-blue/95 backdrop-blur-md border-b border-white/10"
+          : "bg-bron-blue/70 backdrop-blur-md"
       }`}
     >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-3">
@@ -41,7 +41,7 @@ export default function SiteNav() {
             alt=""
             width={36}
             height={36}
-            className="rounded-full ring-2 ring-white/30 group-hover:ring-bron-gold transition"
+            className="rounded-full ring-2 ring-white/30 group-hover:ring-bron-orange transition"
             priority
           />
           <span className="font-display text-white text-lg font-bold tracking-tight hidden sm:inline">
@@ -50,16 +50,16 @@ export default function SiteNav() {
         </Link>
 
         <div className="hidden md:flex items-center gap-7 text-[13px] uppercase tracking-widest font-bold text-white/85">
-          <a href="#beach" className="hover:text-bron-gold transition">
+          <a href="#beach" className="hover:text-bron-orange transition">
             Beach
           </a>
-          <a href="#carts" className="hover:text-bron-gold transition">
+          <a href="#carts" className="hover:text-bron-orange transition">
             Carts
           </a>
-          <a href="#yard" className="hover:text-bron-gold transition">
+          <a href="#yard" className="hover:text-bron-orange transition">
             The Yard
           </a>
-          <a href="#events" className="hover:text-bron-gold transition">
+          <a href="#events" className="hover:text-bron-orange transition">
             Events
           </a>
         </div>

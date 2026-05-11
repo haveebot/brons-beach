@@ -53,7 +53,7 @@ export default function HomePage() {
         {/* Booking form */}
         <section
           id="book"
-          className="bg-bron-navy text-white py-14 sm:py-20 scroll-mt-16"
+          className="bg-bron-blue text-white py-14 sm:py-20 scroll-mt-16"
         >
           <div className="max-w-2xl mx-auto px-6">
             <h2 className="font-display text-3xl sm:text-5xl font-bold mb-2 text-center">
@@ -82,11 +82,11 @@ export default function HomePage() {
             {VENUE_ARMS.map((arm) => (
               <article
                 key={arm.slug}
-                className="bg-white rounded-2xl border border-bron-navy/10 p-6 sm:p-8 shadow-sm"
+                className="bg-white rounded-2xl border border-bron-blue/10 p-6 sm:p-8 shadow-sm"
               >
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
                   <div className="sm:col-span-1">
-                    <div className="aspect-square rounded-xl bg-gradient-to-br from-bron-gold/20 to-bron-coral/15 border border-bron-gold/30 flex items-center justify-center">
+                    <div className="aspect-square rounded-xl bg-gradient-to-br from-bron-orange/20 to-bron-coral/15 border border-bron-orange/30 flex items-center justify-center">
                       <span className="text-7xl">{arm.emoji}</span>
                     </div>
                   </div>
@@ -97,10 +97,10 @@ export default function HomePage() {
                     <h3 className="font-display text-2xl sm:text-3xl font-bold mb-3">
                       {arm.label}
                     </h3>
-                    <p className="text-sm text-bron-navy/80 leading-relaxed mb-4">
+                    <p className="text-sm text-bron-deep-blue/80 leading-relaxed mb-4">
                       {arm.description}
                     </p>
-                    <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1.5 text-xs text-bron-navy/75">
+                    <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1.5 text-xs text-bron-deep-blue/75">
                       {arm.highlights.map((h) => (
                         <li key={h} className="flex gap-2">
                           <span className="text-bron-coral">→</span>
@@ -132,7 +132,7 @@ export default function HomePage() {
             <h2 className="font-display text-3xl sm:text-5xl font-bold mb-5">
               The whole island stop, in one yard.
             </h2>
-            <p className="text-base sm:text-lg text-bron-navy/85 leading-relaxed max-w-2xl mx-auto">
+            <p className="text-base sm:text-lg text-bron-deep-blue/85 leading-relaxed max-w-2xl mx-auto">
               Bron&apos;s started as a few golf carts on Avenue G and grew into
               the full island stop you see today: beach setups delivered to
               your sand, carts ready when you are, an outdoor bar with live
@@ -140,7 +140,7 @@ export default function HomePage() {
               and a walk-up window for frozen margaritas, daiquiris, and
               shaved ice.
             </p>
-            <p className="text-base sm:text-lg text-bron-navy/85 leading-relaxed max-w-2xl mx-auto mt-4">
+            <p className="text-base sm:text-lg text-bron-deep-blue/85 leading-relaxed max-w-2xl mx-auto mt-4">
               Locally owned, family-run, friendly as a Texas afternoon. We set
               you up at the beach and see you back at the yard.
             </p>
@@ -150,12 +150,12 @@ export default function HomePage() {
         {/* Private events */}
         <section
           id="events"
-          className="bg-bron-navy text-white scroll-mt-16"
+          className="bg-bron-blue text-white scroll-mt-16"
         >
           <div className="max-w-5xl mx-auto px-6 py-14 sm:py-20">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
               <div>
-                <p className="text-xs uppercase tracking-[0.3em] text-bron-gold font-bold mb-2">
+                <p className="text-xs uppercase tracking-[0.3em] text-bron-orange font-bold mb-2">
                   Private events
                 </p>
                 <h2 className="font-display text-3xl sm:text-5xl font-bold mb-5">
@@ -196,7 +196,7 @@ export default function HomePage() {
         </section>
 
         {/* How it works */}
-        <section className="bg-bron-navy/[0.04] border-y border-bron-navy/10">
+        <section className="bg-bron-blue/[0.04] border-y border-bron-blue/10">
           <div className="max-w-5xl mx-auto px-6 py-14">
             <h2 className="font-display text-2xl sm:text-3xl font-bold text-center mb-10">
               How rentals work
@@ -231,16 +231,16 @@ export default function HomePage() {
               {FAQ.map((q) => (
                 <div
                   key={q.q}
-                  className="bg-white rounded-xl border border-bron-navy/10 p-5 sm:p-6"
+                  className="bg-white rounded-xl border border-bron-blue/10 p-5 sm:p-6"
                 >
-                  <dt className="font-bold text-bron-navy mb-1.5">{q.q}</dt>
-                  <dd className="text-sm text-bron-navy/80 leading-relaxed">
+                  <dt className="font-bold text-bron-deep-blue mb-1.5">{q.q}</dt>
+                  <dd className="text-sm text-bron-deep-blue/80 leading-relaxed">
                     {q.a}
                   </dd>
                 </div>
               ))}
             </dl>
-            <p className="text-center text-sm text-bron-navy/70 mt-8">
+            <p className="text-center text-sm text-bron-deep-blue/70 mt-8">
               More questions?{" "}
               <a
                 href={`sms:${CONTACT.phoneTel}`}
@@ -285,7 +285,7 @@ function SectionHeading({
       <h2 className="font-display text-3xl sm:text-5xl font-bold mb-3 tracking-tight">
         {title}
       </h2>
-      <p className="text-sm sm:text-base text-bron-navy/70 max-w-xl mx-auto">
+      <p className="text-sm sm:text-base text-bron-deep-blue/70 max-w-xl mx-auto">
         {sub}
       </p>
     </div>
@@ -295,13 +295,13 @@ function SectionHeading({
 function Step({ num, title, body }: { num: number; title: string; body: string }) {
   return (
     <div>
-      <p className="font-bold text-bron-navy mb-2 flex items-center gap-2">
+      <p className="font-bold text-bron-deep-blue mb-2 flex items-center gap-2">
         <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-bron-coral text-white text-xs font-bold">
           {num}
         </span>
         {title}
       </p>
-      <p className="text-bron-navy/75 leading-relaxed pl-9">{body}</p>
+      <p className="text-bron-deep-blue/75 leading-relaxed pl-9">{body}</p>
     </div>
   );
 }
@@ -311,9 +311,9 @@ function LiveMusicPanel() {
   const tonightLabel = "Tonight";
 
   return (
-    <div className="mb-8 rounded-2xl bg-gradient-to-br from-bron-navy via-[#2a4a63] to-bron-sky text-white p-6 sm:p-7 shadow-md">
+    <div className="mb-8 rounded-2xl bg-gradient-to-br from-bron-blue to-bron-light-blue text-white p-6 sm:p-7 shadow-md">
       <div className="flex items-baseline justify-between gap-4 mb-4">
-        <p className="text-[10px] sm:text-xs uppercase tracking-[0.3em] text-bron-gold font-bold">
+        <p className="text-[10px] sm:text-xs uppercase tracking-[0.3em] text-bron-orange font-bold">
           🎶 Live music · Bron&apos;s Backyard
         </p>
         <p className="text-[10px] uppercase tracking-widest text-white/50">
@@ -337,7 +337,7 @@ function LiveMusicPanel() {
               >
                 <span
                   className={`text-[10px] uppercase tracking-widest font-bold ${
-                    dayLabel === tonightLabel ? "text-bron-gold" : "text-white/60"
+                    dayLabel === tonightLabel ? "text-bron-orange" : "text-white/60"
                   } w-20 shrink-0`}
                 >
                   {dayLabel}
@@ -382,7 +382,7 @@ function RentalCommandTile({
   return (
     <Link
       href={href}
-      className={`group relative aspect-[5/4] sm:aspect-[6/5] rounded-3xl overflow-hidden block shadow-xl shadow-bron-navy/15 ring-1 ring-bron-navy/10 hover:shadow-2xl hover:shadow-bron-navy/30 transition-shadow ${bg}`}
+      className={`group relative aspect-[5/4] sm:aspect-[6/5] rounded-3xl overflow-hidden block shadow-xl shadow-bron-blue/15 ring-1 ring-bron-blue/10 hover:shadow-2xl hover:shadow-bron-blue/30 transition-shadow ${bg}`}
     >
       {/* Subtle paper-grain noise for warmth */}
       <div
@@ -474,7 +474,7 @@ function SiteFooter() {
   const directionsHref = `https://maps.apple.com/?address=${encodeURIComponent(CONTACT.address)}`;
 
   return (
-    <footer className="bg-bron-navy text-white">
+    <footer className="bg-bron-blue text-white">
       <div className="max-w-5xl mx-auto px-6 py-12 sm:py-16">
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-10">
           {/* Brand block */}
@@ -496,7 +496,7 @@ function SiteFooter() {
 
           {/* Visit */}
           <div>
-            <p className="text-xs uppercase tracking-widest text-bron-gold font-bold mb-3">
+            <p className="text-xs uppercase tracking-widest text-bron-orange font-bold mb-3">
               Visit
             </p>
             <p className="text-sm text-white/85 mb-1">{CONTACT.address}</p>
@@ -509,7 +509,7 @@ function SiteFooter() {
               href={directionsHref}
               target="_blank"
               rel="noopener"
-              className="inline-block text-bron-gold text-sm font-bold underline-offset-4 hover:underline"
+              className="inline-block text-bron-orange text-sm font-bold underline-offset-4 hover:underline"
             >
               Get directions →
             </a>
@@ -517,12 +517,12 @@ function SiteFooter() {
 
           {/* Reach us */}
           <div>
-            <p className="text-xs uppercase tracking-widest text-bron-gold font-bold mb-3">
+            <p className="text-xs uppercase tracking-widest text-bron-orange font-bold mb-3">
               Reach us
             </p>
             <a
               href={`tel:${CONTACT.phoneTel}`}
-              className="block text-base font-bold text-white hover:text-bron-gold mb-2"
+              className="block text-base font-bold text-white hover:text-bron-orange mb-2"
             >
               {CONTACT.phone}
             </a>

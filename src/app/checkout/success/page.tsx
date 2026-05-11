@@ -25,21 +25,21 @@ export default async function SuccessPage({
       <h1 className="font-display text-3xl sm:text-4xl font-bold mb-4">
         You&apos;re set up.
       </h1>
-      <p className="text-lg text-[#1a3a52]/80 mb-2">
+      <p className="text-lg text-bron-deep-blue/80 mb-2">
         Your reservation is confirmed. We just sent your confirmation by
         email.
       </p>
-      <p className="text-sm text-[#1a3a52]/70 mb-10">
+      <p className="text-sm text-bron-deep-blue/70 mb-10">
         Our crew will text you the morning of your rental with the exact
         setup time. If you need to reach us before then — text the same
         number we&apos;ll text from.
       </p>
 
-      <div className="bg-white rounded-2xl border border-[#1a3a52]/10 p-6 mb-8 text-left">
-        <p className="text-xs uppercase tracking-widest text-[#1a3a52]/60 mb-2">
+      <div className="bg-white rounded-2xl border border-bron-blue/10 p-6 mb-8 text-left">
+        <p className="text-xs uppercase tracking-widest text-bron-deep-blue/60 mb-2">
           What&apos;s next
         </p>
-        <ul className="space-y-3 text-sm text-[#1a3a52]/85">
+        <ul className="space-y-3 text-sm text-bron-deep-blue/85">
           <li>
             <strong>Morning of:</strong> Crew texts you the setup time
             window. Usually within an hour of sunrise.
@@ -62,7 +62,7 @@ export default async function SuccessPage({
 
       <Link
         href="/"
-        className="inline-block px-6 py-3 rounded-full bg-[#1a3a52] text-white font-bold text-sm uppercase tracking-widest hover:bg-[#2a4a63]"
+        className="inline-block px-6 py-3 rounded-full bg-bron-blue text-white font-bold text-sm uppercase tracking-widest hover:bg-bron-deep-blue"
       >
         ← Back to Bron&apos;s
       </Link>
