@@ -177,68 +177,93 @@ function RisingSun() {
   );
 }
 
-/** Frond-bouquet decorations peeking in from the bottom corners. No
- *  trunk — just a fan of stylized palm fronds radiating up and inward,
- *  so there's nothing to "cut off" against the marquee seam. */
+/** Palm-frond crowns peeking in from the bottom corners. Banana-curved
+ *  fronds with pinnate sub-leaflet detail — actually palm-shaped, not
+ *  pot-leaf-shaped. Fronds spread including some that droop horizontally
+ *  / down-outward (real palm crown behavior). */
 function PalmFrame() {
   return (
     <>
-      <div className="hidden md:block absolute left-[-1rem] bottom-2 w-48 lg:w-64 z-0 pointer-events-none">
+      <div className="hidden md:block absolute left-[-2rem] bottom-1 w-56 lg:w-72 z-0 pointer-events-none">
         <PalmFronds flip={false} />
       </div>
-      <div className="hidden md:block absolute right-[-1rem] bottom-2 w-48 lg:w-64 z-0 pointer-events-none">
+      <div className="hidden md:block absolute right-[-2rem] bottom-1 w-56 lg:w-72 z-0 pointer-events-none">
         <PalmFronds flip={true} />
       </div>
     </>
   );
 }
 
-/** Six-frond bouquet, fronds radiating up + outward from a single base
- *  point, no trunk. Drawn in a square viewBox so width:auto sizes
- *  proportionally without cropping. */
 function PalmFronds({ flip }: { flip: boolean }) {
-  // Each frond: angle from vertical (negative = lean left, positive = right)
-  // and length scalar. Bouquet fans across ~180° centered on straight-up.
+  // Crown peeking from the LEFT corner — fronds spread up + to the right
+  // (into the scene), with one drooping further right and one peeking
+  // back off-screen. flip=true mirrors via scaleX for the right corner.
   const fronds: { angle: number; length: number }[] = [
-    { angle: -78, length: 0.9 },
-    { angle: -50, length: 1.0 },
-    { angle: -22, length: 1.05 },
-    { angle: 10, length: 1.0 },
-    { angle: 38, length: 0.95 },
-    { angle: 68, length: 0.85 },
+    { angle: -55, length: 0.85 }, // up-left, mostly off-screen
+    { angle: -20, length: 1.05 }, // mostly up, slight lean
+    { angle: 20, length: 1.1 },   // up-right, longest
+    { angle: 60, length: 1.0 },   // right
+    { angle: 100, length: 0.85 }, // drooping right (horizontal+)
+    { angle: 135, length: 0.7 },  // drooping further (sweeping down)
   ];
   return (
     <svg
-      viewBox="0 0 200 200"
+      viewBox="-160 -170 320 200"
       className="w-full h-auto"
       style={{ transform: flip ? "scaleX(-1)" : undefined }}
     >
-      <g transform="translate(100 200)">
-        {fronds.map((f, i) => (
-          <g key={i} transform={`rotate(${f.angle})`}>
-            {/* Leaf — thin pointed ellipse rising from origin */}
-            <path
-              d={`M 0 0 Q -${10 * f.length} -${75 * f.length}, 0 -${150 * f.length} Q ${10 * f.length} -${75 * f.length}, 0 0 Z`}
-              fill="#0d1f2c"
-              opacity={0.88}
-            />
-            {/* Center vein — thin lighter line */}
-            <line
-              x1="0"
-              y1="0"
-              x2="0"
-              y2={-150 * f.length}
-              stroke="#1a3a52"
-              strokeWidth="1.5"
-              opacity="0.45"
-            />
-          </g>
-        ))}
-        {/* Tiny coconut cluster at the base */}
-        <circle cx="-3" cy="-4" r="4" fill="#0d1f2c" opacity="0.85" />
-        <circle cx="4" cy="-3" r="3.5" fill="#0d1f2c" opacity="0.85" />
-        <circle cx="0" cy="-9" r="3" fill="#0d1f2c" opacity="0.85" />
-      </g>
+      {fronds.map((f, i) => (
+        <g key={i} transform={`rotate(${f.angle})`}>
+          {/* Banana-curved frond — wider in the middle, tapered tip,
+              arches outward then curls back. */}
+          <path
+            d={`
+              M 0 0
+              Q ${22 * f.length} ${-45 * f.length}, ${18 * f.length} ${-95 * f.length}
+              Q ${10 * f.length} ${-130 * f.length}, 0 ${-140 * f.length}
+              Q ${-10 * f.length} ${-130 * f.length}, ${-18 * f.length} ${-95 * f.length}
+              Q ${-22 * f.length} ${-45 * f.length}, 0 0
+              Z
+            `}
+            fill="#0d1f2c"
+            opacity={0.9}
+          />
+          {/* Pinnate sub-leaflet veins — short tick lines along the
+              central rachis, giving the feathered palm-frond texture. */}
+          {[0.25, 0.42, 0.58, 0.74, 0.86].map((p) => {
+            const y = -140 * f.length * p;
+            const x = 9 * f.length * (1 - p * 0.5);
+            return (
+              <g key={p}>
+                <line
+                  x1="0"
+                  y1={y}
+                  x2={x}
+                  y2={y - 6 * f.length}
+                  stroke="#1a3a52"
+                  strokeWidth="1.2"
+                  opacity="0.55"
+                  strokeLinecap="round"
+                />
+                <line
+                  x1="0"
+                  y1={y}
+                  x2={-x}
+                  y2={y - 6 * f.length}
+                  stroke="#1a3a52"
+                  strokeWidth="1.2"
+                  opacity="0.55"
+                  strokeLinecap="round"
+                />
+              </g>
+            );
+          })}
+        </g>
+      ))}
+      {/* Coconut cluster at the base */}
+      <circle cx="-4" cy="-4" r="5" fill="#0d1f2c" opacity="0.92" />
+      <circle cx="5" cy="-3" r="4" fill="#0d1f2c" opacity="0.92" />
+      <circle cx="0" cy="-12" r="3.5" fill="#0d1f2c" opacity="0.92" />
     </svg>
   );
 }
