@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { BEACH_PRODUCTS, CART_PRODUCTS, type Product } from "@/data/products";
+import Link from "next/link";
 import { VENUE_ARMS, HOURS, CONTACT } from "@/data/venue";
 import {
   upcomingActs,
@@ -21,38 +21,29 @@ export default function HomePage() {
       <main className="pb-20 md:pb-0">
         <HeroLive />
 
-        {/* Beach Rentals */}
+        {/* Pick your rental — two commanding tiles, no product drill-down */}
         <section
-          id="beach"
-          className="max-w-5xl mx-auto px-6 py-14 sm:py-20 scroll-mt-16"
+          id="rentals"
+          className="bg-bron-sand scroll-mt-16"
         >
-          <SectionHeading
-            eyebrow="🏖 Beach Rentals"
-            title="Set up at your spot"
-            sub="Every beach rental includes setup at your access point and pickup at end of day. You don't haul anything."
-          />
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            {BEACH_PRODUCTS.map((p) => (
-              <ProductCard key={p.slug} product={p} />
-            ))}
-          </div>
-        </section>
-
-        {/* Cart Rentals */}
-        <section
-          id="carts"
-          className="bg-bron-navy/[0.04] border-y border-bron-navy/10"
-        >
-          <div className="max-w-5xl mx-auto px-6 py-14 sm:py-20 scroll-mt-16">
-            <SectionHeading
-              eyebrow="🛺 Golf Carts"
-              title="Cruise the island"
-              sub="Pick up at our shop on Avenue G or we'll drop the cart at your rental house. Street-legal, full tank, ready to roll."
-            />
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              {CART_PRODUCTS.map((p) => (
-                <ProductCard key={p.slug} product={p} />
-              ))}
+          <div className="max-w-5xl mx-auto px-6 py-14 sm:py-20">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
+              <RentalCommandTile
+                href="#book"
+                bgSrc="/images/bron-halo.jpg"
+                alt="Aerial of the boardwalk to the beach"
+                eyebrow="🏖 Beach Rentals"
+                title="Rent the Beach"
+                sub="Cabanas, umbrellas, chairs, coolers — delivered to your sand and broken down at end of day."
+              />
+              <RentalCommandTile
+                href="#book"
+                bgSrc="/images/bron-design.png"
+                alt="Bron's branded golf cart on the beach"
+                eyebrow="🛺 Golf Carts"
+                title="Rent Carts"
+                sub="4 or 6 passenger, street-legal, full tank — pick up on Avenue G or we drop at your rental."
+              />
             </div>
           </div>
         </section>
@@ -372,47 +363,50 @@ function LiveMusicPanel() {
   );
 }
 
-function ProductCard({ product: p }: { product: Product }) {
+function RentalCommandTile({
+  href,
+  bgSrc,
+  alt,
+  eyebrow,
+  title,
+  sub,
+}: {
+  href: string;
+  bgSrc: string;
+  alt: string;
+  eyebrow: string;
+  title: string;
+  sub: string;
+}) {
   return (
-    <article className="bg-white rounded-2xl border border-bron-navy/10 overflow-hidden shadow-sm hover:shadow-md transition-shadow flex flex-col group">
-      <div className="aspect-[16/9] relative bg-gradient-to-br from-bron-gold/25 via-bron-gold/10 to-bron-sky/15 overflow-hidden">
-        {p.imageUrl ? (
-          <Image
-            src={p.imageUrl}
-            alt={p.label}
-            fill
-            sizes="(min-width: 640px) 50vw, 100vw"
-            className="object-cover group-hover:scale-105 transition-transform duration-500"
-          />
-        ) : (
-          <div className="absolute inset-0 flex items-center justify-center">
-            <span className="text-7xl drop-shadow-sm">{p.emoji}</span>
-          </div>
-        )}
-      </div>
-      <div className="p-6 flex flex-col flex-1">
-        <h3 className="font-display text-xl sm:text-2xl font-bold mb-2">
-          {p.label}
-        </h3>
-        <p className="text-sm text-bron-navy/80 leading-relaxed mb-4 flex-1">
-          {p.longDescription}
+    <Link
+      href={href}
+      className="group relative aspect-[5/4] sm:aspect-[6/5] rounded-2xl overflow-hidden block shadow-xl shadow-bron-navy/15 ring-1 ring-bron-navy/10 hover:shadow-2xl hover:shadow-bron-navy/25 transition-shadow"
+    >
+      <Image
+        src={bgSrc}
+        alt={alt}
+        fill
+        sizes="(min-width: 768px) 50vw, 100vw"
+        className="object-cover group-hover:scale-105 transition-transform duration-700"
+      />
+      {/* Dark gradient for text legibility from bottom */}
+      <div className="absolute inset-0 bg-gradient-to-t from-bron-navy/90 via-bron-navy/40 to-transparent" />
+      <div className="absolute inset-x-0 bottom-0 p-6 sm:p-8 text-white">
+        <p className="text-[11px] sm:text-xs uppercase tracking-[0.3em] text-bron-gold font-bold mb-2">
+          {eyebrow}
         </p>
-        <div className="flex items-baseline justify-between border-t border-bron-navy/10 pt-4">
-          <span className="font-display text-3xl font-bold text-bron-coral">
-            ${(p.dailyTotalCents / 100).toFixed(0)}
-          </span>
-          <span className="text-xs uppercase tracking-widest text-bron-navy/60">
-            per day
-          </span>
-        </div>
-        <a
-          href="#book"
-          className="mt-4 block text-center px-4 py-2.5 rounded-lg bg-bron-coral text-white font-bold text-xs uppercase tracking-widest hover:bg-bron-coral-dark transition-colors"
-        >
-          Reserve
-        </a>
+        <h3 className="font-display text-3xl sm:text-5xl font-bold mb-2 leading-none">
+          {title}
+        </h3>
+        <p className="text-sm sm:text-base text-white/85 leading-snug max-w-md mb-4">
+          {sub}
+        </p>
+        <span className="inline-flex items-center gap-2 text-xs uppercase tracking-widest font-bold text-bron-coral group-hover:gap-3 group-hover:text-bron-gold transition-all">
+          Reserve <span aria-hidden>→</span>
+        </span>
       </div>
-    </article>
+    </Link>
   );
 }
 
