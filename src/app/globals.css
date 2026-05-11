@@ -5,8 +5,8 @@
     BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --font-display: var(--font-display), "Iowan Old Style", "Hoefler Text",
     Georgia, serif;
-  --font-mark: var(--font-mark), Impact, "Arial Black", sans-serif;
-  --font-marquee: var(--font-marquee), Impact, "Arial Black", sans-serif;
+  --font-marquee: var(--font-marquee), "Bebas Neue", Impact, "Arial Black",
+    sans-serif;
 
   /* Bron's brand anchors */
   --color-bron-sand: #f5efe2;

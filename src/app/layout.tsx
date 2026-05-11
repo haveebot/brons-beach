@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
-import { Bungee, Bungee_Shade, Fraunces, Inter } from "next/font/google";
+import { Fraunces, Inter } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 
 const fraunces = Fraunces({
@@ -9,18 +10,10 @@ const fraunces = Fraunces({
   axes: ["opsz", "SOFT"],
 });
 
-// Vintage signage display — built-in 3D shadow, perfect for marquee mark
-const bungeeShade = Bungee_Shade({
-  weight: "400",
-  subsets: ["latin"],
-  variable: "--font-mark",
-  display: "swap",
-});
-
-// Marquee letterboard — bold blocky condensed
-const bungee = Bungee({
-  weight: "400",
-  subsets: ["latin"],
+// Marquee letterboard — Bison Demibold (Ellen Luff). Tall condensed sans
+// with the muscular geometry the vintage letterboard band needs.
+const bison = localFont({
+  src: "./fonts/Bison-DemiBold.ttf",
   variable: "--font-marquee",
   display: "swap",
 });
@@ -84,7 +77,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${fraunces.variable} ${bungeeShade.variable} ${bungee.variable} ${inter.variable}`}
+      className={`${fraunces.variable} ${bison.variable} ${inter.variable}`}
     >
       <body className="antialiased font-sans">{children}</body>
     </html>
