@@ -42,6 +42,7 @@ even though both operate in Port Aransas — see
 | `feedback_show_dont_tell_brand.md` | Earned brand positioning is never declared on the site (no "Kleenex of X" claims on customer surfaces) |
 | `feedback_substance_flag_before_grammar.md` | When reviewing operator-drafted SMS / email, check substance against latest context BEFORE the grammar pass |
 | `feedback_pal_self_provider_rule.md` | Tenant-domain rule — explains why Bron's lives on `bronsbeach.com` instead of `theportalocal.com/rent` |
+| `feedback_launch_prompt_autonomy.md` | Launch prompts must let Claude run the full technical chain autonomously; only stop for human-judgment inputs (filed 2026-05-11 after Collie's brons-beach launch) |
 
 ## How your work is captured
 
