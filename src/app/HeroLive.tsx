@@ -94,9 +94,21 @@ export default function HeroLive() {
           Bron&apos;s
         </h1>
 
-        {/* Tagline — captures the real operating model: beach delivery
-            + yard hangouts. Yard gets the brand-color emphasis. */}
-        <p className="mt-6 sm:mt-8 font-display italic text-xl sm:text-3xl text-bron-navy/85 max-w-2xl mx-auto leading-snug">
+        {/* Segments line — punchy declaration of what Bron's actually is */}
+        <p className="mt-5 sm:mt-7 font-bold text-xs sm:text-base uppercase tracking-[0.2em] text-bron-navy flex items-center justify-center gap-2 sm:gap-3 flex-wrap">
+          <span>Beach</span>
+          <span className="text-bron-coral">·</span>
+          <span>Carts</span>
+          <span className="text-bron-coral">·</span>
+          <span>Bar</span>
+          <span className="text-bron-coral">·</span>
+          <span>Kitchen</span>
+          <span className="text-bron-coral">·</span>
+          <span>Music</span>
+        </p>
+
+        {/* Brand-promise tagline — Bron's hospitality formula */}
+        <p className="mt-3 sm:mt-4 font-display italic text-xl sm:text-3xl text-bron-navy/85 max-w-2xl mx-auto leading-snug">
           Set you up at the beach.{" "}
           <span className="text-bron-pink not-italic font-bold">
             See you back at the yard.
@@ -178,115 +190,92 @@ function RisingSun() {
   );
 }
 
-/** Seaside-FL-style Bron's townscape silhouette running across the
- *  bottom of the hero. v2: full Bron's facet vocabulary (cart shack +
- *  parked golf cart, open-air bar pavilion with stools + tiki torches,
- *  band-shell stage with mic and speakers, picnic table, cornhole,
- *  kitchen with chimney + smoke, sno-cone walk-up kiosk, family cabana
- *  with shade cloth, beach umbrella + chair setup, lifeguard chair,
- *  dunes, wave, pelican overhead) joined by picket fences and string
- *  lights. Better palms — curved trunks, drooping multi-frond crowns.
- *
- *  Wider viewBox (1900) so there's room for the full vocabulary; slice
- *  preservation lets it bleed past edges on narrow viewports while
- *  showing more on wide screens.
+/** Bron's townscape — Seaside-style continuous block silhouette. v3
+ *  packs every structure flush so the runner reads as ONE unbroken
+ *  beach-town skyline (no scattered objects, no random shapes in the
+ *  gaps). Each shape carries meaning by its silhouette alone — same
+ *  vocabulary as actual Seaside Style merch.
  */
 function BronsTownscape() {
   return (
     <svg
-      viewBox="0 0 1900 220"
+      viewBox="0 0 1600 220"
       preserveAspectRatio="xMidYEnd slice"
       className="absolute inset-x-0 bottom-0 w-full h-[clamp(140px,18vw,240px)] z-0 pointer-events-none"
     >
       <g fill="#0d1f2c">
         {/* Ground baseline */}
-        <rect x="0" y="218" width="1900" height="2" />
+        <rect x="0" y="218" width="1600" height="2" />
 
-        {/* Continuous festoon string lights — sweeps edge to edge */}
+        {/* Continuous festoon string lights — sweeps edge to edge,
+            attaching to the rooftops + palm crowns of a continuous block */}
         <path
-          d="M 0 110
-             Q 70 130 125 70
-             Q 215 90 305 55
-             Q 430 110 545 70
-             Q 700 105 850 55
-             Q 1060 110 1280 80
-             Q 1330 105 1380 110
-             Q 1416 100 1465 130
-             Q 1605 138 1670 135
-             Q 1790 145 1900 148"
+          d="M 0 100
+             Q 30 115 100 60
+             Q 150 80 195 75
+             Q 280 105 335 35
+             Q 500 100 565 35
+             Q 650 100 700 70
+             Q 740 90 770 90
+             Q 800 90 825 75
+             Q 870 100 935 70
+             Q 1010 110 1080 145
+             Q 1280 165 1600 165"
           stroke="#0d1f2c"
           strokeWidth="1.6"
           fill="none"
         />
         {[
-          [27, 116], [54, 112], [82, 98], [108, 85],
-          [161, 62], [197, 71], [232, 74], [269, 70],
-          [355, 77], [404, 86], [451, 87], [498, 80],
-          [606, 78], [667, 85], [729, 84], [790, 75],
-          [934, 78], [1020, 89], [1106, 94], [1192, 93],
-          [1310, 100], [1360, 110], [1430, 110],
-          [1492, 130], [1605, 140], [1739, 144], [1832, 149],
+          [16, 108], [42, 108], [70, 96], [92, 75],
+          [122, 64], [152, 76], [180, 78],
+          [225, 88], [265, 95], [305, 75],
+          [375, 76], [430, 75], [480, 71], [535, 65],
+          [595, 73], [625, 80], [665, 85],
+          [710, 78], [745, 88], [785, 88], [820, 78],
+          [855, 84], [890, 85], [920, 80],
+          [970, 95], [1020, 115], [1060, 135], [1140, 158],
+          [1230, 162], [1340, 164], [1450, 165], [1560, 166],
         ].map(([x, y], i) => (
           <circle key={`bulb-${i}`} cx={x} cy={y} r="2.2" />
         ))}
 
-        {/* 1 · Cart Rental Shack — simple silhouette + dome roof */}
-        <g transform="translate(70 0)">
-          <rect x="0" y="118" width="105" height="102" />
-          {/* simple dome roof — single curve, no fringe */}
-          <path d="M -10 122 Q 52 70 115 122 L 115 130 L -10 130 Z" />
+        {/* 1 · Cart Rental Shack — packed at the left edge */}
+        <g transform="translate(20 0)">
+          <rect x="0" y="118" width="100" height="102" />
+          {/* dome roof */}
+          <path d="M -8 122 Q 50 70 108 122 L 108 130 L -8 130 Z" />
           {/* sign band */}
-          <rect x="20" y="146" width="65" height="14" />
+          <rect x="22" y="146" width="56" height="13" />
         </g>
 
-        {/* 2 · Parked Golf Cart — clean silhouette */}
-        <g transform="translate(198 0)">
-          {/* canopy */}
-          <rect x="-2" y="156" width="74" height="6" rx="2" />
-          {/* canopy posts */}
-          <rect x="3" y="162" width="2.5" height="22" />
-          <rect x="64" y="162" width="2.5" height="22" />
-          {/* body chassis */}
-          <rect x="-2" y="184" width="74" height="20" rx="4" />
-          {/* seat backs */}
-          <rect x="8" y="170" width="22" height="14" rx="2" />
-          <rect x="42" y="170" width="22" height="14" rx="2" />
-          {/* wheels — small */}
-          <circle cx="14" cy="206" r="5.5" />
-          <circle cx="56" cy="206" r="5.5" />
-          {/* steering wheel */}
-          <rect x="35" y="176" width="2" height="8" />
-          <circle cx="36" cy="174" r="2" />
-        </g>
+        {/* 2 · Tall Palm — sits between cart shack and bar pavilion */}
+        <Palm x={155} scale={1.6} variant="tall" />
 
-        {/* 3 · Tall Palm Tree */}
-        <Palm x={295} scale={1.6} variant="tall" />
-
-        {/* 4 · Bar Pavilion — wide, single-arch palm-thatch, 4 posts */}
-        <g transform="translate(415 0)">
-          {/* simple arched roof — one broad sweep, no peaks no fringe */}
-          <path d="M -16 108 Q 130 30 276 108 L 276 118 L -16 118 Z" />
-          {/* roof pennant on center */}
-          <rect x="128" y="38" width="3" height="22" />
-          <polygon points="131,40 147,46 131,52" />
+        {/* 3 · Bar Pavilion — packed flush against palm 1 / stage */}
+        <g transform="translate(195 0)">
+          {/* arched roof — broad single sweep */}
+          <path d="M -8 108 Q 140 30 288 108 L 288 118 L -8 118 Z" />
+          {/* center pennant */}
+          <rect x="138" y="38" width="3" height="22" />
+          <polygon points="141,40 157,46 141,52" />
           {/* posts */}
-          {[0, 80, 170, 252].map((cx) => (
+          {[0, 92, 188, 277].map((cx) => (
             <rect key={cx} x={cx} y="118" width="11" height="102" />
           ))}
-          {/* counter band — clean, no stools */}
-          <rect x="-6" y="178" width="280" height="42" />
+          {/* counter */}
+          <rect x="-6" y="178" width="294" height="42" />
         </g>
 
-        {/* 5 · Stage / Band-shell — single arched palm-thatch + bongo */}
-        <g transform="translate(750 0)">
+        {/* 4 · Stage / Band-shell — packed flush against bar pavilion */}
+        <g transform="translate(495 0)">
+          {/* arched palm-thatch roof */}
+          <path d="M -8 154 Q 100 30 208 154 Z" />
           {/* stage platform */}
           <rect x="0" y="180" width="200" height="40" />
-          {/* arched palm-thatch roof — single sweep, taller in middle */}
-          <path d="M -10 154 Q 100 40 210 154 Z" />
           {/* support poles */}
           <rect x="0" y="148" width="8" height="34" />
-          <rect x="194" y="148" width="8" height="34" />
-          {/* Bongo drums — Bron's signal on stage */}
+          <rect x="192" y="148" width="8" height="34" />
+          {/* Bongo drums — Bron's signal */}
           <g transform="translate(86 164)">
             <rect x="0" y="2" width="8" height="14" rx="1" />
             <rect x="9" y="0" width="10" height="16" rx="1" />
@@ -294,57 +283,44 @@ function BronsTownscape() {
           </g>
         </g>
 
-        {/* 6 · Kitchen — body + dome roof + chimney with one smoke puff */}
-        <g transform="translate(1210 0)">
-          <rect x="0" y="148" width="90" height="72" />
-          <path d="M -8 150 Q 45 90 98 150 L 98 158 L -8 158 Z" />
+        {/* 5 · Kitchen — packed flush against stage */}
+        <g transform="translate(710 0)">
+          <rect x="0" y="148" width="78" height="72" />
+          <path d="M -8 150 Q 39 90 86 150 L 86 158 L -8 158 Z" />
           {/* chimney */}
-          <rect x="62" y="80" width="14" height="40" />
+          <rect x="54" y="80" width="14" height="40" />
           {/* one smoke puff */}
-          <circle cx="69" cy="60" r="6" opacity="0.55" />
+          <circle cx="61" cy="60" r="6" opacity="0.55" />
         </g>
 
-        {/* 7 · Sno-cone / To-go Bar — body + dome roof + flag */}
-        <g transform="translate(1320 0)">
-          <rect x="0" y="170" width="64" height="50" />
-          <path d="M -10 172 Q 32 130 74 172 L 74 178 L -10 178 Z" />
+        {/* 6 · Sno-cone / To-go Bar — packed flush against kitchen */}
+        <g transform="translate(800 0)">
+          <rect x="0" y="170" width="58" height="50" />
+          <path d="M -8 172 Q 29 130 66 172 L 66 178 L -8 178 Z" />
           {/* flag */}
-          <rect x="30" y="110" width="3" height="22" />
-          <polygon points="33,112 47,118 33,124" />
+          <rect x="27" y="110" width="3" height="22" />
+          <polygon points="30,112 44,118 30,124" />
         </g>
 
-        {/* 8 · Smaller Palm Tree */}
-        <Palm x={1410} scale={1.15} variant="short" />
+        {/* 7 · Smaller Palm — bridges sno-cone and cabana */}
+        <Palm x={875} scale={1.15} variant="short" />
 
-        {/* 9 · Family Cabana — single arched thatch + 4 posts (clean) */}
-        <g transform="translate(1465 0)">
-          <path d="M -6 138 Q 75 80 156 138 L 156 144 L -6 144 Z" />
-          {[0, 50, 94, 144].map((cx) => (
+        {/* 8 · Family Cabana — packed flush after palm 2 */}
+        <g transform="translate(910 0)">
+          <path d="M -6 138 Q 70 80 146 138 L 146 144 L -6 144 Z" />
+          {[0, 47, 91, 134].map((cx) => (
             <rect key={cx} x={cx} y="144" width="6" height="76" />
           ))}
         </g>
 
-        {/* — Hammock slung between the small palm and the cabana — */}
-        <g>
-          <path
-            d="M 1430 168 Q 1450 200, 1467 184"
-            stroke="#0d1f2c"
-            strokeWidth="2.5"
-            fill="none"
-          />
-          <path d="M 1430 168 Q 1450 202, 1467 184 Q 1450 192, 1430 174 Z" />
-        </g>
-
-        {/* 10 · Beach Umbrella + chair set — simplified */}
-        <g transform="translate(1635 0)">
-          {/* umbrella canopy — clean half circle */}
-          <path d="M 0 168 A 38 38 0 0 1 76 168 Z" />
-          {/* pole */}
-          <rect x="36" y="168" width="3" height="48" />
-          {/* sand mound */}
-          <ellipse cx="38" cy="216" rx="22" ry="4" />
-          {/* one beach chair */}
-          <g transform="translate(70 196)">
+        {/* 9 · Beach Umbrella + chair — packed flush after cabana,
+              transitions from yard to beach */}
+        <g transform="translate(1075 0)">
+          {/* umbrella canopy */}
+          <path d="M 0 168 A 36 36 0 0 1 72 168 Z" />
+          <rect x="34" y="168" width="3" height="48" />
+          <ellipse cx="36" cy="216" rx="22" ry="4" />
+          <g transform="translate(66 196)">
             <rect x="0" y="0" width="24" height="3" />
             <rect x="0" y="3" width="3" height="14" />
             <rect x="20" y="3" width="3" height="14" />
@@ -352,16 +328,18 @@ function BronsTownscape() {
           </g>
         </g>
 
-        {/* 11 · Boardwalk ramp + wave + pelican (beach edge) */}
-        <g transform="translate(1735 0)">
-          <polygon points="0,205 70,180 70,188 0,213" />
-          <rect x="16" y="190" width="3" height="22" />
-          <rect x="44" y="184" width="3" height="22" />
+        {/* 10 · Boardwalk ramp — packed flush, leading to the wave */}
+        <g transform="translate(1185 0)">
+          <polygon points="0,205 80,180 80,188 0,213" />
+          <rect x="20" y="190" width="3" height="22" />
+          <rect x="50" y="184" width="3" height="22" />
         </g>
-        {/* Single wave that closes the runner */}
-        <path d="M 1810 198 Q 1860 178 1910 198 Q 1960 218 2010 198 L 2010 220 L 1810 220 Z" />
-        {/* Pelican silhouette overhead */}
-        <g transform="translate(1820 70)">
+
+        {/* 11 · Wave — closes the runner, bleeds past right edge */}
+        <path d="M 1265 198 Q 1330 178 1395 198 Q 1460 218 1525 198 Q 1590 178 1655 198 L 1655 220 L 1265 220 Z" />
+
+        {/* Pelican silhouette flying over the wave */}
+        <g transform="translate(1430 64)">
           <path d="M 0 0 Q 8 -8 16 0 Q 24 -8 32 0 Q 28 4 16 4 Q 4 4 0 0 Z" />
           <ellipse cx="16" cy="6" rx="4" ry="2" />
         </g>
