@@ -21,28 +21,23 @@ export default function HomePage() {
       <main className="pb-20 md:pb-0">
         <HeroLive />
 
-        {/* Pick your rental — two commanding tiles, no product drill-down */}
-        <section
-          id="rentals"
-          className="bg-bron-sand scroll-mt-16"
-        >
+        {/* Pick your rental — two commanding tiles with Bron as mascot */}
+        <section id="rentals" className="bg-bron-sand scroll-mt-16">
           <div className="max-w-5xl mx-auto px-6 py-14 sm:py-20">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
               <RentalCommandTile
                 href="#book"
-                bgSrc="/images/bron-halo.jpg"
-                alt="Aerial of the boardwalk to the beach"
                 eyebrow="🏖 Beach Rentals"
                 title="Rent the Beach"
-                sub="Cabanas, umbrellas, chairs, coolers — delivered to your sand and broken down at end of day."
+                sub="Cabanas, umbrellas, chairs, coolers — delivered to your sand, broken down at end of day."
+                gradient="bg-gradient-to-br from-bron-sky via-bron-gold/70 to-bron-coral"
               />
               <RentalCommandTile
                 href="#book"
-                bgSrc="/images/bron-design.png"
-                alt="Bron's branded golf cart on the beach"
                 eyebrow="🛺 Golf Carts"
                 title="Rent Carts"
                 sub="4 or 6 passenger, street-legal, full tank — pick up on Avenue G or we drop at your rental."
+                gradient="bg-gradient-to-br from-bron-coral via-bron-pink to-bron-navy"
               />
             </div>
           </div>
@@ -365,44 +360,52 @@ function LiveMusicPanel() {
 
 function RentalCommandTile({
   href,
-  bgSrc,
-  alt,
   eyebrow,
   title,
   sub,
+  gradient,
 }: {
   href: string;
-  bgSrc: string;
-  alt: string;
   eyebrow: string;
   title: string;
   sub: string;
+  gradient: string;
 }) {
   return (
     <Link
       href={href}
-      className="group relative aspect-[5/4] sm:aspect-[6/5] rounded-2xl overflow-hidden block shadow-xl shadow-bron-navy/15 ring-1 ring-bron-navy/10 hover:shadow-2xl hover:shadow-bron-navy/25 transition-shadow"
+      className={`group relative aspect-[6/5] rounded-3xl overflow-hidden block shadow-xl shadow-bron-navy/15 ring-1 ring-bron-navy/10 hover:shadow-2xl hover:shadow-bron-navy/25 transition-shadow ${gradient}`}
     >
-      <Image
-        src={bgSrc}
-        alt={alt}
-        fill
-        sizes="(min-width: 768px) 50vw, 100vw"
-        className="object-cover group-hover:scale-105 transition-transform duration-700"
+      {/* Subtle paper-grain noise across the gradient for warmth */}
+      <div
+        aria-hidden
+        className="absolute inset-0 paper-noise opacity-30 mix-blend-overlay pointer-events-none"
       />
-      {/* Dark gradient for text legibility from bottom */}
-      <div className="absolute inset-0 bg-gradient-to-t from-bron-navy/90 via-bron-navy/40 to-transparent" />
-      <div className="absolute inset-x-0 bottom-0 p-6 sm:p-8 text-white">
-        <p className="text-[11px] sm:text-xs uppercase tracking-[0.3em] text-bron-gold font-bold mb-2">
+
+      {/* Bron mascot — anchored to bottom-right, hand gesturing toward
+          the headline on the left. Group-hover scales him slightly to
+          add liveliness on hover. */}
+      <Image
+        src="/images/bron-mascot.png"
+        alt=""
+        width={460}
+        height={572}
+        priority={false}
+        className="absolute -right-4 -bottom-3 sm:-right-2 sm:-bottom-2 w-[58%] sm:w-[55%] h-auto pointer-events-none drop-shadow-[0_8px_24px_rgba(13,31,44,0.25)] group-hover:scale-105 transition-transform duration-500 origin-bottom-right"
+      />
+
+      {/* Text content — top-left anchored, leaves room for Bron on right */}
+      <div className="relative z-10 p-6 sm:p-8 max-w-[55%] text-white">
+        <p className="text-[11px] sm:text-xs uppercase tracking-[0.3em] text-bron-cream font-bold mb-2 drop-shadow-md">
           {eyebrow}
         </p>
-        <h3 className="font-display text-3xl sm:text-5xl font-bold mb-2 leading-none">
+        <h3 className="font-display text-3xl sm:text-5xl font-bold mb-3 leading-none drop-shadow-md">
           {title}
         </h3>
-        <p className="text-sm sm:text-base text-white/85 leading-snug max-w-md mb-4">
+        <p className="text-sm sm:text-base text-white/95 leading-snug mb-4 drop-shadow-md">
           {sub}
         </p>
-        <span className="inline-flex items-center gap-2 text-xs uppercase tracking-widest font-bold text-bron-coral group-hover:gap-3 group-hover:text-bron-gold transition-all">
+        <span className="inline-flex items-center gap-2 text-xs uppercase tracking-widest font-bold text-bron-cream bg-bron-navy/30 backdrop-blur-sm rounded-full px-4 py-2 group-hover:gap-3 group-hover:bg-bron-navy/50 transition-all">
           Reserve <span aria-hidden>→</span>
         </span>
       </div>
