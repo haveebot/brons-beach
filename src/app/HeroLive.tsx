@@ -240,36 +240,41 @@ function BronsTownscape() {
         ))}
         <rect x="10" y="200" width="45" height="3" />
 
-        {/* 1 · Cart Rental Shack ——————————————————————————————— */}
+        {/* 1 · Cart Rental Shack — tiki version with palm-thatch roof */}
         <g transform="translate(70 0)">
+          {/* body */}
           <rect x="0" y="118" width="105" height="102" />
-          <polygon points="-8,120 52,82 113,120" />
-          {/* cupola weather-vane */}
-          <rect x="46" y="64" width="12" height="20" />
-          <polygon points="40,64 52,52 64,64" />
-          <rect x="51" y="38" width="2" height="16" />
-          <polygon points="53,40 63,44 53,48" />
+          {/* Palm-thatch roof — three small fronds peaks */}
+          <path d="M -10 122 Q -2 110, 18 80 Q 36 112, 52 70 Q 70 112, 88 80 Q 108 110, 115 122 L 115 132 L -10 132 Z" />
+          {/* Frond fringe along the eaves */}
+          {Array.from({ length: 13 }).map((_, i) => (
+            <polygon
+              key={`f1-${i}`}
+              points={`${-8 + i * 10},132 ${-2 + i * 10},132 ${-5 + i * 10},140`}
+            />
+          ))}
           {/* Sign band */}
-          <rect x="20" y="138" width="65" height="14" />
+          <rect x="20" y="148" width="65" height="14" />
         </g>
 
-        {/* 2 · Parked Golf Cart ————————————————————————————————— */}
-        <g transform="translate(195 0)">
-          {/* canopy */}
-          <rect x="0" y="155" width="72" height="6" />
+        {/* 2 · Parked Golf Cart — proportions fixed (smaller wheels) */}
+        <g transform="translate(198 0)">
+          {/* canopy with palm-thatch hint */}
+          <path d="M -2 158 Q 35 152, 70 158 L 70 162 L -2 162 Z" />
           {/* canopy posts */}
-          <rect x="2" y="161" width="3" height="20" />
-          <rect x="67" y="161" width="3" height="20" />
-          {/* body */}
-          <rect x="2" y="180" width="68" height="22" />
-          {/* seat back */}
-          <rect x="6" y="166" width="22" height="14" />
-          <rect x="42" y="166" width="22" height="14" />
-          {/* wheels */}
-          <circle cx="14" cy="208" r="9" />
-          <circle cx="58" cy="208" r="9" />
+          <rect x="3" y="162" width="2.5" height="22" />
+          <rect x="64" y="162" width="2.5" height="22" />
+          {/* body chassis with rounded corners */}
+          <rect x="-2" y="184" width="74" height="20" rx="4" />
+          {/* seat backs */}
+          <rect x="8" y="170" width="22" height="14" rx="2" />
+          <rect x="42" y="170" width="22" height="14" rx="2" />
+          {/* wheels — smaller, more proportional */}
+          <circle cx="14" cy="206" r="5.5" />
+          <circle cx="56" cy="206" r="5.5" />
           {/* steering wheel hint */}
-          <circle cx="34" cy="170" r="2" />
+          <rect x="35" y="176" width="2" height="8" />
+          <circle cx="36" cy="174" r="2" />
         </g>
 
         {/* 3 · Tall Palm Tree ————————————————————————————————————— */}
@@ -278,17 +283,41 @@ function BronsTownscape() {
         {/* — Tiki torch ——————————————————————————————————————————— */}
         <TikiTorch x={385} />
 
-        {/* 4 · Bar Pavilion (with stools) ————————————————————————— */}
+        {/* 4 · Tiki Bar Pavilion — palm-thatch roof, bamboo posts, stools */}
         <g transform="translate(415 0)">
-          {/* gable roof */}
-          <polygon points="-14,98 130,60 274,98" />
-          <rect x="-14" y="98" width="288" height="14" />
-          {/* roof pennant */}
-          <rect x="128" y="42" width="3" height="22" />
-          <polygon points="131,44 147,50 131,56" />
-          {/* columns */}
+          {/* Palm-thatch roof — multi-peak wave across the wide bar */}
+          <path
+            d="
+              M -16 108
+              Q -8 96, 8 78
+              Q 32 102, 60 60
+              Q 95 102, 130 50
+              Q 165 102, 200 60
+              Q 228 102, 252 78
+              Q 268 96, 276 108
+              L 276 118
+              L -16 118
+              Z
+            "
+          />
+          {/* Frond fringe along the eaves */}
+          {Array.from({ length: 30 }).map((_, i) => (
+            <polygon
+              key={`fb-${i}`}
+              points={`${-14 + i * 10},118 ${-8 + i * 10},118 ${-11 + i * 10},127`}
+            />
+          ))}
+          {/* roof pennant on center peak */}
+          <rect x="128" y="32" width="3" height="22" />
+          <polygon points="131,34 147,40 131,46" />
+          {/* bamboo posts (slightly tapered) */}
           {[0, 80, 170, 252].map((cx) => (
-            <rect key={cx} x={cx} y="112" width="11" height="108" />
+            <g key={cx}>
+              <rect x={cx} y="127" width="11" height="93" />
+              {/* bamboo node bands */}
+              <rect x={cx - 1} y="155" width="13" height="2" fill="#faf3e3" opacity="0.5" />
+              <rect x={cx - 1} y="185" width="13" height="2" fill="#faf3e3" opacity="0.5" />
+            </g>
           ))}
           {/* counter band */}
           <rect x="-6" y="178" width="280" height="42" />
@@ -304,15 +333,32 @@ function BronsTownscape() {
         {/* — Tiki torch ——————————————————————————————————————————— */}
         <TikiTorch x={715} />
 
-        {/* 5 · Stage / Band-shell ————————————————————————————————— */}
+        {/* 5 · Tiki Stage / Band-shell — palm-thatch arched roof */}
         <g transform="translate(750 0)">
           {/* stage platform */}
           <rect x="0" y="180" width="200" height="40" />
-          {/* arched roof shell */}
-          <path d="M -10 140 Q 100 50 210 140 L 210 154 L -10 154 Z" />
-          {/* support poles */}
-          <rect x="0" y="150" width="8" height="32" />
-          <rect x="194" y="150" width="8" height="32" />
+          {/* Palm-thatch arched roof — center taller, fronds at peaks */}
+          <path
+            d="
+              M -10 154
+              Q -2 138, 18 110
+              Q 45 138, 70 80
+              Q 100 138, 130 80
+              Q 158 138, 182 110
+              Q 202 138, 210 154
+              Z
+            "
+          />
+          {/* Frond fringe along the eaves */}
+          {Array.from({ length: 24 }).map((_, i) => (
+            <polygon
+              key={`fs-${i}`}
+              points={`${-8 + i * 9},154 ${-2 + i * 9},154 ${-5 + i * 9},161`}
+            />
+          ))}
+          {/* support poles — bamboo */}
+          <rect x="0" y="160" width="8" height="22" />
+          <rect x="194" y="160" width="8" height="22" />
           {/* speaker stacks at sides of stage */}
           <rect x="6" y="158" width="14" height="22" />
           <rect x="180" y="158" width="14" height="22" />
@@ -358,72 +404,119 @@ function BronsTownscape() {
           <rect x="68" y="198" width="2" height="22" />
         </g>
 
-        {/* 7 · Cornhole boards ————————————————————————————————————— */}
-        <g transform="translate(1115 0)">
-          {/* board 1 — angled */}
-          <polygon points="0,210 36,196 36,202 0,216" />
-          <circle cx="22" cy="201" r="2.5" fill="#faf3e3" />
-          {/* board 2 — facing other way (set further back) */}
-          <polygon points="46,210 80,196 80,202 46,216" opacity="0.7" />
+        {/* 7 · Tiki Totem (replaces cornhole boards) ——————————————— */}
+        <g transform="translate(1130 0)">
+          {/* base */}
+          <ellipse cx="14" cy="218" rx="14" ry="3" />
+          {/* pole */}
+          <rect x="9" y="172" width="10" height="48" />
+          {/* totem head — square with simple carved eyes + mouth */}
+          <rect x="2" y="138" width="24" height="38" />
+          {/* hat / headdress */}
+          <polygon points="0,138 14,124 28,138" />
+          {/* eye cutouts (cream shows through) */}
+          <rect x="6" y="148" width="4" height="3" fill="#faf3e3" />
+          <rect x="18" y="148" width="4" height="3" fill="#faf3e3" />
+          {/* nose ridge */}
+          <rect x="13" y="152" width="2" height="9" />
+          {/* mouth cutout */}
+          <rect x="6" y="164" width="16" height="3" fill="#faf3e3" />
+          {/* small fangs */}
+          <polygon points="9,167 11,167 10,170" fill="#faf3e3" />
+          <polygon points="17,167 19,167 18,170" fill="#faf3e3" />
         </g>
 
-        {/* 8 · Kitchen with chimney ——————————————————————————————— */}
+        {/* 8 · Tropical Kitchen — palm-thatch over an open grill */}
         <g transform="translate(1210 0)">
-          <rect x="0" y="138" width="90" height="82" />
-          <polygon points="-6,140 45,108 96,140" />
-          {/* chimney */}
-          <rect x="62" y="78" width="14" height="40" />
-          {/* awning over a side door */}
-          <polygon points="-6,160 -28,170 -6,180" />
-          {/* smoke */}
+          {/* body */}
+          <rect x="0" y="148" width="90" height="72" />
+          {/* Palm-thatch roof */}
+          <path d="M -8 150 Q 0 138, 22 108 Q 45 140, 68 108 Q 90 138, 98 150 L 98 158 L -8 158 Z" />
+          {/* Frond fringe along eaves */}
+          {Array.from({ length: 11 }).map((_, i) => (
+            <polygon
+              key={`fk-${i}`}
+              points={`${-6 + i * 9.5},158 ${-1 + i * 9.5},158 ${-3 + i * 9.5},165`}
+            />
+          ))}
+          {/* chimney / grill smoke stack */}
+          <rect x="62" y="80" width="14" height="40" />
+          {/* smoke puffs */}
           <circle cx="71" cy="65" r="5" opacity="0.55" />
           <circle cx="64" cy="55" r="4" opacity="0.4" />
           <circle cx="58" cy="44" r="3" opacity="0.3" />
-          {/* small order window cutout */}
-          <rect x="62" y="160" width="20" height="14" fill="#faf3e3" />
+          {/* order window cutout */}
+          <rect x="62" y="170" width="20" height="14" fill="#faf3e3" />
+          {/* small awning over the order window */}
+          <polygon points="60,170 84,168 84,170" />
         </g>
 
-        {/* 9 · Sno-cone / To-go Bar walk-up kiosk ——————————————— */}
+        {/* 9 · Sno-cone / To-go Bar — palm-thatch walk-up window */}
         <g transform="translate(1320 0)">
-          <rect x="0" y="160" width="64" height="60" />
-          {/* striped awning */}
-          <polygon points="-10,160 32,124 74,160" />
-          {/* awning stripes hint */}
-          <rect x="-8" y="146" width="80" height="2" fill="#faf3e3" opacity="0.7" />
-          <rect x="-10" y="156" width="84" height="2" fill="#faf3e3" opacity="0.7" />
-          {/* shutter window */}
-          <polygon points="-10,176 -28,190 -10,204" />
+          <rect x="0" y="170" width="64" height="50" />
+          {/* Palm-thatch roof */}
+          <path d="M -10 172 Q -2 162, 14 138 Q 32 162, 50 138 Q 66 162, 74 172 L 74 178 L -10 178 Z" />
+          {/* Frond fringe */}
+          {Array.from({ length: 9 }).map((_, i) => (
+            <polygon
+              key={`fsc-${i}`}
+              points={`${-8 + i * 10},178 ${-3 + i * 10},178 ${-5 + i * 10},184`}
+            />
+          ))}
+          {/* shutter window cutout (cream shows through) */}
+          <rect x="10" y="186" width="44" height="14" fill="#faf3e3" />
+          {/* shutter prop */}
+          <polygon points="-10,186 -28,200 -10,214" />
           {/* "frozen" cup with straw on the counter */}
-          <rect x="6" y="170" width="10" height="14" />
-          <rect x="9" y="160" width="2" height="10" />
+          <rect x="22" y="184" width="9" height="13" fill="#0d1f2c" />
+          <rect x="25" y="174" width="2" height="10" />
           {/* flag on top */}
-          <rect x="30" y="100" width="3" height="24" />
-          <polygon points="33,102 47,108 33,114" />
+          <rect x="30" y="110" width="3" height="22" />
+          <polygon points="33,112 47,118 33,124" />
         </g>
 
         {/* 10 · Smaller Palm Tree ————————————————————————————————— */}
         <Palm x={1410} scale={1.15} variant="short" />
 
-        {/* 11 · Family Cabana (4-post + shade cloth) ————————————— */}
+        {/* 11 · Family Cabana — palm-thatch shade roof + bamboo posts */}
         <g transform="translate(1465 0)">
-          {/* shade cloth roof — slight droop curve */}
-          <path d="M 0 130 Q 75 122 150 130 L 150 138 Q 75 130 0 138 Z" />
-          {/* posts */}
-          <rect x="0" y="138" width="6" height="82" />
-          <rect x="50" y="138" width="6" height="82" />
-          <rect x="94" y="138" width="6" height="82" />
-          <rect x="144" y="138" width="6" height="82" />
-          {/* small fringe along roof */}
-          {Array.from({ length: 13 }).map((_, i) => (
+          {/* Palm-thatch roof — multi-peak across 150 wide */}
+          <path d="M -6 138 Q 4 128, 22 108 Q 48 130, 75 100 Q 102 130, 128 108 Q 146 128, 156 138 L 156 144 L -6 144 Z" />
+          {/* Frond fringe — long droopy fringe like a palapa */}
+          {Array.from({ length: 16 }).map((_, i) => (
             <polygon
-              key={i}
-              points={`${i * 12},137 ${i * 12 + 6},137 ${i * 12 + 3},143`}
+              key={`fc-${i}`}
+              points={`${-4 + i * 10},144 ${1 + i * 10},144 ${-1.5 + i * 10},152`}
             />
           ))}
+          {/* bamboo posts (with node bands) */}
+          {[0, 50, 94, 144].map((cx) => (
+            <g key={cx}>
+              <rect x={cx} y="152" width="6" height="68" />
+              <rect x={cx - 1} y="172" width="8" height="2" fill="#faf3e3" opacity="0.5" />
+              <rect x={cx - 1} y="195" width="8" height="2" fill="#faf3e3" opacity="0.5" />
+            </g>
+          ))}
           {/* chairs inside the cabana */}
-          <rect x="22" y="186" width="14" height="22" />
-          <rect x="42" y="186" width="14" height="22" />
-          <rect x="98" y="186" width="14" height="22" />
+          <rect x="22" y="190" width="14" height="22" />
+          <rect x="42" y="190" width="14" height="22" />
+          <rect x="98" y="190" width="14" height="22" />
+        </g>
+
+        {/* — Hammock between the small palm and the cabana ————————— */}
+        <g>
+          {/* hammock bowed cord (slight catenary curve) */}
+          <path
+            d="M 1430 162 Q 1448 196, 1466 180"
+            stroke="#0d1f2c"
+            strokeWidth="2.5"
+            fill="none"
+          />
+          {/* hammock body — concave drape */}
+          <path d="M 1430 162 Q 1450 200, 1466 180 Q 1450 188, 1430 168 Z" />
+          {/* attachment knots */}
+          <circle cx="1430" cy="162" r="2.2" />
+          <circle cx="1466" cy="180" r="2.2" />
         </g>
 
         {/* 12 · Beach Umbrella + chair set ————————————————————————— */}
