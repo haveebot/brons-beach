@@ -134,15 +134,12 @@ export default function HomePage() {
         <section className="bg-bron-sand">
           <div className="max-w-6xl mx-auto px-6 py-14 sm:py-20">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
-              {/* Left: caricature + headline */}
+              {/* Left: Bron character SVG + headline */}
               <div className="text-center md:text-left">
-                <Image
-                  src="/images/bron-caricature.jpg"
+                <img
+                  src="/images/brons-character.svg"
                   alt="Bron"
-                  width={260}
-                  height={330}
-                  className="mx-auto md:mx-0 mb-6 max-w-[220px] sm:max-w-[260px]"
-                  priority={false}
+                  className="mx-auto md:mx-0 mb-6 w-[220px] sm:w-[280px] h-auto"
                 />
                 <h2 className="font-display text-4xl sm:text-5xl font-bold text-bron-pink leading-tight">
                   Bron knows
@@ -151,37 +148,14 @@ export default function HomePage() {
                 </h2>
               </div>
 
-              {/* Right: deep-blue welcome panel with sunburst + story */}
+              {/* Right: deep-blue welcome panel with welcome-sun SVG + story */}
               <div className="relative bg-bron-deep-blue text-white rounded-3xl px-7 py-10 sm:px-10 sm:py-12 shadow-xl border-2 border-bron-coral/60">
-                <svg
-                  aria-hidden
-                  viewBox="0 0 80 50"
-                  className="w-20 h-12 mx-auto mb-4 text-bron-yellow"
-                  fill="currentColor"
-                >
-                  <path d="M 40 28 a 14 14 0 0 1 14 14 H 26 a 14 14 0 0 1 14 -14 Z" />
-                  {Array.from({ length: 11 }).map((_, i) => {
-                    const angle = (i / 10) * 180 + 180;
-                    const rad = (angle * Math.PI) / 180;
-                    const r1 = 16, r2 = 24;
-                    const x1 = 40 + Math.cos(rad) * r1;
-                    const y1 = 42 + Math.sin(rad) * r1;
-                    const x2 = 40 + Math.cos(rad) * r2;
-                    const y2 = 42 + Math.sin(rad) * r2;
-                    return (
-                      <line
-                        key={i}
-                        x1={x1}
-                        y1={y1}
-                        x2={x2}
-                        y2={y2}
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                      />
-                    );
-                  })}
-                </svg>
+                <img
+                  src="/images/welcome-to-brons-sun.svg"
+                  alt=""
+                  aria-hidden="true"
+                  className="block mx-auto mb-4 h-16 sm:h-20 w-auto"
+                />
                 <h3 className="font-display italic text-2xl sm:text-3xl text-bron-coral text-center mb-5 leading-tight">
                   Welcome to Bron&apos;s Beach
                 </h3>
