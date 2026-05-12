@@ -147,7 +147,7 @@ export default function HomePage() {
                 <img
                   src="/images/brons-character.svg"
                   alt="Bron"
-                  className="mx-auto md:mx-0 mb-6 w-[220px] sm:w-[280px] h-auto"
+                  className="mx-auto md:mx-0 mb-6 w-[300px] sm:w-[400px] lg:w-[460px] h-auto"
                 />
                 <h2 className="font-display text-4xl sm:text-5xl font-bold text-bron-pink leading-tight">
                   Bron knows
@@ -162,7 +162,7 @@ export default function HomePage() {
                   src="/images/welcome-to-brons-sun.svg"
                   alt=""
                   aria-hidden="true"
-                  className="block mx-auto mb-4 h-16 sm:h-20 w-auto"
+                  className="block mx-auto mb-5 h-28 sm:h-36 w-auto"
                 />
                 <h3 className="font-display italic text-2xl sm:text-3xl text-bron-coral text-center mb-5 leading-tight">
                   Welcome to Bron&apos;s Beach
