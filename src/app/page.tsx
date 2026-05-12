@@ -16,20 +16,28 @@ export const dynamic = "force-dynamic";
 
 /**
  * Per-arm config for the "Meet us at Bron's Backyard" tiles — icon
- * asset + destination page. Keyed by VenueArm.slug from data/venue.ts.
+ * asset, destination page, and per-tile header bg color (from Collie's
+ * mockup: yellow / teal / blue across the three tiles). Keyed by
+ * VenueArm.slug from data/venue.ts.
  */
-const YARD_TILE_CONFIG: Record<string, { iconSrc: string; href: string }> = {
+const YARD_TILE_CONFIG: Record<
+  string,
+  { iconSrc: string; href: string; headerBg: string }
+> = {
   backyard: {
     iconSrc: "/images/brons-music-pink.svg",
     href: "/music-events",
+    headerBg: "bg-bron-yellow",
   },
   kitchen: {
     iconSrc: "/images/brons-food-pink.svg",
     href: "/kitchen-menu",
+    headerBg: "bg-bron-teal",
   },
   "shaved-ice": {
     iconSrc: "/images/brons-drink-pink.svg",
     href: "/shaved-ice-menu",
+    headerBg: "bg-bron-blue",
   },
 };
 
@@ -176,24 +184,30 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Meet us at Bron's Backyard — was "The Yard" section. Header
-            renamed per Collie's mockup. Replaces the 3-stacked venue-arm
-            cards with 3 compact side-by-side tiles (Backyard, Kitchen,
-            Shaved Ice) that link to dedicated pages. Tile icons use
-            Collie's pink-on-navy SVG marks. */}
+        {/* Meet us at Bron's Backyard — was "The Yard" section. Per
+            Collie's v3 mockup, section bg is now the night-palm party
+            photo (Bron's Backyard at night, neon-lit palms) with a
+            dark overlay for legibility. Three side-by-side tiles below,
+            each with its own colored header (yellow / teal / blue) and
+            a pink icon on transparent bg. Links to dedicated pages. */}
         <section
           id="yard"
-          className="relative bg-bron-deep-blue text-white overflow-hidden scroll-mt-16"
+          className="relative text-white overflow-hidden scroll-mt-16"
         >
-          {/* Decorative palm silhouettes for atmosphere */}
-          <div aria-hidden className="absolute inset-0 opacity-25 pointer-events-none">
-            <svg viewBox="0 0 1200 400" className="w-full h-full" preserveAspectRatio="xMidYMid slice">
-              <g fill="#0d1f2c">
-                <path d="M 80 400 Q 78 280 90 200 Q 70 180 50 170 Q 80 175 95 195 Q 92 165 80 140 Q 100 160 105 195 Q 120 165 145 155 Q 130 180 110 200 Q 130 210 158 215 Q 130 215 105 215 L 110 400 Z" />
-                <path d="M 1100 400 Q 1098 290 1110 220 Q 1085 195 1060 185 Q 1095 188 1115 210 Q 1110 175 1098 145 Q 1118 168 1125 205 Q 1145 175 1170 165 Q 1150 195 1130 215 Q 1155 225 1185 225 Q 1150 228 1125 228 L 1130 400 Z" />
-              </g>
-            </svg>
-          </div>
+          {/* Background photo — neon-lit palm trees at night */}
+          <Image
+            src="/images/meet-us-backyard-bg.jpg"
+            alt=""
+            aria-hidden
+            fill
+            sizes="100vw"
+            className="object-cover object-center"
+            priority={false}
+          />
+          <div
+            aria-hidden
+            className="absolute inset-0 bg-bron-deep-blue/60 pointer-events-none"
+          />
 
           <div className="relative z-10 max-w-6xl mx-auto px-6 py-14 sm:py-20">
             <div className="text-center mb-10 sm:mb-12">
@@ -216,10 +230,12 @@ export default function HomePage() {
                     href={config.href}
                     className="group bg-bron-sand text-bron-deep-blue rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow flex flex-col"
                   >
-                    {/* Navy icon header — pink-on-navy SVG mark centered.
-                        SVG bg matches container bg so its own corners
-                        blend invisibly. */}
-                    <div className="bg-bron-deep-blue flex items-center justify-center py-10 sm:py-12">
+                    {/* Colored icon header — per-tile bg color
+                        (yellow / teal / blue) per Collie's mockup, with
+                        the pink-on-transparent SVG icon centered. */}
+                    <div
+                      className={`flex items-center justify-center py-10 sm:py-12 ${config.headerBg}`}
+                    >
                       <img
                         src={config.iconSrc}
                         alt=""
