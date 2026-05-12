@@ -29,19 +29,17 @@ export default function HomePage() {
                 href="#book"
                 eyebrow="Beach Rentals"
                 title="Rent the Beach"
-                sub="Cabanas, umbrellas, chairs, coolers — delivered to your sand, broken down at end of day."
+                sub="Cabanas, umbrellas, chairs, coolers – delivered to the sand. Just show up, and you're ready to beach."
                 bg="bg-bron-pink"
-                pillTextClass="text-bron-pink"
-                icon={<BeachIcon />}
+                iconSrc="/images/beach-icon.png"
               />
               <RentalCommandTile
                 href="#book"
                 eyebrow="Golf Carts"
-                title="Rent Carts"
-                sub="4 or 6 passenger, street-legal, full tank — pick up on Avenue G or we drop at your rental."
+                title="Rent your Carts"
+                sub="Ready to roll for 4 or 6, street-legal, full tank — pick up on Ave. G or we drop at your rental."
                 bg="bg-bron-teal"
-                pillTextClass="text-bron-teal"
-                icon={<CartIcon />}
+                iconSrc="/images/carts-icon.png"
               />
             </div>
           </div>
@@ -384,105 +382,47 @@ function RentalCommandTile({
   title,
   sub,
   bg,
-  pillTextClass,
-  icon,
+  iconSrc,
 }: {
   href: string;
   eyebrow: string;
   title: string;
   sub: string;
   bg: string;
-  pillTextClass: string;
-  icon: React.ReactNode;
+  iconSrc: string;
 }) {
   return (
     <Link
       href={href}
       className={`group relative aspect-[5/4] sm:aspect-[6/5] rounded-3xl overflow-hidden block shadow-xl shadow-bron-blue/15 ring-1 ring-bron-blue/10 hover:shadow-2xl hover:shadow-bron-blue/30 transition-shadow ${bg}`}
     >
-      {/* Subtle paper-grain noise for warmth */}
-      <div
-        aria-hidden
-        className="absolute inset-0 paper-noise opacity-25 mix-blend-overlay pointer-events-none"
+      {/* Icon — Collie's flat illustration (yellow chair+umbrella for
+          Beach, pink golf cart for Carts). Right-anchored, vertically
+          centered. The icon's PNG bg color matches the tile's CSS bg
+          exactly so the image blends seamlessly. */}
+      <img
+        src={iconSrc}
+        alt=""
+        aria-hidden="true"
+        className="absolute right-0 top-1/2 -translate-y-1/2 h-[82%] w-auto pointer-events-none group-hover:scale-105 transition-transform duration-500 origin-right"
       />
 
-      {/* Big icon — anchored top-right, slightly off-frame for poster
-          composition energy. White at low opacity acts as a watermark. */}
-      <div
-        aria-hidden
-        className="absolute -right-6 -top-2 w-[58%] sm:w-[52%] aspect-square text-white/90 pointer-events-none group-hover:scale-105 transition-transform duration-500 origin-top-right"
-      >
-        {icon}
-      </div>
-
       {/* Text content — bottom-left anchored */}
-      <div className="relative z-10 p-6 sm:p-8 h-full flex flex-col justify-end max-w-[60%] text-white">
-        <p className="text-[10px] sm:text-xs uppercase tracking-[0.3em] font-bold mb-3 text-white/85">
+      <div className="relative z-10 p-6 sm:p-8 h-full flex flex-col justify-end max-w-[58%] text-white">
+        <p className="text-[10px] sm:text-xs uppercase tracking-[0.3em] font-bold mb-3 text-bron-light-blue">
           {eyebrow}
         </p>
         <h3 className="font-display text-4xl sm:text-6xl font-bold mb-3 leading-none">
           {title}
         </h3>
-        <p className="text-sm sm:text-base text-white/90 leading-snug mb-5">
+        <p className="text-sm sm:text-base text-white/95 leading-snug mb-5">
           {sub}
         </p>
-        <span
-          className={`inline-flex items-center gap-2 self-start text-xs uppercase tracking-widest font-bold bg-white rounded-full px-5 py-2.5 group-hover:gap-3 transition-all shadow-md ${pillTextClass}`}
-        >
+        <span className="inline-flex items-center gap-2 self-start text-xs uppercase tracking-widest font-bold bg-bron-blue text-white rounded-full px-5 py-2.5 group-hover:gap-3 transition-all shadow-md">
           Reserve <span aria-hidden>→</span>
         </span>
       </div>
     </Link>
-  );
-}
-
-/** Beach umbrella + chair silhouette — single-color filled icon. */
-function BeachIcon() {
-  return (
-    <svg viewBox="0 0 120 120" fill="currentColor" className="w-full h-full">
-      {/* Sand mound */}
-      <ellipse cx="60" cy="105" rx="48" ry="5" />
-      {/* Umbrella canopy — half circle */}
-      <path d="M 22 50 A 38 38 0 0 1 98 50 Z" />
-      {/* Umbrella ribs (subtle, same fill as canopy) */}
-      <path d="M 60 50 L 60 14" stroke="currentColor" strokeWidth="2" />
-      {/* Pole */}
-      <rect x="58" y="50" width="4" height="55" />
-      {/* Beach chair — to the right under umbrella */}
-      <g transform="translate(66 70)">
-        {/* angled back */}
-        <polygon points="32,0 8,-18 12,-18 36,0" />
-        {/* seat */}
-        <rect x="0" y="0" width="36" height="4" rx="1" />
-        {/* legs */}
-        <rect x="2" y="4" width="3" height="14" />
-        <rect x="31" y="4" width="3" height="14" />
-      </g>
-    </svg>
-  );
-}
-
-/** Golf cart side-view silhouette — single-color filled icon. */
-function CartIcon() {
-  return (
-    <svg viewBox="0 0 120 120" fill="currentColor" className="w-full h-full">
-      {/* Canopy bar */}
-      <rect x="10" y="34" width="100" height="6" rx="2" />
-      {/* Canopy posts */}
-      <rect x="14" y="40" width="3" height="32" />
-      <rect x="103" y="40" width="3" height="32" />
-      {/* Body chassis */}
-      <rect x="6" y="68" width="108" height="28" rx="5" />
-      {/* Seat backs */}
-      <rect x="22" y="46" width="32" height="22" rx="3" />
-      <rect x="66" y="46" width="32" height="22" rx="3" />
-      {/* Wheels */}
-      <circle cx="24" cy="100" r="9" />
-      <circle cx="96" cy="100" r="9" />
-      {/* Wheel hub circles (cut-out look via inner small circle) */}
-      <circle cx="24" cy="100" r="3.5" fill="none" stroke="currentColor" strokeWidth="1.5" opacity="0.5" />
-      <circle cx="96" cy="100" r="3.5" fill="none" stroke="currentColor" strokeWidth="1.5" opacity="0.5" />
-    </svg>
   );
 }
 
