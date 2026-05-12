@@ -237,7 +237,7 @@ export default function ShavedIceMenuPage() {
             </div>
             <div className="relative aspect-[4/3] rounded-3xl overflow-hidden border-4 border-bron-coral shadow-2xl max-w-md w-full mx-auto md:mx-0 md:ml-auto">
               <Image
-                src="/images/brons-bar-drinks.png"
+                src="/images/brons-bar-drinks.jpg"
                 alt="A layered frozen margarita garnished with lime, at Bron's Backyard bar at night"
                 fill
                 sizes="(min-width: 768px) 50vw, 90vw"
