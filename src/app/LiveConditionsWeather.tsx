@@ -40,7 +40,7 @@ export default function LiveConditionsWeather() {
 
   return (
     <LiveConditionsTile
-      icon="🌡"
+      iconSrc="/images/brons-at-the-beach.svg"
       label="At the beach"
       value={value}
       sub={sub}

@@ -14,6 +14,25 @@ import MobileCtaBar from "./MobileCtaBar";
 
 export const dynamic = "force-dynamic";
 
+/**
+ * Per-arm config for the "Meet us at Bron's Backyard" tiles — icon
+ * asset + destination page. Keyed by VenueArm.slug from data/venue.ts.
+ */
+const YARD_TILE_CONFIG: Record<string, { iconSrc: string; href: string }> = {
+  backyard: {
+    iconSrc: "/images/brons-music-pink.svg",
+    href: "/music-events",
+  },
+  kitchen: {
+    iconSrc: "/images/brons-food-pink.svg",
+    href: "/kitchen-menu",
+  },
+  "shaved-ice": {
+    iconSrc: "/images/brons-drink-pink.svg",
+    href: "/shaved-ice-menu",
+  },
+};
+
 export default function HomePage() {
   return (
     <>
@@ -31,7 +50,7 @@ export default function HomePage() {
                 title="Rent the Beach"
                 sub="Cabanas, umbrellas, chairs, coolers – delivered to the sand. Just show up, and you're ready to beach."
                 bg="bg-bron-pink"
-                iconSrc="/images/beach-icon.png"
+                iconSrc="/images/brons-chairs.svg"
               />
               <RentalCommandTile
                 href="#book"
@@ -45,18 +64,19 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* BRON'S BEACH CARTS circle mark — moved here from the top nav
-            per the homepage revisions. Sits between the rental tiles
-            (bron-sand) and the Right-now-on-the-island block (bron-blue),
-            straddling the boundary as a centered brand anchor. */}
-        <div className="relative h-0 z-10">
-          <div className="absolute left-1/2 -translate-x-1/2 -top-16 sm:-top-20">
+        {/* BRON'S BEACH CARTS circle mark — section divider band in
+            bron-blue between the rental tiles (bron-sand) and the
+            Right-now block. Logo straddles the seam between the sand
+            section above and the blue band, with breathing room above
+            and below per Collie's homepage v3 mockup. */}
+        <div className="bg-bron-blue py-12 sm:py-16 relative">
+          <div className="flex justify-center">
             <Image
               src="/images/bron-logo.png"
               alt="Bron's Beach Carts"
-              width={160}
-              height={160}
-              className="w-32 h-32 sm:w-40 sm:h-40 drop-shadow-lg"
+              width={180}
+              height={180}
+              className="w-32 h-32 sm:w-44 sm:h-44 drop-shadow-lg relative -mt-20 sm:-mt-24"
             />
           </div>
         </div>
@@ -64,100 +84,199 @@ export default function HomePage() {
         {/* Live Conditions — sunset, music, weather, open status */}
         <LiveConditionsBlock />
 
-        {/* Booking form */}
+        {/* Booking form — desktop: 2 photo boxes (golf cart + beach) on
+            the left, form on the right. Mobile: form first/centered (big
+            tap targets), then the two photo boxes side-by-side smaller
+            below. Each photo box has the BRON'S BEACH CARTS circle logo
+            overlay + orange outline border. */}
         <section
           id="book"
           className="bg-bron-blue text-white py-14 sm:py-20 scroll-mt-16"
         >
-          <div className="max-w-2xl mx-auto px-6">
-            <h2 className="font-display text-3xl sm:text-5xl font-bold mb-2 text-center">
-              Reserve your rental
-            </h2>
-            <p className="text-sm text-white/70 text-center mb-8">
-              We confirm by text within an hour. Free cancellation up to 24
-              hours before your rental.
-            </p>
-            <BookingForm />
+          <div className="max-w-6xl mx-auto px-6">
+            <div className="text-center mb-10">
+              <h2 className="font-display text-3xl sm:text-5xl font-bold mb-2">
+                Reserve your rental
+              </h2>
+              <p className="text-sm text-white/70">
+                We confirm by text within an hour. Free cancellation up to
+                24 hours before your rental.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 items-start">
+              {/* Photo boxes column. On mobile: 2 cols side-by-side AFTER
+                  the form. On desktop: stacked vertically BEFORE the form. */}
+              <div className="grid grid-cols-2 md:grid-cols-1 gap-4 order-2 md:order-1">
+                <ReservePhotoBox
+                  src="/images/brons-cart.png"
+                  alt="Bron's golf cart on the beach"
+                />
+                <ReservePhotoBox
+                  src="/images/brons-beach.png"
+                  alt="Bron's beach setup with cabanas and chairs"
+                />
+              </div>
+
+              {/* Form column. On mobile: first + centered. On desktop:
+                  right column. */}
+              <div className="order-1 md:order-2 w-full max-w-md mx-auto md:max-w-none md:mx-0">
+                <BookingForm />
+              </div>
+            </div>
           </div>
         </section>
 
-        {/* The yard */}
+        {/* Welcome to Bron's Beach — two-column moment. Left: big pink
+            "Bron knows the Beach." headline + Bron's line caricature.
+            Right: deep-blue panel with sunburst icon, italic "Welcome to
+            Bron's Beach" header, and the brand origin story. */}
+        <section className="bg-bron-sand">
+          <div className="max-w-6xl mx-auto px-6 py-14 sm:py-20">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+              {/* Left: caricature + headline */}
+              <div className="text-center md:text-left">
+                <Image
+                  src="/images/bron-caricature.jpg"
+                  alt="Bron"
+                  width={260}
+                  height={330}
+                  className="mx-auto md:mx-0 mb-6 max-w-[220px] sm:max-w-[260px]"
+                  priority={false}
+                />
+                <h2 className="font-display text-4xl sm:text-5xl font-bold text-bron-pink leading-tight">
+                  Bron knows
+                  <br />
+                  the Beach.
+                </h2>
+              </div>
+
+              {/* Right: deep-blue welcome panel with sunburst + story */}
+              <div className="relative bg-bron-deep-blue text-white rounded-3xl px-7 py-10 sm:px-10 sm:py-12 shadow-xl border-2 border-bron-coral/60">
+                <svg
+                  aria-hidden
+                  viewBox="0 0 80 50"
+                  className="w-20 h-12 mx-auto mb-4 text-bron-yellow"
+                  fill="currentColor"
+                >
+                  <path d="M 40 28 a 14 14 0 0 1 14 14 H 26 a 14 14 0 0 1 14 -14 Z" />
+                  {Array.from({ length: 11 }).map((_, i) => {
+                    const angle = (i / 10) * 180 + 180;
+                    const rad = (angle * Math.PI) / 180;
+                    const r1 = 16, r2 = 24;
+                    const x1 = 40 + Math.cos(rad) * r1;
+                    const y1 = 42 + Math.sin(rad) * r1;
+                    const x2 = 40 + Math.cos(rad) * r2;
+                    const y2 = 42 + Math.sin(rad) * r2;
+                    return (
+                      <line
+                        key={i}
+                        x1={x1}
+                        y1={y1}
+                        x2={x2}
+                        y2={y2}
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                      />
+                    );
+                  })}
+                </svg>
+                <h3 className="font-display italic text-2xl sm:text-3xl text-bron-coral text-center mb-5 leading-tight">
+                  Welcome to Bron&apos;s Beach
+                </h3>
+                <p className="text-sm sm:text-base text-white/90 leading-relaxed mb-4">
+                  Bron&apos;s started as a few golf carts on Avenue G and
+                  grew into the full island stop you see today: beach
+                  setups delivered to your sand, carts ready when you are,
+                  an outdoor bar with live music most weekends, a kitchen
+                  and a walk-up window for frozen margaritas, daiquiris,
+                  and shaved ice.
+                </p>
+                <p className="text-sm sm:text-base text-white/90 leading-relaxed">
+                  Locally owned, family-run, friendly as a Texas afternoon.
+                  We set you up at the beach and see you back at the yard.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Meet us at Bron's Backyard — was "The Yard" section. Header
+            renamed per Collie's mockup. Replaces the 3-stacked venue-arm
+            cards with 3 compact side-by-side tiles (Backyard, Kitchen,
+            Shaved Ice) that link to dedicated pages. Tile icons use
+            Collie's pink-on-navy SVG marks. */}
         <section
           id="yard"
-          className="max-w-5xl mx-auto px-6 py-14 sm:py-20 scroll-mt-16"
+          className="relative bg-bron-deep-blue text-white overflow-hidden scroll-mt-16"
         >
-          <SectionHeading
-            eyebrow="The Yard"
-            title="While you're on the island"
-            sub="Drop your cart at our spot on Avenue G and stay a while. Cold beer, hot food, frozen drinks, live music most nights."
-          />
-          <LiveMusicPanel />
-          <div className="space-y-6">
-            {VENUE_ARMS.map((arm) => (
-              <article
-                key={arm.slug}
-                className="bg-white rounded-2xl border border-bron-blue/10 p-6 sm:p-8 shadow-sm"
-              >
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-                  <div className="sm:col-span-1">
-                    <div className="aspect-square rounded-xl bg-gradient-to-br from-bron-orange/20 to-bron-coral/15 border border-bron-orange/30 flex items-center justify-center">
-                      <span className="text-7xl">{arm.emoji}</span>
-                    </div>
-                  </div>
-                  <div className="sm:col-span-2">
-                    <p className="text-xs uppercase tracking-[0.2em] text-bron-coral font-bold mb-1">
-                      {arm.tagline}
-                    </p>
-                    <h3 className="font-display text-2xl sm:text-3xl font-bold mb-3">
-                      {arm.label}
-                    </h3>
-                    <p className="text-sm text-bron-deep-blue/80 leading-relaxed mb-4">
-                      {arm.description}
-                    </p>
-                    <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1.5 text-xs text-bron-deep-blue/75">
-                      {arm.highlights.map((h) => (
-                        <li key={h} className="flex gap-2">
-                          <span className="text-bron-coral">→</span>
-                          <span>{h}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              </article>
-            ))}
+          {/* Decorative palm silhouettes for atmosphere */}
+          <div aria-hidden className="absolute inset-0 opacity-25 pointer-events-none">
+            <svg viewBox="0 0 1200 400" className="w-full h-full" preserveAspectRatio="xMidYMid slice">
+              <g fill="#0d1f2c">
+                <path d="M 80 400 Q 78 280 90 200 Q 70 180 50 170 Q 80 175 95 195 Q 92 165 80 140 Q 100 160 105 195 Q 120 165 145 155 Q 130 180 110 200 Q 130 210 158 215 Q 130 215 105 215 L 110 400 Z" />
+                <path d="M 1100 400 Q 1098 290 1110 220 Q 1085 195 1060 185 Q 1095 188 1115 210 Q 1110 175 1098 145 Q 1118 168 1125 205 Q 1145 175 1170 165 Q 1150 195 1130 215 Q 1155 225 1185 225 Q 1150 228 1125 228 L 1130 400 Z" />
+              </g>
+            </svg>
           </div>
-        </section>
 
-        {/* About — Bron's portrait + the yard story */}
-        <section className="bg-bron-sand">
-          <div className="max-w-4xl mx-auto px-6 py-14 sm:py-20 text-center">
-            <Image
-              src="/images/bron-caricature.jpg"
-              alt="Bron"
-              width={180}
-              height={228}
-              className="mx-auto mb-6"
-              priority={false}
-            />
-            <p className="text-xs uppercase tracking-[0.3em] text-bron-coral font-bold mb-2">
-              Meet Bron
-            </p>
-            <h2 className="font-display text-3xl sm:text-5xl font-bold mb-5">
-              The whole island stop, in one yard.
-            </h2>
-            <p className="text-base sm:text-lg text-bron-deep-blue/85 leading-relaxed max-w-2xl mx-auto">
-              Bron&apos;s started as a few golf carts on Avenue G and grew into
-              the full island stop you see today: beach setups delivered to
-              your sand, carts ready when you are, an outdoor bar with live
-              music most weekends, a kitchen running the same hours as the bar,
-              and a walk-up window for frozen margaritas, daiquiris, and
-              shaved ice.
-            </p>
-            <p className="text-base sm:text-lg text-bron-deep-blue/85 leading-relaxed max-w-2xl mx-auto mt-4">
-              Locally owned, family-run, friendly as a Texas afternoon. We set
-              you up at the beach and see you back at the yard.
-            </p>
+          <div className="relative z-10 max-w-6xl mx-auto px-6 py-14 sm:py-20">
+            <div className="text-center mb-10 sm:mb-12">
+              <h2 className="font-display text-3xl sm:text-5xl font-bold text-bron-yellow leading-tight mb-3">
+                Meet us at Bron&apos;s Backyard
+              </h2>
+              <p className="text-sm sm:text-base text-white/85 max-w-2xl mx-auto">
+                Drop your cart at our spot on Ave G and stay awhile. Cold
+                beer, hot food, frozen drinks, and live music most nights.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6">
+              {VENUE_ARMS.map((arm) => {
+                const config = YARD_TILE_CONFIG[arm.slug];
+                if (!config) return null;
+                return (
+                  <Link
+                    key={arm.slug}
+                    href={config.href}
+                    className="group bg-bron-sand text-bron-deep-blue rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow flex flex-col"
+                  >
+                    {/* Navy icon header — pink-on-navy SVG mark centered.
+                        SVG bg matches container bg so its own corners
+                        blend invisibly. */}
+                    <div className="bg-bron-deep-blue flex items-center justify-center py-10 sm:py-12">
+                      <img
+                        src={config.iconSrc}
+                        alt=""
+                        aria-hidden="true"
+                        className="w-24 h-24 sm:w-28 sm:h-28"
+                      />
+                    </div>
+                    {/* Sand content area — title, description, highlights */}
+                    <div className="p-5 sm:p-6 flex-1">
+                      <p className="text-[10px] uppercase tracking-[0.2em] text-bron-coral font-bold mb-1">
+                        {arm.tagline}
+                      </p>
+                      <h3 className="font-display text-xl sm:text-2xl font-bold mb-2 group-hover:text-bron-coral transition-colors">
+                        {arm.label}
+                      </h3>
+                      <p className="text-sm text-bron-deep-blue/80 leading-relaxed mb-3">
+                        {arm.description}
+                      </p>
+                      <ul className="space-y-1 text-xs text-bron-deep-blue/75">
+                        {arm.highlights.slice(0, 3).map((h) => (
+                          <li key={h} className="flex gap-2">
+                            <span className="text-bron-coral">→</span>
+                            <span>{h}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
           </div>
         </section>
 
@@ -198,8 +317,8 @@ export default function HomePage() {
               </div>
               <div className="relative aspect-[4/3] rounded-2xl overflow-hidden order-first md:order-last">
                 <Image
-                  src="/images/bron-cart-beach.jpg"
-                  alt="Bron's beach carts on the boardwalk"
+                  src="/images/brons-party-pic.jpg"
+                  alt="Bron's Backyard party scene"
                   fill
                   sizes="(min-width: 768px) 50vw, 100vw"
                   className="object-cover"
@@ -376,6 +495,33 @@ function LiveMusicPanel() {
   );
 }
 
+/**
+ * Reserve-section photo box — the golf cart / beach photos on the left
+ * side of the Reserve section. Photo fills the box, circle BRON'S BEACH
+ * CARTS logo overlays at top-left, and the box gets a coral outline.
+ */
+function ReservePhotoBox({ src, alt }: { src: string; alt: string }) {
+  return (
+    <div className="relative aspect-[4/3] rounded-2xl overflow-hidden border-4 border-bron-orange shadow-lg">
+      <Image
+        src={src}
+        alt={alt}
+        fill
+        sizes="(min-width: 768px) 25vw, 50vw"
+        className="object-cover"
+      />
+      <Image
+        src="/images/bron-logo.png"
+        alt=""
+        aria-hidden
+        width={96}
+        height={96}
+        className="absolute top-3 left-3 w-14 h-14 sm:w-20 sm:h-20 drop-shadow-md"
+      />
+    </div>
+  );
+}
+
 function RentalCommandTile({
   href,
   eyebrow,
@@ -409,7 +555,7 @@ function RentalCommandTile({
 
       {/* Text content — bottom-left anchored */}
       <div className="relative z-10 p-6 sm:p-8 h-full flex flex-col justify-end max-w-[58%] text-white">
-        <p className="text-[10px] sm:text-xs uppercase tracking-[0.3em] font-bold mb-3 text-bron-light-blue">
+        <p className="text-[10px] sm:text-xs uppercase tracking-[0.3em] font-bold mb-3 text-white">
           {eyebrow}
         </p>
         <h3 className="font-display text-4xl sm:text-6xl font-bold mb-3 leading-none">

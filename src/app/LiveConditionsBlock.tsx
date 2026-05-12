@@ -1,7 +1,7 @@
+import Image from "next/image";
 import LiveConditionsTile from "./LiveConditionsTile";
 import LiveConditionsWeather from "./LiveConditionsWeather";
 import { sunTimesFor, formatPortATime } from "@/lib/sunCalc";
-import { openStatus } from "@/lib/openStatus";
 import { upcomingActs, todayInPortA } from "@/data/live-music";
 
 /**
@@ -16,7 +16,6 @@ import { upcomingActs, todayInPortA } from "@/data/live-music";
  */
 export default function LiveConditionsBlock() {
   const now = new Date();
-  const status = openStatus(now);
   const sun = sunTimesFor(now);
 
   const today = todayInPortA();
@@ -25,18 +24,12 @@ export default function LiveConditionsBlock() {
   const next = tonight ?? upcoming[0];
 
   let musicValue: string;
-  let musicSub: string;
   if (tonight) {
     musicValue = tonight.artist;
-    musicSub = `Tonight · ${tonight.time} · Bron's Backyard`;
   } else if (next) {
-    const d = new Date(next.date + "T12:00:00");
-    const dayLabel = d.toLocaleDateString("en-US", { weekday: "long" });
     musicValue = next.artist;
-    musicSub = `${dayLabel} · ${next.time}`;
   } else {
-    musicValue = "Returns Friday";
-    musicSub = "Live music most weekends";
+    musicValue = "Coming Soon";
   }
 
   // Now-as-of stamp (Chicago-local) so the block visibly feels live
@@ -46,24 +39,31 @@ export default function LiveConditionsBlock() {
     minute: "2-digit",
   });
 
+  // Music tile: links to /music-events. The fourth tile is now Port A
+  // Live Cams (deep-link to theportalocal.com/live) — replaces the old
+  // "yard open/closed" tile per Collie's homepage v3 mockup.
+  const musicLabel = tonight ? "Band Tonight" : "Next Up";
+
   return (
-    <section className="relative bg-bron-blue text-white overflow-hidden isolate">
-      {/* Ambient sun glow off-center — atmospheric, not competing */}
-      <div
+    <section className="relative text-white overflow-hidden isolate">
+      {/* Beach photo background — fills the whole section. Bron-blue
+          overlay tints it for legibility while keeping the ocean feel. */}
+      <Image
+        src="/images/brons-beach.png"
+        alt=""
         aria-hidden
-        className="absolute -top-32 -right-24 w-[520px] h-[520px] rounded-full pointer-events-none"
-        style={{
-          background:
-            "radial-gradient(closest-side, rgba(246,192,38,0.32), rgba(255,77,139,0.18) 55%, transparent 75%)",
-        }}
+        fill
+        sizes="100vw"
+        className="object-cover object-center"
+        priority={false}
       />
       <div
         aria-hidden
-        className="absolute -bottom-32 -left-32 w-[440px] h-[440px] rounded-full pointer-events-none"
-        style={{
-          background:
-            "radial-gradient(closest-side, rgba(255,139,77,0.28), transparent 75%)",
-        }}
+        className="absolute inset-0 bg-bron-blue/72 mix-blend-multiply pointer-events-none"
+      />
+      <div
+        aria-hidden
+        className="absolute inset-0 bg-gradient-to-b from-bron-blue/30 via-transparent to-bron-blue/60 pointer-events-none"
       />
 
       <div className="relative z-10 max-w-5xl mx-auto px-6 py-14 sm:py-20">
@@ -74,17 +74,16 @@ export default function LiveConditionsBlock() {
           <h2 className="font-display text-3xl sm:text-5xl font-bold tracking-tight leading-tight">
             Right now on the island.
           </h2>
-          <p className="text-sm sm:text-base text-white/75 max-w-xl mx-auto mt-3">
+          <p className="text-sm sm:text-base text-white/85 max-w-xl mx-auto mt-3">
             Updates by the minute. So you know what to wear, when to head
-            down, and what the yard&apos;s doing tonight.
+            down, what the water looks like, and what&apos;s live at the
+            Yard tonight.
           </p>
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 max-w-4xl mx-auto">
-          {/* Tile colors per Collie's homepage revisions mockup:
-              sunset → deep-blue, weather → pink, music → orange, yard → teal. */}
           <LiveConditionsTile
-            icon="🌅"
+            iconSrc="/images/brons-sunset.svg"
             label="Sunset"
             value={formatPortATime(sun.sunset)}
             sub="Beach time on the Gulf"
@@ -92,18 +91,21 @@ export default function LiveConditionsBlock() {
           />
           <LiveConditionsWeather />
           <LiveConditionsTile
-            icon="🎶"
-            label={tonight ? "Tonight" : "Next up"}
+            iconSrc="/images/brons-music.svg"
+            label={musicLabel}
             value={musicValue}
-            sub={musicSub}
+            sub="Check out music & events at the Yard"
             bgClass="bg-bron-orange"
+            href="/music-events"
           />
           <LiveConditionsTile
-            icon={status.isOpen ? "🍻" : "🌙"}
-            label="The yard"
-            value={status.isOpen ? "Open" : "Closed"}
-            sub={status.label.replace(/^Open until |^Closed — /, "")}
+            iconSrc="/images/brons-wave.svg"
+            label="Right Now"
+            value="Port A Live Cams"
+            sub="Check out the island in real time"
             bgClass="bg-bron-teal"
+            href="https://theportalocal.com/live"
+            external
           />
         </div>
       </div>
