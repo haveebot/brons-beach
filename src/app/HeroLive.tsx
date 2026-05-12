@@ -42,16 +42,6 @@ export default function HeroLive() {
     "Private events booking now",
   ];
 
-  // Time stamp for the corner
-  const stamp = now.toLocaleString("en-US", {
-    timeZone: "America/Chicago",
-    weekday: "short",
-    month: "short",
-    day: "numeric",
-    hour: "numeric",
-    minute: "2-digit",
-  });
-
   return (
     <>
     <section className="relative bg-bron-cream text-bron-deep-blue overflow-hidden isolate">
@@ -75,15 +65,10 @@ export default function HeroLive() {
         src="/images/brons-hero-silhouette.png"
         alt=""
         aria-hidden="true"
-        className="absolute inset-x-0 bottom-0 w-full h-auto pointer-events-none z-0"
+        className="absolute inset-x-0 bottom-0 w-full h-[140px] sm:h-auto object-cover object-left pointer-events-none z-0"
       />
 
-      {/* Top corner stamp — current local Port A time */}
-      <div className="absolute top-20 right-5 sm:top-24 sm:right-8 z-20 text-[10px] uppercase tracking-[0.25em] font-bold text-bron-deep-blue/75 bg-bron-cream/85 backdrop-blur-sm rounded-full px-3 py-1.5 border border-bron-blue/15">
-        {stamp} · Port A
-      </div>
-
-      <div className="relative z-10 max-w-6xl mx-auto px-6 pt-24 sm:pt-32 pb-44 sm:pb-56 text-center">
+      <div className="relative z-10 max-w-6xl mx-auto px-6 pt-20 sm:pt-32 pb-44 sm:pb-56 text-center">
         {/* Eyebrow with alternating tropical bullet dots */}
         <p className="flex items-center justify-center gap-2 sm:gap-3 text-[10px] sm:text-xs uppercase tracking-[0.25em] sm:tracking-[0.4em] text-bron-coral font-bold mb-6 sm:mb-8 whitespace-nowrap">
           <Bullet color="bg-bron-teal" />
@@ -129,18 +114,19 @@ export default function HeroLive() {
           </span>
         </p>
 
-        {/* CTAs — two-tone blue pill buttons. Light-blue primary,
-            bron-blue secondary. Both solid, white text. */}
-        <div className="mt-10 sm:mt-12 flex items-center justify-center gap-3 flex-wrap">
+        {/* CTAs — two-tone blue pill buttons. Stacked full-width on
+            mobile (better tap targets, cleaner stack), side-by-side
+            on tablet and up. Light-blue primary, bron-blue secondary. */}
+        <div className="mt-10 sm:mt-12 flex flex-col sm:flex-row items-center justify-center gap-3 max-w-sm sm:max-w-none mx-auto">
           <a
             href="#book"
-            className="px-8 py-4 rounded-full bg-bron-light-blue text-white font-bold text-sm uppercase tracking-widest hover:brightness-95 transition shadow-xl shadow-bron-light-blue/30"
+            className="w-full sm:w-auto px-8 py-4 rounded-full bg-bron-light-blue text-white text-center font-bold text-sm uppercase tracking-widest hover:brightness-95 transition shadow-xl shadow-bron-light-blue/30"
           >
             Reserve a rental
           </a>
           <a
             href="#yard"
-            className="px-8 py-4 rounded-full bg-bron-blue text-white font-bold text-sm uppercase tracking-widest hover:brightness-95 transition shadow-xl shadow-bron-blue/30"
+            className="w-full sm:w-auto px-8 py-4 rounded-full bg-bron-blue text-white text-center font-bold text-sm uppercase tracking-widest hover:brightness-95 transition shadow-xl shadow-bron-blue/30"
           >
             Visit the yard
           </a>
