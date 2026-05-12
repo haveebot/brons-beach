@@ -46,10 +46,11 @@ export default function LiveConditionsBlock() {
 
   return (
     <section className="relative text-white overflow-hidden isolate">
-      {/* Beach photo background — fills the whole section. Bron-blue
-          overlay tints it for legibility while keeping the ocean feel. */}
+      {/* Beach photo background — aerial view of the boardwalk + dunes
+          + Gulf at golden hour. Softer overlay than before since the
+          new photo is gentler/cleaner than the prior brons-beach.png. */}
       <Image
-        src="/images/brons-beach.png"
+        src="/images/right-now-bg.png"
         alt=""
         aria-hidden
         fill
@@ -59,11 +60,11 @@ export default function LiveConditionsBlock() {
       />
       <div
         aria-hidden
-        className="absolute inset-0 bg-bron-blue/72 mix-blend-multiply pointer-events-none"
+        className="absolute inset-0 bg-bron-blue/55 mix-blend-multiply pointer-events-none"
       />
       <div
         aria-hidden
-        className="absolute inset-0 bg-gradient-to-b from-bron-blue/30 via-transparent to-bron-blue/60 pointer-events-none"
+        className="absolute inset-0 bg-gradient-to-b from-bron-deep-blue/40 via-transparent to-bron-deep-blue/50 pointer-events-none"
       />
 
       <div className="relative z-10 max-w-5xl mx-auto px-6 py-14 sm:py-20">
