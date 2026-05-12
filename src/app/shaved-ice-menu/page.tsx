@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
 import SiteNav from "../SiteNav";
@@ -220,18 +221,29 @@ export default function ShavedIceMenuPage() {
           </div>
         </section>
 
-        {/* To-Go Bar — divider section */}
-        <section className="bg-bron-blue text-white pt-14 sm:pt-20 pb-10 text-center">
-          <div className="max-w-3xl mx-auto px-6">
-            <p className="text-xs uppercase tracking-[0.3em] text-bron-yellow font-bold mb-3">
-              Age 21 + · Plus tax · ID required
-            </p>
-            <h2 className="font-display text-3xl sm:text-5xl font-bold mb-3">
-              Bron&apos;s To-Go Bar
-            </h2>
-            <p className="font-display italic text-lg sm:text-xl text-white/85">
-              House specialty since 2014.
-            </p>
+        {/* To-Go Bar — divider section with hero drink photo */}
+        <section className="bg-bron-blue text-white pt-14 sm:pt-20 pb-10">
+          <div className="max-w-5xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+            <div className="text-center md:text-left">
+              <p className="text-xs uppercase tracking-[0.3em] text-bron-yellow font-bold mb-3">
+                Age 21 + · Plus tax · ID required
+              </p>
+              <h2 className="font-display text-3xl sm:text-5xl font-bold mb-3 leading-tight">
+                Bron&apos;s To-Go Bar
+              </h2>
+              <p className="font-display italic text-lg sm:text-xl text-white/85">
+                House specialty since 2014.
+              </p>
+            </div>
+            <div className="relative aspect-[4/3] rounded-3xl overflow-hidden border-4 border-bron-coral shadow-2xl max-w-md w-full mx-auto md:mx-0 md:ml-auto">
+              <Image
+                src="/images/brons-bar-drinks.png"
+                alt="A layered frozen margarita garnished with lime, at Bron's Backyard bar at night"
+                fill
+                sizes="(min-width: 768px) 50vw, 90vw"
+                className="object-cover"
+              />
+            </div>
           </div>
         </section>
 

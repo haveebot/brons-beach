@@ -132,8 +132,8 @@ export default function KitchenMenuPage() {
             </div>
             <div className="relative aspect-square rounded-3xl overflow-hidden border-4 border-bron-coral shadow-2xl max-w-md w-full mx-auto">
               <Image
-                src="/images/brons-food-1.png"
-                alt="A Bron's Kitchen burger and fries in a checkered basket"
+                src="/images/brons-food.png"
+                alt="A grilled cheese sandwich with bacon and seasoned fries in a checkered basket"
                 fill
                 sizes="(min-width: 768px) 50vw, 90vw"
                 className="object-cover"
