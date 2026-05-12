@@ -65,15 +65,17 @@ export default function HeroLive() {
           fanning upward and outward through the composition. */}
       <RisingSun />
 
-      {/* Brons silhouette — wide horizontal scene at the bottom of the
-          hero: golf cart, palm + birds, kids running, swings under the
-          thatched roof, bar scenes with people. In bron-deep-blue.
+      {/* Brons silhouette — wide horizontal scene that stretches edge to
+          edge across the bottom of the hero (no left/right gap). PNG at
+          5828x1092 (5.34:1) so it scales cleanly to any viewport width.
+          Includes golf cart, palm + birds, kids running, swings, bar
+          scenes, dancers, and the band on the right. Bron-deep-blue.
           Sits in front of the rising sun rays. */}
       <img
-        src="/images/brons-hero-silhouette.svg"
+        src="/images/brons-hero-silhouette.png"
         alt=""
         aria-hidden="true"
-        className="absolute inset-x-0 bottom-0 mx-auto w-full max-w-7xl h-auto pointer-events-none z-0"
+        className="absolute inset-x-0 bottom-0 w-full h-auto pointer-events-none z-0"
       />
 
       {/* Top corner stamp — current local Port A time */}
